@@ -87,6 +87,9 @@ export default {
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
       },
+      maxWidth: {
+        '8xl': '90rem',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
