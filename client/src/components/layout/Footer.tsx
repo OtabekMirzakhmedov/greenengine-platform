@@ -76,7 +76,7 @@ export default function Footer() {
                 data-testid="link-footer-facebook"
                 aria-label="Facebook"
               >
-                <FaFacebook className="h-6 w-6" />
+                <FaFacebook className="h-[25px] w-[25px]" />
               </a>
               <a
                 href="https://instagram.com/greenengine"
@@ -86,7 +86,7 @@ export default function Footer() {
                 data-testid="link-footer-instagram"
                 aria-label="Instagram"
               >
-                <FaInstagram className="h-6 w-6" />
+                <FaInstagram className="h-[25px] w-[25px]" />
               </a>
               <a
                 href="https://youtube.com/greenengine"
@@ -96,7 +96,7 @@ export default function Footer() {
                 data-testid="link-footer-youtube"
                 aria-label="YouTube"
               >
-                <FaYoutube className="h-6 w-6" />
+                <FaYoutube className="h-[25px] w-[25px]" />
               </a>
               <a
                 href="https://linkedin.com/company/greenengine"
@@ -106,7 +106,7 @@ export default function Footer() {
                 data-testid="link-footer-linkedin"
                 aria-label="LinkedIn"
               >
-                <FaLinkedin className="h-6 w-6" />
+                <FaLinkedin className="h-[25px] w-[25px]" />
               </a>
             </div>
             <p className="text-xs text-muted-foreground pt-2">
