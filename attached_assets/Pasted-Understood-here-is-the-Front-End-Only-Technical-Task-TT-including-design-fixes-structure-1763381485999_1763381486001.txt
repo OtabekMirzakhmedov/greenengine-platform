@@ -1,0 +1,194 @@
+Understood — here is the **Front-End Only Technical Task (TT)** including **design fixes + structure improvements + social media links**.
+Clear, short, and ready to give to your React front-end developer.
+
+---
+
+# **TECHNICAL TASK (TT) – FRONT-END ONLY
+
+GREENENGINE Website Redesign**
+
+## **1. General Front-End Requirements**
+
+* Technology: **React.js + Tailwind CSS** (or your existing stack).
+* Improve UI/UX for consistency, readability, spacing, and alignment.
+* Fully responsive design for: desktop, laptop, tablet, phone.
+* Replace temporary/placeholder elements with correct structure.
+* Remove “Activate Windows” image watermark from banners.
+
+---
+
+# **2. Header & Navigation (Frontend Fix)**
+
+### **2.1 Header Design**
+
+* Reduce header height by 15–20px.
+* Center-align all elements vertically.
+* Add light shadow (`shadow-md`) when sticky.
+
+### **2.2 Navigation**
+
+* Fix spacing between menu items (equal padding).
+* Ensure dropdown under **Intercultural Passport** opens smoothly.
+* Add active state (green underline).
+
+### **2.3 Add Social Media Icons in Header (Right Side)**
+
+Add icons with links (React Icons recommended):
+
+* Facebook
+* Instagram
+* YouTube
+* LinkedIn
+
+Place them before **Login** button.
+
+**Design:**
+
+* Icons: 20–22px
+* Color: neutral → hover: green (#1FAF38)
+* Spacing: 16px gap
+
+---
+
+# **3. Hero Section (Landing Page)**
+
+### **3.1 Banner Image**
+
+* Replace with **brighter, high-resolution** image.
+* Add dark overlay (20–30%) for readability.
+
+### **3.2 Text**
+
+* Center-align vertically & horizontally.
+* Increase headline font size 10–15%.
+* Add tighter line spacing.
+
+### **3.3 Buttons**
+
+* Primary button: Green (#1FAF38).
+* Secondary button: white with black text.
+* Add hover transitions.
+
+---
+
+# **4. Discover GREENENGINE Section**
+
+### **4.1 Spacing**
+
+* Add more top & bottom padding.
+* Center the heading.
+
+### **4.2 Add Info Cards**
+
+Add 3–4 cards with icons:
+
+* Vision
+* Mission
+* Countries
+* Beneficiaries
+
+Cards should use hover shadow effect.
+
+---
+
+# **5. Partner Institutions Section**
+
+### **5.1 Structure Fixes**
+
+* Increase top spacing.
+* Center title & text.
+
+### **5.2 Add Logo Grid**
+
+* 4-column grid on desktop → 2-column on tablet → 1-column on mobile.
+* Logos grayscale → hover to color.
+
+---
+
+# **6. Footer Redesign (Frontend Only)**
+
+### **6.1 Footer Structure**
+
+Footer must contain **four blocks**:
+
+#### 1) **Project Info**
+
+* Short description
+* “Funded by Erasmus+ Programme”
+
+#### 2) **Quick Links**
+
+* About GREENENGINE
+* Intercultural Passport
+* Stories
+* Events
+* Project Partners
+
+#### 3) **Contact**
+
+* Email
+* Office address
+* Contact persons (optional)
+
+#### **4) Social Media Icons**
+
+Add icons with links:
+
+* Facebook
+* Instagram
+* YouTube
+* LinkedIn
+
+**Design:**
+
+* Icons 25px
+* In a row, spaced by 12–16px
+* Color: #1FAF38 hover
+
+### **6.2 Footer Alignment Fix**
+
+* Reduce empty white space.
+* Align columns evenly.
+* Add top border line for separation.
+
+---
+
+# **7. UI/UX Fixes Required**
+
+* Fix inconsistent margins (too large at bottom).
+* Fix misaligned text blocks.
+* Normalize padding for sections (use consistent system).
+* Use a standard heading hierarchy: H1 → H2 → H3.
+* Buttons must be consistent across all pages.
+
+---
+
+# **8. Performance**
+
+(Frontend only tasks)
+
+* Compress all images (WebP format recommended).
+* Lazy-load heavy images (React Lazy).
+* Optimize hero image to <300kb.
+
+---
+
+# **9. Deliverables**
+
+* Updated React components.
+* Clean, commented code.
+* Fully responsive design.
+* Social media icons added to header and footer.
+* Final GitHub commit + build.
+
+---
+
+If you want, I can also prepare:
+
+✅ **Ready UI kit (colors, fonts, spacing system)**
+✅ **Figma layout**
+✅ **Footer example code in React + Tailwind**
+✅ **Header with social media code**
+
+Just tell me —
+**“Make UI kit”** or **“Write code for header/footer”**.

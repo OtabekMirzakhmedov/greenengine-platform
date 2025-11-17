@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,6 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import logoImage from "@assets/22_1763377690616.jpg";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -51,11 +53,8 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/">
-              <a className="flex items-center gap-2 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
-                <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">GE</span>
-                </div>
-                <span className="font-bold text-lg hidden sm:inline-block">GREENENGINE</span>
+              <a className="flex items-center gap-3 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
+                <img src={logoImage} alt="GREENENGINE Logo" className="h-10 w-auto" />
               </a>
             </Link>
 
@@ -178,6 +177,49 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-4">
+              <a
+                href="https://facebook.com/greenengine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                data-testid="link-facebook"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="h-5 w-5" />
+              </a>
+              <a
+                href="https://instagram.com/greenengine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                data-testid="link-instagram"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="h-5 w-5" />
+              </a>
+              <a
+                href="https://youtube.com/greenengine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                data-testid="link-youtube"
+                aria-label="YouTube"
+              >
+                <FaYoutube className="h-5 w-5" />
+              </a>
+              <a
+                href="https://linkedin.com/company/greenengine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                data-testid="link-linkedin"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="h-5 w-5" />
+              </a>
+            </div>
+
             <Link href="/login">
               <a>
                 <Button variant="outline" size="sm" className="hidden sm:inline-flex" data-testid="button-login">
