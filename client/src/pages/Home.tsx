@@ -55,20 +55,20 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
             Building Intercultural Competence for a Sustainable Future
           </h1>
-          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
             Empowering higher education institutions across Central Asia, Georgia, and Europe through collaborative learning and sustainable development.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/about">
-              <Button size="lg" variant="default" className="min-w-[160px]" data-testid="button-learn-more">
+              <Button size="lg" variant="default" className="min-w-[180px] transition-all hover:scale-105" data-testid="button-learn-more">
                 Learn More
               </Button>
             </Link>
             <Link href="/stories">
-              <Button size="lg" variant="outline" className="min-w-[160px] bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20" data-testid="button-explore-stories">
+              <Button size="lg" variant="outline" className="min-w-[180px] bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all hover:scale-105" data-testid="button-explore-stories">
                 Explore Stories
               </Button>
             </Link>
