@@ -32,6 +32,7 @@ import ActionPlansAdmin from "@/pages/admin/ActionPlansAdmin";
 import InfographicsAdmin from "@/pages/admin/InfographicsAdmin";
 import CommunityPlansAdmin from "@/pages/admin/CommunityPlansAdmin";
 import PartnersAdmin from "@/pages/admin/PartnersAdmin";
+import NewsAdmin from "@/pages/admin/NewsAdmin";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -237,6 +238,14 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <PartnersAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/news">
+        {() => (
+          <ProtectedRoute>
+            <NewsAdmin />
           </ProtectedRoute>
         )}
       </Route>
