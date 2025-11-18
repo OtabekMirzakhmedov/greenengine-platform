@@ -16,6 +16,7 @@ import {
   LogOut,
   ChevronRight,
   Shield,
+  Newspaper,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -96,6 +97,14 @@ export default function Dashboard() {
       description: "Partner institutions information",
       color: "text-indigo-500",
       bgColor: "bg-indigo-500/10",
+    },
+    {
+      title: "News",
+      icon: Newspaper,
+      href: "/admin/news",
+      description: "Latest news and articles",
+      color: "text-rose-500",
+      bgColor: "bg-rose-500/10",
     },
   ];
 
