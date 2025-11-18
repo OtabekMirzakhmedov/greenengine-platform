@@ -9,10 +9,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Project Info */}
           <div className="space-y-4">
-            <Link href="/">
-              <a className="inline-block">
-                <img src={logoImage} alt="GREENENGINE Logo" className="h-12 w-auto" />
-              </a>
+            <Link href="/" className="inline-block">
+              <img src={logoImage} alt="GREENENGINE Logo" className="h-12 w-auto" />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               An international educational initiative promoting intercultural competence and sustainable development across Central Asia, Georgia, and Europe.
@@ -26,30 +24,20 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-base">Quick Links</h3>
             <nav className="flex flex-col gap-2">
-              <Link href="/about">
-                <a className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-about">
-                  About GREENENGINE
-                </a>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-about">
+                About GREENENGINE
               </Link>
-              <Link href="/passport">
-                <a className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-passport">
-                  Intercultural Passport
-                </a>
+              <Link href="/passport" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-passport">
+                Intercultural Passport
               </Link>
-              <Link href="/stories">
-                <a className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-stories">
-                  Stories
-                </a>
+              <Link href="/stories" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-stories">
+                Stories
               </Link>
-              <Link href="/events">
-                <a className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-events">
-                  Events
-                </a>
+              <Link href="/events" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-events">
+                Events
               </Link>
-              <Link href="/partners">
-                <a className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-partners">
-                  Project Partners
-                </a>
+              <Link href="/partners" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-partners">
+                Project Partners
               </Link>
             </nav>
           </div>

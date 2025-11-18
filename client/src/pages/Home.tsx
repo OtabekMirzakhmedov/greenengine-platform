@@ -22,7 +22,7 @@ export default function Home() {
     },
     {
       icon: Target,
-      title: "Action Plans",
+      title: "Action",
       description: "Detailed strategies and implementation frameworks for sustainable educational development initiatives.",
       href: "/action-plans",
     },

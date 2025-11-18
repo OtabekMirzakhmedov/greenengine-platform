@@ -15,7 +15,7 @@ export default function ActionPlans() {
   return (
     <div className="flex flex-col min-h-screen">
       <PageHero
-        title="Action Plans"
+        title="Action"
         description="Strategic implementation frameworks for sustainable educational development"
         imageUrl={heroImage}
       />

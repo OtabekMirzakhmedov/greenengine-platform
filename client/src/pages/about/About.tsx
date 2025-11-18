@@ -63,7 +63,7 @@ export default function About() {
 
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">Action Plans</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">Action</h3>
                     <p className="text-muted-foreground leading-relaxed">
                       Detailed implementation strategies ensuring sustainable impact and measurable outcomes across all project activities.
                     </p>
