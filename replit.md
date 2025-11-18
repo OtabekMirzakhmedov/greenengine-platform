@@ -16,6 +16,41 @@ The application is designed following Material Design principles with academic r
 
 Preferred communication style: Simple, everyday language.
 
+## Admin Panel
+
+The platform includes a comprehensive Content Management System (CMS) for administrators:
+
+**Login Credentials:**
+- Email: `admin@greenengine.org`
+- Password: `admin123`
+
+**Admin Dashboard Features:**
+- Modern, user-friendly interface with gradient background
+- Sticky header with backdrop blur effect
+- User badge showing logged-in admin email
+- 7 content management sections with colorful icons:
+  - Pages (Blue) - Manage About and Passport pages
+  - Institutions (Green) - Institution stories and profiles
+  - Events (Purple) - Project meetings and workshops
+  - Action Plans (Orange) - Strategic implementation plans
+  - Infographics (Pink) - Visual reports and data
+  - Community Plans (Teal) - Community development initiatives
+  - Partners (Indigo) - Partner institutions information
+
+**Admin Pages Structure:**
+- All pages follow consistent design pattern
+- Header with back button and add button
+- Responsive grid layout (1/2/3 columns)
+- Card-based item display with edit/delete actions
+- Loading states with skeletons
+- Empty states with helpful messages
+- Delete confirmation dialogs for safety
+
+**Protected Routes:**
+- All `/admin/*` routes require authentication
+- Automatic redirect to login if not authenticated
+- Session persisted via JWT in HTTP-only cookies
+
 ## System Architecture
 
 ### Frontend Architecture
