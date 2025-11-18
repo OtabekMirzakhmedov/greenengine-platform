@@ -100,6 +100,18 @@ export const partners = pgTable("partners", {
   order: integer("order").notNull().default(0),
 });
 
+export const news = pgTable("news", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  imageUrl: text("image_url"),
+  publishedAt: timestamp("published_at").notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
 export const insertInstitutionSchema = createInsertSchema(institutions).omit({ id: true, updatedAt: true });
@@ -108,6 +120,7 @@ export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({ id:
 export const insertInfographicSchema = createInsertSchema(infographics).omit({ id: true, updatedAt: true });
 export const insertCommunityPlanSchema = createInsertSchema(communityPlans).omit({ id: true, updatedAt: true });
 export const insertPartnerSchema = createInsertSchema(partners).omit({ id: true });
+export const insertNewsSchema = createInsertSchema(news).omit({ id: true, updatedAt: true });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -125,3 +138,5 @@ export type InsertCommunityPlan = z.infer<typeof insertCommunityPlanSchema>;
 export type CommunityPlan = typeof communityPlans.$inferSelect;
 export type InsertPartner = z.infer<typeof insertPartnerSchema>;
 export type Partner = typeof partners.$inferSelect;
+export type InsertNews = z.infer<typeof insertNewsSchema>;
+export type News = typeof news.$inferSelect;
