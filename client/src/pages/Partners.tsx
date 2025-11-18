@@ -123,7 +123,11 @@ export default function Partners() {
                               {partner.phone && (
                                 <div className="flex gap-3 text-sm">
                                   <Phone className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <a href={`tel:${partner.phone}`} className="text-muted-foreground hover:text-foreground transition-colors">
+                                  <a 
+                                    href={`tel:${partner.phone}`} 
+                                    className="text-muted-foreground hover:text-foreground transition-colors"
+                                    data-testid={`link-phone-${partner.id}`}
+                                  >
                                     {partner.phone}
                                   </a>
                                 </div>
@@ -132,7 +136,11 @@ export default function Partners() {
                               {partner.email && (
                                 <div className="flex gap-3 text-sm">
                                   <Mail className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <a href={`mailto:${partner.email}`} className="text-muted-foreground hover:text-foreground transition-colors">
+                                  <a 
+                                    href={`mailto:${partner.email}`} 
+                                    className="text-muted-foreground hover:text-foreground transition-colors"
+                                    data-testid={`link-email-${partner.id}`}
+                                  >
                                     {partner.email}
                                   </a>
                                 </div>
