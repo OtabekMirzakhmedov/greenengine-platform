@@ -93,10 +93,14 @@ export const communityPlans = pgTable("community_plans", {
 export const partners = pgTable("partners", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
+  country: text("country"),
   description: text("description"),
+  pic: text("pic"),
+  address: text("address"),
+  phone: text("phone"),
+  email: text("email"),
   logoUrl: text("logo_url"),
   websiteUrl: text("website_url"),
-  contactEmail: text("contact_email"),
   order: integer("order").notNull().default(0),
 });
 
