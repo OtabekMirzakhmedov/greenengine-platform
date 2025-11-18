@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Users, Target, Calendar, BarChart3, ArrowRight } from "lucide-react";
 import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
+import NewsCarousel from "@/components/NewsCarousel";
+import { useQuery } from "@tanstack/react-query";
+import type { News } from "@shared/schema";
 import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
 import heroImage2 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
 import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
@@ -16,6 +19,9 @@ import discoverImage4 from "@assets/stock_images/environmental_sustai_bb342fce.j
 import discoverImage5 from "@assets/stock_images/environmental_sustai_4fd1c4ba.jpg";
 
 export default function Home() {
+  const { data: newsData } = useQuery<News[]>({
+    queryKey: ["/api/news"],
+  });
   const heroSlides: HeroSlide[] = [
     {
       id: "1",
@@ -228,6 +234,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {newsData && newsData.length > 0 && (
+        <NewsCarousel news={newsData.filter(item => item.published).slice(0, 6)} />
+      )}
     </div>
   );
 }
