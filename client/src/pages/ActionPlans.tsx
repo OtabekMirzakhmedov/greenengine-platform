@@ -5,6 +5,7 @@ import { Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ActionPlan } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import heroImage from "@assets/stock_images/modern_green_sustain_b56e3a5e.jpg";
 
 export default function ActionPlans() {
   const { data: actionPlans, isLoading } = useQuery<ActionPlan[]>({
@@ -16,6 +17,7 @@ export default function ActionPlans() {
       <PageHero
         title="Action Plans"
         description="Strategic implementation frameworks for sustainable educational development"
+        imageUrl={heroImage}
       />
 
       <div className="flex-1 py-12 md:py-16">

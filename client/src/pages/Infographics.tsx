@@ -5,6 +5,7 @@ import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Infographic } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import heroImage from "@assets/stock_images/diverse_students_col_55923d1a.jpg";
 
 export default function Infographics() {
   const { data: infographics, isLoading } = useQuery<Infographic[]>({
@@ -16,6 +17,7 @@ export default function Infographics() {
       <PageHero
         title="Infographic Reports"
         description="Visual insights and data-driven analysis of project outcomes"
+        imageUrl={heroImage}
       />
 
       <div className="flex-1 py-12 md:py-16">

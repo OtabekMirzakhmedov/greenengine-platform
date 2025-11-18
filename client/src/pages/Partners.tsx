@@ -5,6 +5,7 @@ import { ExternalLink, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Partner } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import heroImage from "@assets/stock_images/international_cooper_13d95da6.jpg";
 
 export default function Partners() {
   const { data: partners, isLoading } = useQuery<Partner[]>({
@@ -16,6 +17,7 @@ export default function Partners() {
       <PageHero
         title="Project Partners"
         description="Collaborating institutions advancing intercultural education across three continents"
+        imageUrl={heroImage}
       />
 
       <div className="flex-1 py-12 md:py-16">

@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { MapPin, ExternalLink } from "lucide-react";
 import type { Institution } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import heroImage from "@assets/stock_images/university_campus_ed_b4274d37.jpg";
 
 export default function Stories() {
   const { data: institutions, isLoading } = useQuery<Institution[]>({
@@ -16,6 +17,7 @@ export default function Stories() {
       <PageHero
         title="Stories of GREENENGINE"
         description="Discover the unique contributions and achievements of our partner institutions"
+        imageUrl={heroImage}
       />
 
       <div className="flex-1 py-12 md:py-16">

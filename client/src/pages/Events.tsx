@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Event } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
+import heroImage from "@assets/stock_images/conference_meeting_b_0f46ddf8.jpg";
 
 export default function Events() {
   const { data: events, isLoading } = useQuery<Event[]>({
@@ -18,6 +19,7 @@ export default function Events() {
       <PageHero
         title="Project Events"
         description="International meetings, workshops, and collaborative activities"
+        imageUrl={heroImage}
       />
 
       <div className="flex-1 py-12 md:py-16">
