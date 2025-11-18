@@ -120,7 +120,9 @@ export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({ id:
 export const insertInfographicSchema = createInsertSchema(infographics).omit({ id: true, updatedAt: true });
 export const insertCommunityPlanSchema = createInsertSchema(communityPlans).omit({ id: true, updatedAt: true });
 export const insertPartnerSchema = createInsertSchema(partners).omit({ id: true });
-export const insertNewsSchema = createInsertSchema(news).omit({ id: true, updatedAt: true });
+export const insertNewsSchema = createInsertSchema(news).omit({ id: true, updatedAt: true }).extend({
+  publishedAt: z.coerce.date(),
+});
 export const updateNewsSchema = insertNewsSchema.partial().superRefine((data, ctx) => {
   if (Object.keys(data).length === 0) {
     ctx.addIssue({
