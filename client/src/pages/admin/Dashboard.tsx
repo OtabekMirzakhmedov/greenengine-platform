@@ -1,8 +1,10 @@
 import { useAuth } from "@/lib/auth";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   BookOpen,
   Users,
@@ -12,6 +14,8 @@ import {
   FolderOpen,
   Building2,
   LogOut,
+  ChevronRight,
+  Shield,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -42,55 +46,81 @@ export default function Dashboard() {
       icon: BookOpen,
       href: "/admin/pages",
       description: "Manage About and Passport pages",
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
     },
     {
       title: "Institutions",
       icon: Building2,
       href: "/admin/institutions",
       description: "Institution stories and profiles",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
     },
     {
       title: "Events",
       icon: Calendar,
       href: "/admin/events",
       description: "Project meetings and workshops",
+      color: "text-purple-500",
+      bgColor: "bg-purple-500/10",
     },
     {
       title: "Action Plans",
       icon: FileText,
       href: "/admin/action-plans",
       description: "Strategic implementation plans",
+      color: "text-orange-500",
+      bgColor: "bg-orange-500/10",
     },
     {
       title: "Infographics",
       icon: BarChart3,
       href: "/admin/infographics",
       description: "Visual reports and data",
+      color: "text-pink-500",
+      bgColor: "bg-pink-500/10",
     },
     {
       title: "Community Plans",
       icon: FolderOpen,
       href: "/admin/community-plans",
       description: "Community development initiatives",
+      color: "text-teal-500",
+      bgColor: "bg-teal-500/10",
     },
     {
       title: "Partners",
       icon: Users,
       href: "/admin/partners",
       description: "Partner institutions information",
+      color: "text-indigo-500",
+      bgColor: "bg-indigo-500/10",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-muted/30">
+      <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">GREENENGINE CMS</h1>
-              <p className="text-sm text-muted-foreground">Welcome back, {user?.email}</p>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">GREENENGINE CMS</h1>
+                  <p className="text-sm text-muted-foreground">Content Management System</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="gap-2">
+                <div className="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+                <span className="text-xs">{user?.email}</span>
+              </Badge>
+              <Separator orientation="vertical" className="h-8" />
               <Link href="/">
                 <Button variant="outline" size="sm" data-testid="button-view-site">
                   View Site
@@ -111,29 +141,52 @@ export default function Dashboard() {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h2 className="text-3xl font-semibold mb-2 text-foreground">Content Management</h2>
-          <p className="text-muted-foreground">
-            Manage all GREENENGINE platform content from this dashboard
+        <div className="mb-12">
+          <h2 className="text-4xl font-bold mb-3 text-foreground">
+            Welcome Back 👋
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            Manage all GREENENGINE platform content from this centralized dashboard. 
+            Select a section below to get started.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sections.map((section) => (
             <Link key={section.href} href={section.href}>
-              <Card className="h-full hover-elevate active-elevate-2 transition-all cursor-pointer" data-testid={`card-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                <CardHeader>
-                  <div className="h-12 w-12 rounded-md bg-primary/10 flex items-center justify-center mb-4">
-                    <section.icon className="h-6 w-6 text-primary" />
+              <Card className="h-full hover-elevate active-elevate-2 transition-all cursor-pointer group" data-testid={`card-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                <CardHeader className="pb-3">
+                  <div className={`h-14 w-14 rounded-lg ${section.bgColor} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                    <section.icon className={`h-7 w-7 ${section.color}`} />
                   </div>
-                  <CardTitle className="text-xl">{section.title}</CardTitle>
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle className="text-xl">{section.title}</CardTitle>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">{section.description}</p>
+                  <CardDescription className="text-sm">
+                    {section.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-12 p-6 bg-background/60 backdrop-blur-sm border rounded-lg">
+          <div className="flex items-start gap-4">
+            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <Shield className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground mb-1">Administrator Access</h3>
+              <p className="text-sm text-muted-foreground">
+                You have full access to all content sections. Changes you make will be reflected on the public website immediately. 
+                Please ensure all content follows the GREENENGINE guidelines and quality standards.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
