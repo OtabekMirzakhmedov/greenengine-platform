@@ -50,11 +50,11 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/">
               <a className="flex items-center gap-3 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
-                <img src={logoImage} alt="GREENENGINE Logo" className="h-10 w-auto" />
+                <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
               </a>
             </Link>
 
@@ -119,17 +119,6 @@ export default function Header() {
                 </a>
               </Link>
 
-              <Link href="/community-plans">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location.startsWith("/community-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-community"
-                >
-                  Community Plans
-                </a>
-              </Link>
-
               <Link href="/events">
                 <a
                   className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
@@ -148,7 +137,7 @@ export default function Header() {
                   }`}
                   data-testid="link-nav-action-plans"
                 >
-                  Action Plans
+                  Action
                 </a>
               </Link>
 
@@ -277,12 +266,6 @@ export default function Header() {
                 </a>
               </Link>
 
-              <Link href="/community-plans">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-community">
-                  Community Plans
-                </a>
-              </Link>
-
               <Link href="/events">
                 <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">
                   Events
@@ -291,7 +274,7 @@ export default function Header() {
 
               <Link href="/action-plans">
                 <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
-                  Action Plans
+                  Action
                 </a>
               </Link>
 
