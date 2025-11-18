@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { users, partners } from "@shared/schema";
+import { users, partners, news } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 
@@ -171,6 +171,117 @@ async function seed() {
       console.log(`✓ Added partner: ${partner.name}`);
     } else {
       console.log(`- Partner already exists: ${partner.name}`);
+    }
+  }
+
+  // Seed news
+  console.log("\nSeeding news articles...");
+  
+  const newsData = [
+    {
+      title: "GREENENGINE Project Kickoff Conference in Tashkent",
+      slug: "greenengine-kickoff-conference-tashkent",
+      excerpt: "The GREENENGINE project officially launched with a successful kickoff conference bringing together all 11 partner institutions in Tashkent, Uzbekistan.",
+      content: "The GREENENGINE project officially began with an inspiring kickoff conference held in Tashkent, Uzbekistan. Over 50 participants from 11 partner institutions across Central Asia, Georgia, and Europe gathered to establish the foundation for this transformative educational initiative. The three-day event featured collaborative workshops, strategic planning sessions, and networking opportunities. Partners discussed the project's goals of promoting intercultural competence and sustainable development in higher education, outlining a comprehensive roadmap for the next three years.",
+      imageUrl: "/attached_assets/stock_images/educational_conferen_f6f10e1d.jpg",
+      publishedAt: new Date("2025-09-15T09:00:00Z"),
+      order: 1
+    },
+    {
+      title: "First MOOC Module on Intercultural Communication Launches",
+      slug: "first-mooc-module-intercultural-communication",
+      excerpt: "GREENENGINE introduces its first Massive Open Online Course focusing on intercultural communication skills for students and educators.",
+      content: "We are excited to announce the launch of our first MOOC module: 'Foundations of Intercultural Communication in Higher Education.' This comprehensive online course is designed for students, educators, and professionals seeking to enhance their intercultural competence. The module features video lectures from leading experts, interactive exercises, case studies from diverse cultural contexts, and peer-to-peer learning opportunities. Over 500 participants have already enrolled from across the partner institutions.",
+      imageUrl: "/attached_assets/stock_images/educational_conferen_b0c0e7ee.jpg",
+      publishedAt: new Date("2025-10-05T10:00:00Z"),
+      order: 2
+    },
+    {
+      title: "Digital Storytelling Workshop Empowers Student Voices",
+      slug: "digital-storytelling-workshop-student-voices",
+      excerpt: "Students from partner universities participated in an intensive digital storytelling workshop to share their intercultural experiences through multimedia narratives.",
+      content: "The GREENENGINE Digital Storytelling Workshop brought together 30 students from across the partner network to develop powerful multimedia narratives about their intercultural experiences. Over five days, participants learned video editing, narrative structure, interviewing techniques, and ethical storytelling practices. The resulting digital stories will be featured in the Intercultural Passport platform and shared widely to inspire others. This hands-on workshop exemplified the project's commitment to student-centered learning and creative expression.",
+      imageUrl: "/attached_assets/stock_images/educational_conferen_d0a55f3f.jpg",
+      publishedAt: new Date("2025-10-20T14:00:00Z"),
+      order: 3
+    },
+    {
+      title: "Faculty Development Program on Inclusive Teaching",
+      slug: "faculty-development-inclusive-teaching",
+      excerpt: "Educators from all partner institutions completed a comprehensive training program on inclusive and culturally responsive teaching methodologies.",
+      content: "GREENENGINE's Faculty Development Program concluded with remarkable success, training over 60 educators in inclusive and culturally responsive teaching practices. The two-week intensive program covered topics including unconscious bias, culturally sustaining pedagogy, universal design for learning, and assessment strategies for diverse classrooms. Participants engaged in reflective practice, collaborative lesson planning, and peer observation. The program has already begun influencing classroom practices across all partner institutions, creating more inclusive learning environments for all students.",
+      imageUrl: "/attached_assets/stock_images/educational_conferen_6ef0e73a.jpg",
+      publishedAt: new Date("2025-10-28T11:00:00Z"),
+      order: 4
+    },
+    {
+      title: "Sustainability and Green Education Forum 2025",
+      slug: "sustainability-green-education-forum-2025",
+      excerpt: "GREENENGINE partners convened for a forum on integrating sustainability principles and environmental education into university curricula.",
+      content: "The Sustainability and Green Education Forum marked a pivotal moment in the GREENENGINE project's commitment to environmental stewardship. Academic leaders, researchers, and sustainability experts from all partner institutions gathered to explore innovative approaches to embedding climate action and sustainable development goals into higher education. The forum featured keynote presentations on renewable energy education, circular economy principles, and eco-campus initiatives. Participants developed collaborative action plans for greening curricula, reducing campus carbon footprints, and fostering environmental consciousness among students.",
+      imageUrl: "/attached_assets/stock_images/educational_conferen_4986f3dd.jpg",
+      publishedAt: new Date("2025-11-01T09:30:00Z"),
+      order: 5
+    },
+    {
+      title: "Collaborative Research Project on Cross-Cultural Learning",
+      slug: "collaborative-research-cross-cultural-learning",
+      excerpt: "A joint research initiative investigates the effectiveness of intercultural competence training across the GREENENGINE partner network.",
+      content: "GREENENGINE has launched an ambitious collaborative research project examining the impact of intercultural competence training on student learning outcomes. Researchers from six partner universities are conducting a multi-site study tracking 300 students over two academic years. The research employs mixed methods including surveys, interviews, focus groups, and learning analytics to assess changes in intercultural sensitivity, communication skills, and global citizenship attitudes. Preliminary findings suggest significant positive effects, with full results expected in spring 2026. This evidence-based approach will inform future program development and contribute to the broader academic literature.",
+      imageUrl: "/attached_assets/stock_images/university_workshop__f6d2f672.jpg",
+      publishedAt: new Date("2025-11-08T13:00:00Z"),
+      order: 6
+    },
+    {
+      title: "Student Mobility Program Applications Now Open",
+      slug: "student-mobility-program-applications-open",
+      excerpt: "GREENENGINE announces the opening of applications for its student exchange program, offering semester-long study opportunities at partner universities.",
+      content: "We are thrilled to announce that applications are now open for the GREENENGINE Student Mobility Program for the 2025-2026 academic year! This exciting initiative enables undergraduate and graduate students to spend one semester at a partner university in Central Asia, Georgia, or Europe. The program covers tuition, provides monthly stipends, and includes pre-departure intercultural training. Students will have the opportunity to immerse themselves in new cultural contexts, improve language skills, build international networks, and gain unique academic perspectives. The first cohort of 50 students will begin their exchanges in September 2026. Don't miss this life-changing opportunity!",
+      imageUrl: "/attached_assets/stock_images/university_workshop__92f15da7.jpg",
+      publishedAt: new Date("2025-11-12T10:00:00Z"),
+      order: 7
+    },
+    {
+      title: "Innovation in Assessment: New Digital Passport Platform",
+      slug: "innovation-assessment-digital-passport-platform",
+      excerpt: "GREENENGINE unveils its innovative Intercultural Passport digital platform for tracking and recognizing students' intercultural learning journeys.",
+      content: "The GREENENGINE Intercultural Passport is now live! This groundbreaking digital platform allows students to document, reflect on, and showcase their intercultural learning experiences. Features include a digital portfolio for uploading stories and artifacts, competency self-assessment tools, peer feedback mechanisms, and digital badges recognizing achievement milestones. The platform integrates seamlessly with university learning management systems and provides educators with analytics dashboards to monitor student progress. Over 200 students have already created their passports and begun chronicling their intercultural journeys.",
+      imageUrl: "/attached_assets/stock_images/university_workshop__5aa174a7.jpg",
+      publishedAt: new Date("2025-11-15T15:30:00Z"),
+      order: 8
+    },
+    {
+      title: "Erasmus+ Co-Funding Milestone Reached",
+      slug: "erasmus-cofunding-milestone-reached",
+      excerpt: "The GREENENGINE project successfully achieves its first-year objectives and receives continued Erasmus+ support for years two and three.",
+      content: "We are proud to announce that GREENENGINE has successfully met all first-year milestones and deliverables, securing continued Erasmus+ co-funding for the remainder of the project! The European Commission's positive evaluation highlighted the project's innovative approach to intercultural education, strong partnership collaboration, and measurable impact on students and faculty. This achievement reflects the dedication and hard work of all partners and participants. With this continued support, we can expand our activities, reach more students, and deepen our impact on higher education across Central Asia, Georgia, and Europe.",
+      imageUrl: "/attached_assets/stock_images/university_workshop__212dc14f.jpg",
+      publishedAt: new Date("2025-11-18T09:00:00Z"),
+      order: 9
+    },
+    {
+      title: "Upcoming International Conference: Save the Date!",
+      slug: "upcoming-international-conference-save-date",
+      excerpt: "Mark your calendars for the GREENENGINE International Conference on Intercultural Competence, scheduled for June 2026 in Tbilisi, Georgia.",
+      content: "Save the date! The GREENENGINE International Conference on Intercultural Competence in Higher Education will take place June 15-17, 2026, in beautiful Tbilisi, Georgia. This landmark event will bring together researchers, educators, policymakers, and students from around the world to share insights, present research, and discuss the future of intercultural education. The conference will feature keynote addresses from internationally renowned scholars, parallel sessions on innovative practices, workshops on pedagogical approaches, poster presentations, and extensive networking opportunities. A call for proposals will be issued in January 2026. We look forward to welcoming you to Tbilisi!",
+      imageUrl: "/attached_assets/stock_images/university_workshop__c6901365.jpg",
+      publishedAt: new Date("2025-11-20T11:00:00Z"),
+      order: 10
+    }
+  ];
+
+  for (const newsItem of newsData) {
+    const existing = await db
+      .select()
+      .from(news)
+      .where(eq(news.slug, newsItem.slug))
+      .limit(1);
+
+    if (existing.length === 0) {
+      await db.insert(news).values(newsItem);
+      console.log(`✓ Added news: ${newsItem.title}`);
+    } else {
+      console.log(`- News already exists: ${newsItem.title}`);
     }
   }
 
