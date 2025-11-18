@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import useEmblaCarousel from "embla-carousel-react";
@@ -19,17 +19,21 @@ export default function NewsPage() {
     queryKey: ["/api/news"],
   });
 
+  // Sort by publishedAt descending to get latest news first
+  const sortedNews = newsItems
+    ? [...newsItems].sort((a, b) => 
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      )
+    : [];
+
   // Separate featured news (latest 3) from the rest
-  const featuredNews = newsItems?.slice(0, 3) || [];
-  const otherNews = newsItems?.slice(3) || [];
+  const featuredNews = sortedNews.slice(0, 3);
+  const otherNews = sortedNews.slice(3);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "center" },
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
-
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -38,24 +42,6 @@ export default function NewsPage() {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -120,7 +106,7 @@ export default function NewsPage() {
                                   <div className="space-y-4">
                                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                       <Calendar className="h-4 w-4" />
-                                      <time dateTime={item.publishedAt.toString()}>
+                                      <time dateTime={new Date(item.publishedAt).toISOString()}>
                                         {format(new Date(item.publishedAt), "MMMM d, yyyy")}
                                       </time>
                                     </div>
@@ -152,28 +138,28 @@ export default function NewsPage() {
                       </div>
                     </div>
 
-                    {/* Carousel Navigation */}
-                    {canScrollPrev && (
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
-                        onClick={scrollPrev}
-                        data-testid="button-carousel-prev"
-                      >
-                        <ChevronLeft className="h-5 w-5" />
-                      </Button>
-                    )}
-                    {canScrollNext && (
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
-                        onClick={scrollNext}
-                        data-testid="button-carousel-next"
-                      >
-                        <ChevronRight className="h-5 w-5" />
-                      </Button>
+                    {/* Carousel Navigation - Always show when multiple items */}
+                    {featuredNews.length > 1 && (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
+                          onClick={scrollPrev}
+                          data-testid="button-carousel-prev"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
+                          onClick={scrollNext}
+                          data-testid="button-carousel-next"
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </Button>
+                      </>
                     )}
                   </div>
                 </section>
@@ -211,7 +197,7 @@ export default function NewsPage() {
                         <CardHeader className="flex-1">
                           <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
                             <Calendar className="h-3 w-3" />
-                            <time dateTime={item.publishedAt.toString()}>
+                            <time dateTime={new Date(item.publishedAt).toISOString()}>
                               {format(new Date(item.publishedAt), "MMM d, yyyy")}
                             </time>
                           </div>
