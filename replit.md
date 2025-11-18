@@ -135,11 +135,21 @@ The platform includes a comprehensive Content Management System (CMS) for admini
 - Uses stock images as placeholder logos
 - Countries represented: Uzbekistan (4), Georgia (4), Turkey (1), Greece (1), Italy (1)
 
+**News Page:**
+- Dedicated /news page displaying all GREENENGINE news and updates
+- **Featured News Carousel**: Top 3 latest articles in large carousel format
+  - Auto-play with 5-second delay
+  - Manual navigation with prev/next buttons
+  - Large cards showing: date, title, excerpt, featured image, "Read Full Article" button
+- **All News Grid**: Remaining articles in responsive 3-column grid layout
+  - Cards with: image, date, title, excerpt, "Read More" button
+- Articles sorted by published date (newest first)
+- 10 comprehensive news articles covering: project kickoff, MOOC launch, workshops, faculty development, sustainability forum, research, student mobility, digital passport, Erasmus+ funding, conference announcements
+- All articles include professional educational photography
+
 **News Carousel (Home Page):**
-- Hero carousel displaying latest news and updates
-- Auto-play functionality with manual navigation
-- Each news item shows: title, excerpt, published date, featured image
-- Seamless integration with home page hero section
+- Compact carousel displaying featured news on homepage
+- Links to full News page via "All news" button
 
 ### Database Architecture
 
