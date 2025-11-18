@@ -52,22 +52,19 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/">
-              <a className="flex items-center gap-3 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
-                <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
-              </a>
+            <Link href="/" className="flex items-center gap-3 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
+              <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
-              <Link href="/">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location === "/" ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-home"
-                >
-                  Home
-                </a>
+              <Link 
+                href="/"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location === "/" ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-home"
+              >
+                Home
               </Link>
 
               <NavigationMenu>
@@ -79,10 +76,13 @@ export default function Header() {
                     <NavigationMenuContent>
                       <div className="w-64 p-2">
                         {aboutLinks.map((link) => (
-                          <Link key={link.href} href={link.href}>
-                            <a className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" data-testid={`link-${link.href.replace(/\//g, '-')}`}>
-                              {link.title}
-                            </a>
+                          <Link 
+                            key={link.href} 
+                            href={link.href}
+                            className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" 
+                            data-testid={`link-${link.href.replace(/\//g, '-')}`}
+                          >
+                            {link.title}
                           </Link>
                         ))}
                       </div>
@@ -96,10 +96,13 @@ export default function Header() {
                     <NavigationMenuContent>
                       <div className="w-64 p-2">
                         {passportLinks.map((link) => (
-                          <Link key={link.href} href={link.href}>
-                            <a className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" data-testid={`link-${link.href.replace(/\//g, '-')}`}>
-                              {link.title}
-                            </a>
+                          <Link 
+                            key={link.href} 
+                            href={link.href}
+                            className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" 
+                            data-testid={`link-${link.href.replace(/\//g, '-')}`}
+                          >
+                            {link.title}
                           </Link>
                         ))}
                       </div>
@@ -108,59 +111,54 @@ export default function Header() {
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <Link href="/stories">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location.startsWith("/stories") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-stories"
-                >
-                  Stories
-                </a>
+              <Link 
+                href="/stories"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location.startsWith("/stories") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-stories"
+              >
+                Stories
               </Link>
 
-              <Link href="/events">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location.startsWith("/events") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-events"
-                >
-                  Events
-                </a>
+              <Link 
+                href="/events"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location.startsWith("/events") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-events"
+              >
+                Events
               </Link>
 
-              <Link href="/action-plans">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location.startsWith("/action-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-action-plans"
-                >
-                  Action
-                </a>
+              <Link 
+                href="/action-plans"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location.startsWith("/action-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-action-plans"
+              >
+                Action
               </Link>
 
-              <Link href="/infographics">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location.startsWith("/infographics") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-infographics"
-                >
-                  Infographics
-                </a>
+              <Link 
+                href="/infographics"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location.startsWith("/infographics") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-infographics"
+              >
+                Infographics
               </Link>
 
-              <Link href="/partners">
-                <a
-                  className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
-                    location === "/partners" ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                  }`}
-                  data-testid="link-nav-partners"
-                >
-                  Partners
-                </a>
+              <Link 
+                href="/partners"
+                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                  location === "/partners" ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-partners"
+              >
+                Partners
               </Link>
             </nav>
           </div>
@@ -209,12 +207,10 @@ export default function Header() {
               </a>
             </div>
 
-            <Link href="/login">
-              <a>
-                <Button variant="outline" size="sm" className="hidden sm:inline-flex" data-testid="button-login">
-                  Login
-                </Button>
-              </a>
+            <Link href="/login" className="hidden sm:inline-flex">
+              <Button variant="outline" size="sm" data-testid="button-login">
+                Login
+              </Button>
             </Link>
 
             <Button
@@ -232,19 +228,20 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t" data-testid="mobile-menu">
             <div className="space-y-1">
-              <Link href="/">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-home">
-                  Home
-                </a>
+              <Link href="/" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-home">
+                Home
               </Link>
 
               <div className="space-y-1">
                 <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">About GREENENGINE</div>
                 {aboutLinks.map((link) => (
-                  <Link key={link.href} href={link.href}>
-                    <a className="block px-5 py-2 text-sm rounded-md hover-elevate" data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}>
-                      {link.title}
-                    </a>
+                  <Link 
+                    key={link.href} 
+                    href={link.href}
+                    className="block px-5 py-2 text-sm rounded-md hover-elevate" 
+                    data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
+                  >
+                    {link.title}
                   </Link>
                 ))}
               </div>
@@ -252,48 +249,39 @@ export default function Header() {
               <div className="space-y-1">
                 <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">Intercultural Passport</div>
                 {passportLinks.map((link) => (
-                  <Link key={link.href} href={link.href}>
-                    <a className="block px-5 py-2 text-sm rounded-md hover-elevate" data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}>
-                      {link.title}
-                    </a>
+                  <Link 
+                    key={link.href} 
+                    href={link.href}
+                    className="block px-5 py-2 text-sm rounded-md hover-elevate" 
+                    data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
+                  >
+                    {link.title}
                   </Link>
                 ))}
               </div>
 
-              <Link href="/stories">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-stories">
-                  Stories
-                </a>
+              <Link href="/stories" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-stories">
+                Stories
               </Link>
 
-              <Link href="/events">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">
-                  Events
-                </a>
+              <Link href="/events" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">
+                Events
               </Link>
 
-              <Link href="/action-plans">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
-                  Action
-                </a>
+              <Link href="/action-plans" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
+                Action
               </Link>
 
-              <Link href="/infographics">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-infographics">
-                  Infographics
-                </a>
+              <Link href="/infographics" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-infographics">
+                Infographics
               </Link>
 
-              <Link href="/partners">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-partners">
-                  Partners
-                </a>
+              <Link href="/partners" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-partners">
+                Partners
               </Link>
 
-              <Link href="/login">
-                <a className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-login">
-                  Admin Login
-                </a>
+              <Link href="/login" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-login">
+                Admin Login
               </Link>
             </div>
           </div>
