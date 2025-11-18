@@ -4,9 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { BookOpen, Users, Target, Calendar, BarChart3, ArrowRight } from "lucide-react";
 import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
 import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
-import heroImage2 from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
-import heroImage3 from "@assets/stock_images/international_cooper_13d95da6.jpg";
-import heroImage4 from "@assets/stock_images/university_campus_ed_0fe64faa.jpg";
+import heroImage2 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
+import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
+import heroImage4 from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
 import discoverImage1 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
@@ -100,7 +100,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Carousel */}
-      <HeroCarousel slides={heroSlides} autoplayDelay={6000} />
+      <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
 
       <section className="relative py-20 md:py-24 overflow-hidden">
         {/* Background Pattern */}
