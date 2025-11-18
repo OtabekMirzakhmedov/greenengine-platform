@@ -66,8 +66,7 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
           </h2>
           <Link href="/news">
             <Button 
-              variant="default" 
-              className="bg-rose-500 hover:bg-rose-600 text-white"
+              variant="default"
               data-testid="button-all-news"
             >
               All news
@@ -111,7 +110,7 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
                         <Link href={`/news/${item.slug}`}>
                           <Button
                             variant="outline"
-                            className="w-full bg-rose-50 text-rose-600 border-rose-200 hover:bg-rose-100 hover:text-rose-700 hover:border-rose-300"
+                            className="w-full"
                             data-testid={`button-read-more-${item.slug}`}
                           >
                             Read more
@@ -131,7 +130,7 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
               variant="default"
               size="icon"
               onClick={scrollPrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-12 w-12 rounded-full bg-rose-500 hover:bg-rose-600 text-white shadow-lg"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-12 w-12 rounded-full shadow-lg"
               aria-label="Previous news"
               data-testid="button-news-prev"
             >
@@ -144,7 +143,7 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
               variant="default"
               size="icon"
               onClick={scrollNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-12 w-12 rounded-full bg-rose-500 hover:bg-rose-600 text-white shadow-lg"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-12 w-12 rounded-full shadow-lg"
               aria-label="Next news"
               data-testid="button-news-next"
             >

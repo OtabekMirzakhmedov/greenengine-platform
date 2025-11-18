@@ -8,6 +8,7 @@ import { generateToken, requireAuth, type AuthRequest } from "./middleware/auth"
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { insertNewsSchema, updateNewsSchema } from "@shared/schema";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -400,7 +401,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/news", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const newsItem = await storage.createNews(req.body);
+      const validation = insertNewsSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          message: "Invalid input", 
+          errors: validation.error.errors 
+        });
+      }
+      const newsItem = await storage.createNews(validation.data);
       res.status(201).json(newsItem);
     } catch (error) {
       console.error("Create news error:", error);
@@ -410,7 +418,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/news/:id", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const newsItem = await storage.updateNews(req.params.id, req.body);
+      const validation = updateNewsSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({ 
+          message: "Invalid input", 
+          errors: validation.error.errors 
+        });
+      }
+      
+      const newsItem = await storage.updateNews(req.params.id, validation.data);
       res.json(newsItem);
     } catch (error) {
       console.error("Update news error:", error);

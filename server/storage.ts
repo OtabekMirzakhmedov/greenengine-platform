@@ -220,7 +220,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getNews(): Promise<News[]> {
-    return await db.select().from(news).orderBy(desc(news.publishedAt));
+    return await db.select().from(news).orderBy(desc(news.publishedAt), desc(news.order));
   }
 
   async createNews(newsItem: InsertNews): Promise<News> {

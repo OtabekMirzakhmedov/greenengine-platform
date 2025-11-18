@@ -121,6 +121,14 @@ export const insertInfographicSchema = createInsertSchema(infographics).omit({ i
 export const insertCommunityPlanSchema = createInsertSchema(communityPlans).omit({ id: true, updatedAt: true });
 export const insertPartnerSchema = createInsertSchema(partners).omit({ id: true });
 export const insertNewsSchema = createInsertSchema(news).omit({ id: true, updatedAt: true });
+export const updateNewsSchema = insertNewsSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update"
+    });
+  }
+});
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
