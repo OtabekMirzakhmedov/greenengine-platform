@@ -2,7 +2,11 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Users, Target, Calendar, BarChart3, ArrowRight } from "lucide-react";
-import heroImage from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
+import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
+import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
+import heroImage2 from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
+import heroImage3 from "@assets/stock_images/international_cooper_13d95da6.jpg";
+import heroImage4 from "@assets/stock_images/university_campus_ed_0fe64faa.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
 import discoverImage1 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
@@ -12,6 +16,49 @@ import discoverImage4 from "@assets/stock_images/environmental_sustai_bb342fce.j
 import discoverImage5 from "@assets/stock_images/environmental_sustai_4fd1c4ba.jpg";
 
 export default function Home() {
+  const heroSlides: HeroSlide[] = [
+    {
+      id: "1",
+      title: "Building Intercultural Competence for a Sustainable Future",
+      description: "Empowering higher education institutions across Central Asia, Georgia, and Europe through collaborative learning and sustainable development.",
+      image: heroImage1,
+      ctaText: "Learn More",
+      ctaLink: "/about",
+      secondaryCtaText: "Explore Stories",
+      secondaryCtaLink: "/stories",
+    },
+    {
+      id: "2",
+      title: "Youth Dialogues for Global Citizenship",
+      description: "Fostering intercultural understanding and digital storytelling through innovative educational partnerships and transformative learning experiences.",
+      image: heroImage2,
+      ctaText: "Intercultural Passport",
+      ctaLink: "/passport",
+      secondaryCtaText: "View Events",
+      secondaryCtaLink: "/events",
+    },
+    {
+      id: "3",
+      title: "International Cooperation for Education Excellence",
+      description: "Connecting universities across continents to promote sustainable development and collaborative innovation in higher education.",
+      image: heroImage3,
+      ctaText: "Our Partners",
+      ctaLink: "/partners",
+      secondaryCtaText: "Action Plans",
+      secondaryCtaLink: "/action",
+    },
+    {
+      id: "4",
+      title: "Transforming Higher Education Together",
+      description: "Co-funded by the Erasmus+ Programme, bringing together institutions to create lasting impact in intercultural education.",
+      image: heroImage4,
+      ctaText: "Discover More",
+      ctaLink: "/about",
+      secondaryCtaText: "View Infographics",
+      secondaryCtaLink: "/infographics",
+    },
+  ];
+
   const features = [
     {
       icon: BookOpen,
@@ -52,35 +99,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-        <img
-          src={heroImage}
-          alt="Green sustainable environment and nature"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
-            Building Intercultural Competence for a Sustainable Future
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Empowering higher education institutions across Central Asia, Georgia, and Europe through collaborative learning and sustainable development.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/about">
-              <Button size="lg" variant="default" className="min-w-[180px] transition-all hover:scale-105" data-testid="button-learn-more">
-                Learn More
-              </Button>
-            </Link>
-            <Link href="/stories">
-              <Button size="lg" variant="outline" className="min-w-[180px] bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all hover:scale-105" data-testid="button-explore-stories">
-                Explore Stories
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Hero Carousel */}
+      <HeroCarousel slides={heroSlides} autoplayDelay={6000} />
 
       <section className="relative py-20 md:py-24 overflow-hidden">
         {/* Background Pattern */}
