@@ -26,6 +26,12 @@ import Partners from "@/pages/Partners";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import InstitutionsAdmin from "@/pages/admin/InstitutionsAdmin";
+import PagesAdmin from "@/pages/admin/PagesAdmin";
+import EventsAdmin from "@/pages/admin/EventsAdmin";
+import ActionPlansAdmin from "@/pages/admin/ActionPlansAdmin";
+import InfographicsAdmin from "@/pages/admin/InfographicsAdmin";
+import CommunityPlansAdmin from "@/pages/admin/CommunityPlansAdmin";
+import PartnersAdmin from "@/pages/admin/PartnersAdmin";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -183,6 +189,54 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <InstitutionsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/pages">
+        {() => (
+          <ProtectedRoute>
+            <PagesAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/events">
+        {() => (
+          <ProtectedRoute>
+            <EventsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/action-plans">
+        {() => (
+          <ProtectedRoute>
+            <ActionPlansAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/infographics">
+        {() => (
+          <ProtectedRoute>
+            <InfographicsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/community-plans">
+        {() => (
+          <ProtectedRoute>
+            <CommunityPlansAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/partners">
+        {() => (
+          <ProtectedRoute>
+            <PartnersAdmin />
           </ProtectedRoute>
         )}
       </Route>
