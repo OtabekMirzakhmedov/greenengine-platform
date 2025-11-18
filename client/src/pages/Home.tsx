@@ -108,18 +108,21 @@ export default function Home() {
             {features.map((feature, index) => (
               <Link key={feature.href} href={feature.href}>
                 <div 
-                  className="group relative h-[420px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+                  className="group relative h-[420px] overflow-visible cursor-pointer transition-all duration-500 hover-elevate active-elevate-2"
                   data-testid={`card-feature-${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
                 >
-                  {/* Background Image */}
-                  <img
-                    src={feature.image}
-                    alt={feature.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90 transition-opacity duration-500 group-hover:from-primary/40 group-hover:via-primary/70 group-hover:to-primary/95"></div>
+                  {/* Inner container with rounded corners and overflow hidden */}
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                    {/* Background Image */}
+                    <img
+                      src={feature.image}
+                      alt={feature.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90 transition-opacity duration-500 group-hover:from-primary/40 group-hover:via-primary/70 group-hover:to-primary/95"></div>
+                  </div>
                   
                   {/* Content */}
                   <div className="absolute inset-0 p-8 flex flex-col justify-end">
