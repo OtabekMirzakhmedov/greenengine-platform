@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import logoImage from "@assets/22_1763377690616.jpg";
+import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -52,8 +53,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-3 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
+            <Link href="/" className="flex items-center gap-4 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
               <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
+              <div className="h-12 border-l border-border pl-4">
+                <img src={erasmusLogo} alt="Co-funded by Erasmus+" className="h-12 w-auto" />
+              </div>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
