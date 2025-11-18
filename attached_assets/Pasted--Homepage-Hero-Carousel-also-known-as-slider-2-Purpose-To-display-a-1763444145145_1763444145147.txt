@@ -1,0 +1,113 @@
+
+
+**Homepage Hero Carousel** (also known as *slider*).
+
+---
+
+## **2. Purpose**
+
+To display a rotating set of hero sections at the top of the webpage, each containing:
+
+* An image or background color
+* Text (title, subtitle)
+* Navigation arrows
+* Optional CTA button
+
+---
+
+## **3. Functional Requirements**
+
+### **3.1 Slides**
+
+* Carousel must support **3–6 slides**.
+* Each slide can contain:
+
+  * Background image OR background color
+  * Title (e.g., “Youth Dialogues”)
+  * Description (optional)
+  * CTA button (optional)
+  * Custom layout for image vs. text
+
+### **3.2 Navigation**
+
+* **Left and right arrows** for manual navigation
+* **Clickable pagination dots** at the bottom
+* **Autoplay** enabled:
+
+  * Slide change every **5–7 seconds**
+  * Autoplay must **pause on hover**
+
+### **3.3 Responsiveness**
+
+Carousel must adapt to:
+
+* Desktop (≥ 1024px)
+* Tablet (768–1023px)
+* Mobile (≤ 767px)
+
+On mobile:
+
+* Text must scale down
+* Arrows should be smaller
+* Background images centered/cropped for visibility
+
+---
+
+## **4. Technical Requirements**
+
+### **4.1 Frontend Technology Options**
+
+Choose one of the following:
+
+#### Option A: **JavaScript + CSS + HTML** (vanilla)
+
+* Lightweight
+* No library dependency
+
+#### Option B: **Swiper.js** (recommended)
+
+* Smooth animation
+* Mobile gestures
+* Easy pagination and arrows
+
+#### Option C: **Bootstrap Carousel**
+
+* If the existing site uses Bootstrap
+
+---
+
+## **5. Animation Requirements**
+
+* Smooth slide transition (300–500 ms)
+* Fade or slide animation
+* No excessive motion for accessibility
+* Should follow WCAG guidelines (pause, stop, hide)
+
+---
+
+## **6. Accessibility Requirements**
+
+* Keyboard navigation:
+
+  * Left/right arrow keys move slides
+* Arrows must have ARIA labels:
+
+  * `aria-label="Next slide"`
+  * `aria-label="Previous slide"`
+* Screen reader support:
+
+  * Titles read as headings
+* Autoplay must be stoppable through a pause button
+
+---
+
+## **7. Content Management**
+
+Slides should be:
+
+* Editable through a CMS or config file
+* Support uploading images
+* Support changing background color
+* Support editing text + links
+
+
