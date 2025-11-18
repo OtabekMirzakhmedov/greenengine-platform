@@ -1,5 +1,5 @@
 import { 
-  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages,
+  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -8,9 +8,10 @@ import {
   type CommunityPlan, type InsertCommunityPlan,
   type Partner, type InsertPartner,
   type Page, type InsertPage,
+  type News, type InsertNews,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -54,6 +55,11 @@ export interface IStorage {
   createPartner(partner: InsertPartner): Promise<Partner>;
   updatePartner(id: string, partner: Partial<InsertPartner>): Promise<Partner>;
   deletePartner(id: string): Promise<void>;
+
+  getNews(): Promise<News[]>;
+  createNews(newsItem: InsertNews): Promise<News>;
+  updateNews(id: string, newsItem: Partial<InsertNews>): Promise<News>;
+  deleteNews(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -211,6 +217,24 @@ export class DatabaseStorage implements IStorage {
 
   async deletePartner(id: string): Promise<void> {
     await db.delete(partners).where(eq(partners.id, id));
+  }
+
+  async getNews(): Promise<News[]> {
+    return await db.select().from(news).orderBy(desc(news.publishedAt));
+  }
+
+  async createNews(newsItem: InsertNews): Promise<News> {
+    const [created] = await db.insert(news).values(newsItem).returning();
+    return created;
+  }
+
+  async updateNews(id: string, newsItem: Partial<InsertNews>): Promise<News> {
+    const [updated] = await db.update(news).set(newsItem).where(eq(news.id, id)).returning();
+    return updated;
+  }
+
+  async deleteNews(id: string): Promise<void> {
+    await db.delete(news).where(eq(news.id, id));
   }
 }
 

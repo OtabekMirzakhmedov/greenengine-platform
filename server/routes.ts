@@ -388,6 +388,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/news", async (req, res) => {
+    try {
+      const news = await storage.getNews();
+      res.json(news);
+    } catch (error) {
+      console.error("Get news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/news", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const newsItem = await storage.createNews(req.body);
+      res.status(201).json(newsItem);
+    } catch (error) {
+      console.error("Create news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/news/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const newsItem = await storage.updateNews(req.params.id, req.body);
+      res.json(newsItem);
+    } catch (error) {
+      console.error("Update news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/news/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteNews(req.params.id);
+      res.json({ message: "News deleted successfully" });
+    } catch (error) {
+      console.error("Delete news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.post("/api/upload", requireAuth, upload.single("file"), async (req, res) => {
     try {
       if (!req.file) {
