@@ -122,8 +122,24 @@ The platform includes a comprehensive Content Management System (CMS) for admini
 - `/api/action-plans` - Action plan resources
 - `/api/infographics` - Infographic resources
 - `/api/community-plans` - Community development plans
-- `/api/partners` - Partner organization data
+- `/api/partners` - Partner organization data (GET all, GET by ID, POST, PUT, DELETE)
 - `/api/pages` - Dynamic page content management
+- `/api/news` - News and updates management (GET all, POST, PUT, DELETE)
+
+### Public Pages
+
+**Partners Page:**
+- Displays all 11 partner institutions grouped by country
+- Comprehensive partner cards with: name, PIC code, description, address, phone, email, website
+- Interactive contact links (phone, email) and website buttons
+- Uses stock images as placeholder logos
+- Countries represented: Uzbekistan (4), Georgia (4), Turkey (1), Greece (1), Italy (1)
+
+**News Carousel (Home Page):**
+- Hero carousel displaying latest news and updates
+- Auto-play functionality with manual navigation
+- Each news item shows: title, excerpt, published date, featured image
+- Seamless integration with home page hero section
 
 ### Database Architecture
 
@@ -169,9 +185,17 @@ The platform includes a comprehensive Content Management System (CMS) for admini
 - Optional image URLs for visual previews
 
 **Partners Table:**
-- Name, country, description
-- Logo URL, website, contact email
-- Ordering support
+- Core fields: name, country, description
+- Contact information: email, phone, address
+- PIC identification code
+- Logo URL, website URL
+- Ordering support with integer order field
+
+**News Table:**
+- Core fields: title, excerpt, content
+- Media: featuredImageUrl
+- Published date tracking
+- Created and updated timestamps
 
 **Data Types:**
 - Text fields for content
