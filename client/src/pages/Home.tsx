@@ -236,7 +236,7 @@ export default function Home() {
       </section>
 
       {newsData && newsData.length > 0 && (
-        <NewsCarousel news={newsData.filter(item => item.published).slice(0, 6)} />
+        <NewsCarousel news={newsData.slice(0, 6)} />
       )}
     </div>
   );
