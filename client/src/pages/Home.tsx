@@ -1,8 +1,10 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Users, Target, Calendar, FileText, BarChart3 } from "lucide-react";
-import heroImage from "@assets/generated_images/Hero_image_diverse_students_020c3915.png";
+import { BookOpen, Users, Target, Calendar, BarChart3 } from "lucide-react";
+import heroImage from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
+import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
+import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
 
 export default function Home() {
   const features = [
@@ -36,12 +38,6 @@ export default function Home() {
       description: "Visual insights and data-driven analysis of project outcomes and impact across partner institutions.",
       href: "/infographics",
     },
-    {
-      icon: FileText,
-      title: "Community Plans",
-      description: "Comprehensive development plans supporting local communities through educational innovation and partnerships.",
-      href: "/community-plans",
-    },
   ];
 
   return (
@@ -49,10 +45,10 @@ export default function Home() {
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <img
           src={heroImage}
-          alt="Diverse international students collaborating"
+          alt="Green sustainable environment and nature"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
@@ -109,31 +105,51 @@ export default function Home() {
 
       <section className="py-16 md:py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">About the Project</h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              GREENENGINE is an international educational initiative co-funded by the European Union's Erasmus+ Programme, bringing together universities and institutions from Central Asia, Georgia, and Europe to foster intercultural competence, sustainable development, and collaborative innovation in higher education.
-            </p>
-            <Link href="/about">
-              <Button variant="outline" size="lg" data-testid="button-read-more-about">
-                Read More About GREENENGINE
-              </Button>
-            </Link>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">About the Project</h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                GREENENGINE is an international educational initiative co-funded by the European Union's Erasmus+ Programme, bringing together universities and institutions from Central Asia, Georgia, and Europe to foster intercultural competence, sustainable development, and collaborative innovation in higher education.
+              </p>
+              <Link href="/about">
+                <Button variant="outline" size="lg" data-testid="button-read-more-about">
+                  Read More About GREENENGINE
+                </Button>
+              </Link>
+            </div>
+            <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg">
+              <img
+                src={sustainabilityImage}
+                alt="Sustainable green energy and environmental innovation"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-16 md:py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Partner Institutions</h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Collaborating with leading universities and institutions across three continents to advance intercultural education.
-          </p>
-          <Link href="/partners">
-            <Button variant="default" size="lg" data-testid="button-view-partners">
-              View All Partners
-            </Button>
-          </Link>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg order-2 md:order-1">
+              <img
+                src={collaborationImage}
+                alt="Diverse students collaborating on sustainable development"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Partner Institutions</h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Collaborating with leading universities and institutions across three continents to advance intercultural education and sustainable development through innovative partnerships and shared learning experiences.
+              </p>
+              <Link href="/partners">
+                <Button variant="default" size="lg" data-testid="button-view-partners">
+                  View All Partners
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

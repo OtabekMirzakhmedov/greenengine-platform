@@ -1,5 +1,7 @@
 import PageHero from "@/components/layout/PageHero";
 import { Card, CardContent } from "@/components/ui/card";
+import educationImage from "@assets/stock_images/diverse_students_col_38e99c13.jpg";
+import partnershipImage from "@assets/stock_images/international_cooper_561d4ff8.jpg";
 
 export default function About() {
   return (
@@ -13,6 +15,13 @@ export default function About() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             <section className="mb-12">
+              <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg mb-8">
+                <img
+                  src={educationImage}
+                  alt="Diverse students collaborating on educational projects"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h2 className="text-3xl font-semibold mb-6 text-foreground">Project Mission</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 GREENENGINE is an ambitious international educational project designed to strengthen intercultural competence and promote sustainable development practices across higher education institutions in Central Asia, Georgia, and Europe.
@@ -114,6 +123,13 @@ export default function About() {
             </section>
 
             <section>
+              <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg mb-8">
+                <img
+                  src={partnershipImage}
+                  alt="International cooperation and global partnerships"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h2 className="text-3xl font-semibold mb-6 text-foreground">EU Erasmus+ Programme</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                 GREENENGINE is proudly co-funded by the European Union's Erasmus+ Programme, which supports education, training, youth, and sport initiatives across Europe and beyond.
