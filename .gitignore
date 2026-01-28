@@ -8,3 +8,22 @@ vite.config.ts.*
 .idea/
 .local/
 .env
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+data/
+
+# Uploads
+uploads/
+
+# Logs
+logs/
+*.log
+
+# Backups
+backups/
+
+# PM2
+.pm2/

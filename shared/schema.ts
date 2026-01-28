@@ -1,29 +1,29 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   role: text("role").notNull().default("admin"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const pages = pgTable("pages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const pages = sqliteTable("pages", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   category: text("category").notNull(),
   content: text("content"),
   published: integer("published").notNull().default(1),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const institutions = pgTable("institutions", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const institutions = sqliteTable("institutions", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   country: text("country").notNull(),
@@ -32,43 +32,43 @@ export const institutions = pgTable("institutions", {
   achievements: text("achievements"),
   logoUrl: text("logo_url"),
   heroImageUrl: text("hero_image_url"),
-  gallery: jsonb("gallery").$type<string[]>().default([]),
+  gallery: text("gallery", { mode: 'json' }).$type<string[]>().default(sql`'[]'`),
   videoUrl: text("video_url"),
-  attachments: jsonb("attachments").$type<Array<{ name: string; url: string; size: string }>>().default([]),
+  attachments: text("attachments", { mode: 'json' }).$type<Array<{ name: string; url: string; size: string }>>().default(sql`'[]'`),
   order: integer("order").notNull().default(0),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const events = pgTable("events", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const events = sqliteTable("events", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
-  date: timestamp("date").notNull(),
+  date: integer("date", { mode: 'timestamp' }).notNull(),
   location: text("location"),
   venue: text("venue"),
   overview: text("overview"),
   agenda: text("agenda"),
   agendaPdfUrl: text("agenda_pdf_url"),
   photoCount: integer("photo_count").default(0),
-  gallery: jsonb("gallery").$type<string[]>().default([]),
-  documents: jsonb("documents").$type<Array<{ name: string; url: string; size: string }>>().default([]),
+  gallery: text("gallery", { mode: 'json' }).$type<string[]>().default(sql`'[]'`),
+  documents: text("documents", { mode: 'json' }).$type<Array<{ name: string; url: string; size: string }>>().default(sql`'[]'`),
   attendeeCount: integer("attendee_count"),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const actionPlans = pgTable("action_plans", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const actionPlans = sqliteTable("action_plans", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
   fileUrl: text("file_url"),
   fileSize: text("file_size"),
   order: integer("order").notNull().default(0),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const infographics = pgTable("infographics", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const infographics = sqliteTable("infographics", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
@@ -76,22 +76,22 @@ export const infographics = pgTable("infographics", {
   pdfUrl: text("pdf_url"),
   pdfSize: text("pdf_size"),
   order: integer("order").notNull().default(0),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const communityPlans = pgTable("community_plans", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const communityPlans = sqliteTable("community_plans", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
   fileUrl: text("file_url"),
   fileSize: text("file_size"),
   order: integer("order").notNull().default(0),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
-export const partners = pgTable("partners", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const partners = sqliteTable("partners", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull(),
   country: text("country"),
   description: text("description"),
@@ -104,16 +104,16 @@ export const partners = pgTable("partners", {
   order: integer("order").notNull().default(0),
 });
 
-export const news = pgTable("news", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const news = sqliteTable("news", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   excerpt: text("excerpt"),
   content: text("content"),
   imageUrl: text("image_url"),
-  publishedAt: timestamp("published_at").notNull(),
+  publishedAt: integer("published_at", { mode: 'timestamp' }).notNull(),
   order: integer("order").notNull().default(0),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });

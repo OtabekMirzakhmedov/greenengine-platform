@@ -3,28 +3,29 @@ import { users, partners, news } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 
-async function seed() {
+function seed() {
   console.log("Seeding database...");
 
   const adminEmail = "admin@greenengine.org";
   const adminPassword = "admin123";
 
-  const existingUser = await db
+  const existingUser = db
     .select()
     .from(users)
     .where(eq(users.email, adminEmail))
-    .limit(1);
+    .limit(1)
+    .all();
 
   if (existingUser.length > 0) {
     console.log("Admin user already exists");
   } else {
-    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+    const hashedPassword = bcrypt.hashSync(adminPassword, 10);
 
-    await db.insert(users).values({
+    db.insert(users).values({
       email: adminEmail,
       password: hashedPassword,
       role: "admin",
-    });
+    }).run();
 
     console.log("Admin user created successfully");
     console.log("Email:", adminEmail);
@@ -34,7 +35,7 @@ async function seed() {
 
   // Seed partners
   console.log("\nSeeding partners...");
-  
+
   const partnersData = [
     {
       name: "Tashkent Kimyo International University",
@@ -160,14 +161,15 @@ async function seed() {
   ];
 
   for (const partner of partnersData) {
-    const existing = await db
+    const existing = db
       .select()
       .from(partners)
       .where(eq(partners.name, partner.name))
-      .limit(1);
+      .limit(1)
+      .all();
 
     if (existing.length === 0) {
-      await db.insert(partners).values(partner);
+      db.insert(partners).values(partner).run();
       console.log(`✓ Added partner: ${partner.name}`);
     } else {
       console.log(`- Partner already exists: ${partner.name}`);
@@ -176,7 +178,7 @@ async function seed() {
 
   // Seed news
   console.log("\nSeeding news articles...");
-  
+
   const newsData = [
     {
       title: "GREENENGINE Project Kickoff Conference in Tashkent",
@@ -271,14 +273,15 @@ async function seed() {
   ];
 
   for (const newsItem of newsData) {
-    const existing = await db
+    const existing = db
       .select()
       .from(news)
       .where(eq(news.slug, newsItem.slug))
-      .limit(1);
+      .limit(1)
+      .all();
 
     if (existing.length === 0) {
-      await db.insert(news).values(newsItem);
+      db.insert(news).values(newsItem).run();
       console.log(`✓ Added news: ${newsItem.title}`);
     } else {
       console.log(`- News already exists: ${newsItem.title}`);
@@ -290,7 +293,9 @@ async function seed() {
   process.exit(0);
 }
 
-seed().catch((error) => {
+try {
+  seed();
+} catch (error) {
   console.error("Seed failed:", error);
   process.exit(1);
-});
+}
