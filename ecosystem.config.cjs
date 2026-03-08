@@ -15,7 +15,9 @@ module.exports = {
     // Environment variables
     env: {
       NODE_ENV: 'production',
-      PORT: 5000
+      PORT: 5000,
+      DATABASE_URL: './data/production.db',
+      SESSION_SECRET: process.env.SESSION_SECRET || 'change-this-secret-in-production'
     },
 
     // Logging
