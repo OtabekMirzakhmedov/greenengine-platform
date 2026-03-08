@@ -6,46 +6,46 @@ export default function Goals() {
   const objectives = [
     {
       icon: Target,
-      title: "Enhance Intercultural Competence",
+      title: "Modernization of Engineering Curricula",
       description:
-        "Develop comprehensive programs and resources that equip students and educators with the skills to effectively navigate diverse cultural contexts and foster meaningful cross-cultural collaboration.",
+        "Develop and introduce new courses and modules related to green technologies, sustainable engineering, renewable energy, and environmental management in partner universities.",
       kpis: [
-        "500+ students completing Intercultural Passport program",
-        "95% participant satisfaction rate",
-        "Measurable improvement in intercultural competence assessments",
+        "New sustainability-focused modules in engineering programs",
+        "Integration of green technologies into existing courses",
+        "Updated curricula aligned with European best practices",
       ],
     },
     {
       icon: TrendingUp,
-      title: "Promote Sustainable Development",
+      title: "Capacity Building for Academic Staff",
       description:
-        "Integrate sustainability principles into educational practices and institutional operations, creating lasting environmental and social impact across partner institutions.",
+        "Strengthen the professional competencies of academic staff through international training, workshops, and knowledge exchange with European partner universities.",
       kpis: [
-        "Sustainability modules integrated into 20+ courses",
-        "Reduction in institutional environmental footprint",
-        "Community outreach programs in 11 partner locations",
+        "Faculty training programs on sustainable engineering",
+        "International workshops and knowledge exchange sessions",
+        "Enhanced teaching methodologies across partner institutions",
       ],
     },
     {
       icon: Users,
-      title: "Strengthen Institutional Partnerships",
+      title: "Strengthening University-Industry Cooperation",
       description:
-        "Build robust collaborative networks among universities in Central Asia, Georgia, and Europe, facilitating knowledge exchange, resource sharing, and joint initiatives.",
+        "Develop stronger partnerships between universities and industry stakeholders to ensure that engineering education meets the needs of the modern labor market.",
       kpis: [
-        "11 active partner institutions across 3 regions",
-        "Quarterly collaborative workshops and meetings",
-        "Shared educational resources and best practices database",
+        "Industry partnerships established at each partner institution",
+        "Joint projects between academia and industry",
+        "Graduate employment alignment with market needs",
       ],
     },
     {
       icon: Award,
-      title: "Develop Quality Educational Resources",
+      title: "Promotion of Sustainable Innovation",
       description:
-        "Create innovative, accessible learning materials including digital courses, storytelling projects, and comprehensive documentation that serve as models for international education.",
+        "Encourage research and innovation activities focused on sustainable technological development and environmentally friendly engineering solutions.",
       kpis: [
-        "Complete IACD MOOC with 10+ modules",
-        "50+ digital storytelling projects documented",
-        "Open-access resource repository for wider community",
+        "Research projects on renewable energy and green tech",
+        "Student innovation competitions and initiatives",
+        "Collaborative research publications across partners",
       ],
     },
   ];
@@ -62,7 +62,7 @@ export default function Goals() {
           <div className="mb-12 max-w-3xl">
             <h2 className="text-3xl font-semibold mb-4 text-foreground">Project Vision</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              GREENENGINE strives to create a transformative educational ecosystem that empowers students and institutions to become leaders in intercultural understanding and sustainable development. Our objectives are designed to deliver measurable, lasting impact across all participating communities.
+              The main goal of the GREENENGINE project is to modernize engineering education in partner countries by integrating sustainability, green technologies, and innovative teaching approaches into academic programs. Our objectives are designed to prepare future engineers who can address global environmental challenges and contribute to sustainable technological development.
             </p>
           </div>
 
@@ -95,19 +95,23 @@ export default function Goals() {
           </div>
 
           <div className="mt-16 bg-muted/30 rounded-lg p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground text-center">Impact Framework</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground text-center">Project Consortium</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="text-center">
                 <div className="text-4xl font-bold text-primary mb-2">11</div>
-                <div className="text-sm font-medium text-muted-foreground">Partner Institutions</div>
+                <div className="text-sm font-medium text-muted-foreground">Partner Organizations</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">3</div>
-                <div className="text-sm font-medium text-muted-foreground">Geographic Regions</div>
+                <div className="text-4xl font-bold text-primary mb-2">4</div>
+                <div className="text-sm font-medium text-muted-foreground">Countries</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm font-medium text-muted-foreground">Students Impacted</div>
+                <div className="text-4xl font-bold text-primary mb-2">2</div>
+                <div className="text-sm font-medium text-muted-foreground">Regions</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-primary mb-2">EU</div>
+                <div className="text-sm font-medium text-muted-foreground">Erasmus+ Funded</div>
               </div>
             </div>
           </div>

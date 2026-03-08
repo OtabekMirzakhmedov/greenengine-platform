@@ -8,7 +8,7 @@ export default function About() {
     <div className="flex flex-col min-h-screen">
       <PageHero
         title="About GREENENGINE"
-        description="International Educational Initiative for Sustainable Development"
+        description="Promoting Creative Engineering Education for a Sustainable Green World"
       />
 
       <div className="flex-1 py-12 md:py-16">
@@ -18,108 +18,111 @@ export default function About() {
               <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg mb-8">
                 <img
                   src={educationImage}
-                  alt="Diverse students collaborating on educational projects"
+                  alt="Engineering students collaborating on sustainable projects"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h2 className="text-3xl font-semibold mb-6 text-foreground">Project Mission</h2>
+              <h2 className="text-3xl font-semibold mb-6 text-foreground">About the Project</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                GREENENGINE is an ambitious international educational project designed to strengthen intercultural competence and promote sustainable development practices across higher education institutions in Central Asia, Georgia, and Europe.
+                GREENENGINE (Promoting Creative Engineering Education for a Sustainable Green World) is an international project funded by the Erasmus+ Capacity Building in Higher Education (CBHE) program of the European Commission. The project brings together universities, research institutions, and innovation organizations from Europe and Central Asia to modernize engineering education and promote sustainable development.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                The project focuses on integrating green technologies, environmental sustainability principles, and innovative teaching methodologies into engineering programs at partner universities. Through international collaboration, GREENENGINE aims to strengthen the capacity of higher education institutions to prepare future engineers who can address global environmental challenges and contribute to sustainable technological development.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Through collaborative partnerships, innovative teaching methodologies, and the development of comprehensive educational resources, GREENENGINE aims to create a lasting impact on students, educators, and communities by fostering global citizenship and environmental awareness.
+                The project consortium consists of 11 partner organizations from Uzbekistan, Italy, Turkey, and Georgia, combining European experience in sustainable engineering education with regional expertise in technological development and higher education reform.
               </p>
             </section>
 
             <section className="mb-12">
-              <h2 className="text-3xl font-semibold mb-6 text-foreground">Project Structure</h2>
+              <h2 className="text-3xl font-semibold mb-6 text-foreground">Project Focus Areas</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">Intercultural Passport</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">Modern Curricula</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      A comprehensive framework including the IACD MOOC and Digital Storytelling components that equip students with essential intercultural competencies.
+                      Development of modern curricula integrating green technologies, renewable energy, and environmental management into engineering programs.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">Community Development</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">Innovative Teaching</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      Strategic plans and initiatives designed to support local communities through educational innovation and sustainable practices.
+                      Creation of innovative teaching materials and methodologies that prepare engineers for the transition toward a green economy.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">Institutional Collaboration</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">University-Industry Links</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      Partnerships across 11 institutions spanning Central Asia, Georgia, and Europe, fostering knowledge exchange and best practices.
+                      Establishment of stronger links between universities, industry, and research organizations to meet modern labor market needs.
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-3 text-foreground">Action</h3>
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">Knowledge Exchange</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      Detailed implementation strategies ensuring sustainable impact and measurable outcomes across all project activities.
+                      Fostering interdisciplinary cooperation and knowledge exchange among partner institutions across Europe and Central Asia.
                     </p>
                   </CardContent>
                 </Card>
               </div>
             </section>
 
-            <section className="mb-12">
+            <section className="mb-12 not-prose">
               <h2 className="text-3xl font-semibold mb-6 text-foreground">Key Impact Areas</h2>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
+              <div className="space-y-6">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                    </div>
+                    <h4 className="font-semibold text-foreground text-lg m-0 p-0">Green Technologies Integration</h4>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Intercultural Competence Development</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Enhancing students' ability to navigate diverse cultural contexts and collaborate effectively across borders.
-                    </p>
+                  <p className="text-muted-foreground leading-relaxed ml-9">
+                    Embedding sustainable technologies and environmental principles into engineering education across partner institutions.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                    </div>
+                    <h4 className="font-semibold text-foreground text-lg m-0 p-0">Capacity Building</h4>
                   </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
+                  <p className="text-muted-foreground leading-relaxed ml-9">
+                    Strengthening professional competencies of academic staff through international training and knowledge exchange with European partners.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                    </div>
+                    <h4 className="font-semibold text-foreground text-lg m-0 p-0">Sustainable Innovation</h4>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Sustainable Development Education</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Integrating sustainability principles into curriculum and institutional practices across partner organizations.
-                    </p>
+                  <p className="text-muted-foreground leading-relaxed ml-9">
+                    Encouraging research and innovation activities focused on sustainable technological development and environmentally friendly engineering solutions.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                    </div>
+                    <h4 className="font-semibold text-foreground text-lg m-0 p-0">Future-Ready Engineers</h4>
                   </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Digital Innovation</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Leveraging digital storytelling and online learning platforms to create accessible, engaging educational experiences.
-                    </p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Institutional Capacity Building</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Strengthening organizational capabilities through knowledge transfer, training programs, and resource development.
-                    </p>
-                  </div>
-                </li>
-              </ul>
+                  <p className="text-muted-foreground leading-relaxed ml-9">
+                    Building a new generation of engineers equipped with skills required for the transition toward a green and sustainable economy.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section>
@@ -132,10 +135,10 @@ export default function About() {
               </div>
               <h2 className="text-3xl font-semibold mb-6 text-foreground">EU Erasmus+ Programme</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                GREENENGINE is proudly co-funded by the European Union's Erasmus+ Programme, which supports education, training, youth, and sport initiatives across Europe and beyond.
+                GREENENGINE is funded by the Erasmus+ Capacity Building in Higher Education (CBHE) program of the European Commission, which supports modernization and reform of higher education institutions in partner countries.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                This funding enables us to create meaningful partnerships, develop innovative educational resources, and contribute to the global advancement of intercultural understanding and sustainable development in higher education.
+                This funding enables us to create meaningful partnerships between European and Central Asian institutions, develop innovative educational resources, and contribute to the advancement of sustainable engineering education that addresses global environmental challenges.
               </p>
             </section>
           </div>

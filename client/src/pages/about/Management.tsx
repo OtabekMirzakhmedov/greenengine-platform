@@ -6,50 +6,50 @@ export default function Management() {
   const governance = [
     {
       icon: Users,
-      title: "Project Coordination Team",
+      title: "Project Coordination",
       description:
-        "Led by the coordinating institution with representatives from all 11 partner universities, ensuring effective communication and decision-making across the consortium.",
+        "The project is coordinated by Tashkent Kimyo International University, which is responsible for overall project administration, coordination among partners, financial management, and reporting to the European Commission.",
       responsibilities: [
-        "Overall project management and strategic direction",
+        "Overall project administration and management",
         "Coordination of activities across partner institutions",
-        "Budget management and financial reporting",
-        "Communication with European Commission",
+        "Financial management and budget oversight",
+        "Reporting to the European Commission",
       ],
     },
     {
       icon: Target,
-      title: "Work Package Leaders",
+      title: "Steering Committee",
       description:
-        "Dedicated teams responsible for specific project components, ensuring specialized expertise and focused implementation.",
+        "A steering committee composed of representatives from all partner institutions oversees the strategic direction of the project and ensures that activities are implemented according to the project plan.",
       responsibilities: [
-        "Management of specific work package activities",
-        "Deliverable preparation and quality control",
-        "Coordination with partner institutions on work package tasks",
-        "Regular progress reporting to coordination team",
+        "Strategic oversight of project direction",
+        "Ensuring activities align with project objectives",
+        "Decision-making on key project matters",
+        "Coordination between partner institutions",
       ],
     },
     {
       icon: FileCheck,
-      title: "Quality Assurance Committee",
+      title: "Quality Assurance",
       description:
-        "Independent body ensuring project quality, adherence to standards, and continuous improvement throughout implementation.",
+        "Quality control measures are implemented throughout the project lifecycle to ensure that all activities meet the expected academic and organizational standards.",
       responsibilities: [
-        "Development and monitoring of quality indicators",
-        "Regular review of project deliverables",
-        "Identification of improvement opportunities",
-        "Validation of project outcomes and impact",
+        "Regular progress monitoring and evaluation",
+        "Internal evaluations and feedback collection",
+        "Review of project deliverables by experts",
+        "Assessment of deliverable quality standards",
       ],
     },
     {
       icon: Shield,
-      title: "Advisory Board",
+      title: "External Review",
       description:
-        "External experts providing strategic guidance, expertise, and ensuring project relevance to broader educational contexts.",
+        "Independent experts and partner institutions periodically review project deliverables to assess their quality and ensure alignment with project objectives.",
       responsibilities: [
-        "Strategic advice on project direction and priorities",
-        "External quality review and validation",
-        "Support for dissemination and sustainability",
-        "Connection to broader educational networks",
+        "Independent quality assessment",
+        "Peer review of deliverables",
+        "Recommendations for improvement",
+        "Validation of project outcomes",
       ],
     },
   ];
@@ -91,9 +91,9 @@ export default function Management() {
       <div className="flex-1 py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mb-12 max-w-3xl">
-            <h2 className="text-3xl font-semibold mb-4 text-foreground">Governance Structure</h2>
+            <h2 className="text-3xl font-semibold mb-4 text-foreground">Project Management Structure</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              GREENENGINE employs a robust governance framework ensuring effective coordination, transparent decision-making, and accountability across all partner institutions. Our multi-level structure balances centralized coordination with distributed responsibility.
+              Effective project management and quality assurance are essential for the successful implementation of the GREENENGINE project. The project employs a robust governance framework ensuring effective coordination, transparent decision-making, and accountability across all partner institutions.
             </p>
           </div>
 
@@ -126,9 +126,9 @@ export default function Management() {
           </div>
 
           <div className="mb-12">
-            <h2 className="text-3xl font-semibold mb-6 text-foreground">Quality Assurance Framework</h2>
+            <h2 className="text-3xl font-semibold mb-6 text-foreground">Quality Assurance Mechanisms</h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-3xl">
-              Quality is embedded in every aspect of GREENENGINE through systematic processes, clear standards, and continuous evaluation. Our framework ensures excellence in all project deliverables and activities.
+              Quality control measures are implemented throughout the project lifecycle to ensure that all activities meet the expected academic and organizational standards. This includes regular progress monitoring, internal evaluations, and feedback from project partners.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -155,7 +155,7 @@ export default function Management() {
                     <div className="h-2 w-2 rounded-full bg-primary" />
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Institutional Integration:</strong> Embedding Intercultural Passport and sustainability principles into regular curricula
+                    <strong className="text-foreground">Curricula Integration:</strong> Embedding green technologies and sustainability principles into regular engineering curricula
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -163,7 +163,7 @@ export default function Management() {
                     <div className="h-2 w-2 rounded-full bg-primary" />
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Capacity Building:</strong> Training institutional staff to independently deliver and expand project outcomes
+                    <strong className="text-foreground">Laboratory Infrastructure:</strong> Maintaining green engineering laboratories for continued teaching and research
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -171,7 +171,7 @@ export default function Management() {
                     <div className="h-2 w-2 rounded-full bg-primary" />
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Open Resources:</strong> Maintaining public access to all educational materials and documentation
+                    <strong className="text-foreground">Industry Partnerships:</strong> Sustaining university-industry links for graduate employment and collaborative research
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -179,7 +179,7 @@ export default function Management() {
                     <div className="h-2 w-2 rounded-full bg-primary" />
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Network Continuation:</strong> Sustaining partnerships and collaborative mechanisms beyond project completion
+                    <strong className="text-foreground">Network Continuation:</strong> Maintaining academic partnerships and knowledge exchange beyond project completion
                   </span>
                 </li>
               </ul>
