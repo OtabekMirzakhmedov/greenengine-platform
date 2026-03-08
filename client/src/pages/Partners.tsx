@@ -98,16 +98,33 @@ export default function Partners() {
                           
                           <CardHeader>
                             <CardTitle className="text-xl leading-tight">{partner.name}</CardTitle>
-                            {partner.pic && (
-                              <p className="text-sm text-muted-foreground">PIC: {partner.pic}</p>
-                            )}
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {partner.established && (
+                                <Badge variant="outline">Est. {partner.established}</Badge>
+                              )}
+                              {partner.pic && (
+                                <Badge variant="secondary">PIC: {partner.pic}</Badge>
+                              )}
+                            </div>
                           </CardHeader>
-                          
+
                           <CardContent className="space-y-4">
                             {partner.description && (
-                              <p className="text-sm text-muted-foreground leading-relaxed">
-                                {partner.description}
-                              </p>
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">Brief Information</h4>
+                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                  {partner.description}
+                                </p>
+                              </div>
+                            )}
+
+                            {partner.roleInProject && (
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">Role in GreenEngine</h4>
+                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                  {partner.roleInProject}
+                                </p>
+                              </div>
                             )}
 
                             <Separator />
