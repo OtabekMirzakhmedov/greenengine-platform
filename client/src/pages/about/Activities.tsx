@@ -68,13 +68,21 @@ export default function Activities() {
     },
   ];
 
-  const expectedOutcomes = [
-    "Modernized engineering curricula integrating sustainability principles",
-    "Improved teaching capacity and faculty competencies",
-    "Enhanced research collaboration across partner institutions",
-    "Stronger links between universities and industry",
-    "Skilled workforce supporting sustainable technological development",
-    "Modern green engineering laboratories at partner universities",
+  const keyActivities = [
+    "Analysis of current curricula and EU best practices",
+    "Development of Creative Green Engineering courses",
+    "Faculty training on innovative methodologies",
+    "Course implementation and evaluation",
+    "Student Winter Camps promoting teamwork and eco-innovation",
+  ];
+
+  const expectedResults = [
+    "Development of new sustainability focused courses – 14",
+    "Establishment of VR labs in UZ and GE universities – 6",
+    "Integration of courses into existing engineering curricula (launch of new courses by Sep 2026)",
+    "Building teacher capacity – 30 teachers at UOI, and 100 locally (multiplication trainings)",
+    "Total number of students engaged in modernized programs by the end of the project – 500",
+    "Strengthen international cooperation – bilateral/multilateral cooperation agreements between partners",
   ];
 
   return (
@@ -150,18 +158,29 @@ export default function Activities() {
             </div>
           </div>
 
-          <div className="bg-muted/30 rounded-lg p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground">Expected Outcomes</h2>
-            <p className="text-muted-foreground mb-6 max-w-3xl">
-              The project will lead to modernized engineering curricula, improved teaching capacity, enhanced research collaboration, and stronger links between universities and industry. It will also contribute to the development of a skilled workforce capable of supporting sustainable technological development in the region.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {expectedOutcomes.map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 bg-background rounded-md">
-                  <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">{outcome}</span>
-                </div>
-              ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-muted/30 rounded-lg p-8">
+              <h2 className="text-2xl font-semibold mb-6 text-foreground">Key Activities</h2>
+              <ul className="space-y-3">
+                {keyActivities.map((activity, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0 mt-2" />
+                    <span className="text-muted-foreground">{activity}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-muted/30 rounded-lg p-8">
+              <h2 className="text-2xl font-semibold mb-6 text-foreground">Expected Results</h2>
+              <ul className="space-y-3">
+                {expectedResults.map((result, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-muted-foreground">{result}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

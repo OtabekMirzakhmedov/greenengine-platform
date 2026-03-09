@@ -120,13 +120,13 @@ export default function Home() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              Explore Our Initiatives
+              ERASMUS-EDU-2023-CBHE-STRAND-2 / Project Number: 101236240
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Discover GREENENGINE
+              Fostering Creative Engineering for a Sustainable Green World
             </h2>
             <p className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-              Explore our comprehensive resources, partner stories, and collaborative initiatives promoting intercultural education and sustainable development across three continents.
+              GreenEngine aims to develop a new generation of engineers through modernization of engineering education by integrating sustainability principles, green practices and soft skills, while fostering creativity, innovation and social responsibility among students.
             </p>
           </div>
 

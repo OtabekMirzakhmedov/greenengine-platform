@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import logoImage from "@assets/22_1763377690616.jpg";
+import logoImage from "@assets/green-logo.png";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 export default function Footer() {
@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="space-y-6">
             <div>
               <Link href="/" data-testid="link-footer-home">
-                <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
+                <img src={logoImage} alt="GREENENGINE Logo" className="h-32 w-auto" />
               </Link>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -154,12 +154,12 @@ export default function Footer() {
                 <Mail className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Email</p>
-                  <a 
-                    href="mailto:info@greenengine.org" 
+                  <a
+                    href="mailto:info@greenengine.uz"
                     className="text-sm text-foreground hover:text-primary transition-colors"
                     data-testid="link-footer-email"
                   >
-                    info@greenengine.org
+                    info@greenengine.uz
                   </a>
                 </div>
               </div>
@@ -168,11 +168,11 @@ export default function Footer() {
                 <Phone className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Phone</p>
-                  <a 
-                    href="tel:+000000000000" 
+                  <a
+                    href="tel:+998781294040"
                     className="text-sm text-foreground hover:text-primary transition-colors"
                   >
-                    +000 000 000 000
+                    +99878 129 4040
                   </a>
                 </div>
               </div>
