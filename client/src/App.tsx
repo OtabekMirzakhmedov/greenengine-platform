@@ -24,6 +24,7 @@ import Infographics from "@/pages/Infographics";
 import CommunityPlans from "@/pages/CommunityPlans";
 import Partners from "@/pages/Partners";
 import NewsPage from "@/pages/News";
+import NewsDetail from "@/pages/NewsDetail";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import InstitutionsAdmin from "@/pages/admin/InstitutionsAdmin";
@@ -181,6 +182,14 @@ function Router() {
         {() => (
           <PublicLayout>
             <NewsPage />
+          </PublicLayout>
+        )}
+      </Route>
+
+      <Route path="/news/:slug">
+        {() => (
+          <PublicLayout>
+            <NewsDetail />
           </PublicLayout>
         )}
       </Route>

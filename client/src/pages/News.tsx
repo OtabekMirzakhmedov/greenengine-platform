@@ -79,7 +79,7 @@ export default function NewsPage() {
                     </Badge>
                   </div>
 
-                  <div className="relative">
+                  <div className="relative px-12 md:px-16">
                     <div className="overflow-hidden rounded-lg" ref={emblaRef}>
                       <div className="flex">
                         {featuredNews.map((item) => (
@@ -144,7 +144,7 @@ export default function NewsPage() {
                         <Button
                           variant="outline"
                           size="icon"
-                          className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg z-10"
                           onClick={scrollPrev}
                           data-testid="button-carousel-prev"
                         >
@@ -153,7 +153,7 @@ export default function NewsPage() {
                         <Button
                           variant="outline"
                           size="icon"
-                          className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg z-10"
                           onClick={scrollNext}
                           data-testid="button-carousel-next"
                         >

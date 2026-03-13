@@ -1,8 +1,9 @@
+import { useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Plus, Edit, Trash2, ArrowLeft } from "lucide-react";
+import { Plus, Edit, Trash2, ArrowLeft, Upload, Loader2 } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Institution } from "@shared/schema";
@@ -18,9 +19,54 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+
+interface InstitutionFormData {
+  name: string;
+  slug: string;
+  country: string;
+  description: string;
+  story: string;
+  achievements: string;
+  logoUrl: string;
+  heroImageUrl: string;
+  videoUrl: string;
+  order: number;
+}
+
+const emptyFormData: InstitutionFormData = {
+  name: "",
+  slug: "",
+  country: "",
+  description: "",
+  story: "",
+  achievements: "",
+  logoUrl: "",
+  heroImageUrl: "",
+  videoUrl: "",
+  order: 0,
+};
 
 export default function InstitutionsAdmin() {
   const { toast } = useToast();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formData, setFormData] = useState<InstitutionFormData>(emptyFormData);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingHero, setIsUploadingHero] = useState(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const heroInputRef = useRef<HTMLInputElement>(null);
+
   const { data: institutions, isLoading } = useQuery<Institution[]>({
     queryKey: ["/api/institutions"],
   });
@@ -45,6 +91,129 @@ export default function InstitutionsAdmin() {
     },
   });
 
+  const createMutation = useMutation({
+    mutationFn: async (data: InstitutionFormData) => {
+      return apiRequest("POST", "/api/institutions", data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/institutions"] });
+      setDialogOpen(false);
+      setFormData(emptyFormData);
+      toast({
+        title: "Success",
+        description: "Institution created successfully",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to create institution",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: InstitutionFormData }) => {
+      return apiRequest("PUT", `/api/institutions/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/institutions"] });
+      setDialogOpen(false);
+      setEditingId(null);
+      setFormData(emptyFormData);
+      toast({
+        title: "Success",
+        description: "Institution updated successfully",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update institution",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleOpenCreate = () => {
+    setEditingId(null);
+    setFormData(emptyFormData);
+    setDialogOpen(true);
+  };
+
+  const handleOpenEdit = (institution: Institution) => {
+    setEditingId(institution.id);
+    setFormData({
+      name: institution.name,
+      slug: institution.slug,
+      country: institution.country,
+      description: institution.description || "",
+      story: institution.story || "",
+      achievements: institution.achievements || "",
+      logoUrl: institution.logoUrl || "",
+      heroImageUrl: institution.heroImageUrl || "",
+      videoUrl: institution.videoUrl || "",
+      order: institution.order,
+    });
+    setDialogOpen(true);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingId) {
+      updateMutation.mutate({ id: editingId, data: formData });
+    } else {
+      createMutation.mutate(formData);
+    }
+  };
+
+  const generateSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  };
+
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "logoUrl" | "heroImageUrl"
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const setUploading = field === "logoUrl" ? setIsUploadingLogo : setIsUploadingHero;
+    setUploading(true);
+
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formDataUpload,
+        credentials: "include",
+      });
+
+      if (!response.ok) throw new Error("Upload failed");
+
+      const data = await response.json();
+      setFormData((prev) => ({ ...prev, [field]: data.url }));
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-muted/30">
       <header className="border-b bg-background">
@@ -59,7 +228,7 @@ export default function InstitutionsAdmin() {
               </Link>
               <h1 className="text-2xl font-bold text-foreground">Institutions</h1>
             </div>
-            <Button size="sm" data-testid="button-add-institution">
+            <Button size="sm" onClick={handleOpenCreate} data-testid="button-add-institution">
               <Plus className="h-4 w-4 mr-2" />
               Add Institution
             </Button>
@@ -95,7 +264,7 @@ export default function InstitutionsAdmin() {
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm" data-testid={`button-edit-${institution.id}`}>
+                      <Button variant="outline" size="sm" onClick={() => handleOpenEdit(institution)} data-testid={`button-edit-${institution.id}`}>
                         <Edit className="h-4 w-4" />
                       </Button>
                       <AlertDialog>
@@ -136,7 +305,7 @@ export default function InstitutionsAdmin() {
           <Card>
             <CardContent className="p-12 text-center">
               <p className="text-muted-foreground mb-4">No institutions added yet</p>
-              <Button data-testid="button-add-first-institution">
+              <Button onClick={handleOpenCreate} data-testid="button-add-first-institution">
                 <Plus className="h-4 w-4 mr-2" />
                 Add First Institution
               </Button>
@@ -144,6 +313,234 @@ export default function InstitutionsAdmin() {
           </Card>
         )}
       </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {editingId ? "Edit Institution" : "Add Institution"}
+            </DialogTitle>
+            <DialogDescription>
+              {editingId
+                ? "Update the institution details below."
+                : "Fill in the details for the new institution."}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => {
+                    const newName = e.target.value;
+                    setFormData({
+                      ...formData,
+                      name: newName,
+                      slug: formData.slug || generateSlug(newName),
+                    });
+                  }}
+                  placeholder="Institution name"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="slug">Slug *</Label>
+                  <Input
+                    id="slug"
+                    value={formData.slug}
+                    onChange={(e) =>
+                      setFormData({ ...formData, slug: e.target.value })
+                    }
+                    placeholder="institution-slug"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="country">Country *</Label>
+                  <Input
+                    id="country"
+                    value={formData.country}
+                    onChange={(e) =>
+                      setFormData({ ...formData, country: e.target.value })
+                    }
+                    placeholder="Country name"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  placeholder="Brief description of the institution"
+                  rows={2}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="story">Story</Label>
+                <Textarea
+                  id="story"
+                  value={formData.story}
+                  onChange={(e) =>
+                    setFormData({ ...formData, story: e.target.value })
+                  }
+                  placeholder="Institution's story and background"
+                  rows={3}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="achievements">Achievements</Label>
+                <Textarea
+                  id="achievements"
+                  value={formData.achievements}
+                  onChange={(e) =>
+                    setFormData({ ...formData, achievements: e.target.value })
+                  }
+                  placeholder="Notable achievements"
+                  rows={2}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="logoUrl">Logo</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="logoUrl"
+                    value={formData.logoUrl}
+                    onChange={(e) =>
+                      setFormData({ ...formData, logoUrl: e.target.value })
+                    }
+                    placeholder="Logo URL"
+                    className="flex-1"
+                  />
+                  <input
+                    type="file"
+                    ref={logoInputRef}
+                    onChange={(e) => handleImageUpload(e, "logoUrl")}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => logoInputRef.current?.click()}
+                    disabled={isUploadingLogo}
+                  >
+                    {isUploadingLogo ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Upload className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+                {formData.logoUrl && (
+                  <div className="mt-2 h-16 w-32 rounded-md overflow-hidden bg-muted">
+                    <img
+                      src={formData.logoUrl}
+                      alt="Logo preview"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="heroImageUrl">Hero Image</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="heroImageUrl"
+                    value={formData.heroImageUrl}
+                    onChange={(e) =>
+                      setFormData({ ...formData, heroImageUrl: e.target.value })
+                    }
+                    placeholder="Hero image URL"
+                    className="flex-1"
+                  />
+                  <input
+                    type="file"
+                    ref={heroInputRef}
+                    onChange={(e) => handleImageUpload(e, "heroImageUrl")}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => heroInputRef.current?.click()}
+                    disabled={isUploadingHero}
+                  >
+                    {isUploadingHero ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Upload className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+                {formData.heroImageUrl && (
+                  <div className="mt-2 h-24 rounded-md overflow-hidden bg-muted">
+                    <img
+                      src={formData.heroImageUrl}
+                      alt="Hero preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="videoUrl">Video URL</Label>
+                  <Input
+                    id="videoUrl"
+                    value={formData.videoUrl}
+                    onChange={(e) =>
+                      setFormData({ ...formData, videoUrl: e.target.value })
+                    }
+                    placeholder="YouTube or video URL"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="order">Order</Label>
+                  <Input
+                    id="order"
+                    type="number"
+                    value={formData.order}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        order: parseInt(e.target.value) || 0,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={createMutation.isPending || updateMutation.isPending}
+              >
+                {createMutation.isPending || updateMutation.isPending
+                  ? "Saving..."
+                  : editingId
+                  ? "Update Institution"
+                  : "Create Institution"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
