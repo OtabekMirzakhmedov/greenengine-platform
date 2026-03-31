@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import {
@@ -11,7 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import logoImage from "@assets/22_1763377690616.jpg";
+import logoImage from "@assets/green-logo.png";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const aboutLinks = [
@@ -46,24 +46,40 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-shadow ${
+      className={`sticky top-0 z-50 w-full border-b bg-white transition-shadow ${
         scrolled ? "shadow-md" : ""
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-4 hover-elevate active-elevate-2 px-2 py-1 rounded-md transition-colors" data-testid="link-home">
-              <img src={logoImage} alt="GREENENGINE Logo" className="h-16 w-auto" />
-              <div className="h-12 border-l border-border pl-4">
-                <img src={erasmusLogo} alt="Co-funded by Erasmus+" className="h-12 w-auto" />
-              </div>
+      <div className="mx-auto w-full max-w-[1780px] px-4 lg:px-6 xl:px-8">
+        <div className="flex min-h-24 items-center gap-3 py-3 2xl:gap-6">
+          <div className="flex shrink-0 items-center gap-3 xl:gap-4">
+            <Link
+              href="/"
+              className="flex shrink-0 items-center rounded-md px-2 py-1 transition-colors hover-elevate active-elevate-2"
+              data-testid="link-home"
+            >
+              <img
+                src={logoImage}
+                alt="GREENENGINE Logo"
+                className="h-16 w-auto object-contain sm:h-20 lg:h-24"
+              />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-1">
+            <div className="hidden min-[1320px]:flex items-center border-l border-border/80 pl-3 2xl:pl-4">
+              <img
+                src={erasmusLogo}
+                alt="Co-funded by the Erasmus+ Programme of the European Union"
+                className="h-10 w-auto max-w-[180px] object-contain 2xl:h-12 2xl:max-w-[210px]"
+              />
+            </div>
+
+          </div>
+
+          <div className="hidden min-[1320px]:flex min-w-0 flex-1 justify-center px-4">
+            <nav className="flex items-center gap-0.5 2xl:gap-1">
               <Link 
                 href="/"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location === "/" ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-home"
@@ -74,7 +90,7 @@ export default function Header() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-10 text-sm font-medium" data-testid="button-about-menu">
+                    <NavigationMenuTrigger className="h-10 px-2 text-sm font-medium 2xl:px-3" data-testid="button-about-menu">
                       About GREENENGINE
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -94,7 +110,7 @@ export default function Header() {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-10 text-sm font-medium" data-testid="button-passport-menu">
+                    <NavigationMenuTrigger className="h-10 px-2 text-sm font-medium 2xl:px-3" data-testid="button-passport-menu">
                       Intercultural Passport
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -117,7 +133,7 @@ export default function Header() {
 
               <Link 
                 href="/stories"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/stories") ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-stories"
@@ -127,7 +143,7 @@ export default function Header() {
 
               <Link 
                 href="/events"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/events") ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-events"
@@ -137,7 +153,7 @@ export default function Header() {
 
               <Link 
                 href="/action-plans"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/action-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-action-plans"
@@ -147,7 +163,7 @@ export default function Header() {
 
               <Link 
                 href="/infographics"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/infographics") ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-infographics"
@@ -157,7 +173,7 @@ export default function Header() {
 
               <Link 
                 href="/partners"
-                className={`px-3 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors ${
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location === "/partners" ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
                 data-testid="link-nav-partners"
@@ -167,8 +183,8 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-4">
+          <div className="ml-auto flex shrink-0 items-center gap-3 2xl:gap-4">
+            <div className="hidden min-[1500px]:flex items-center gap-3 2xl:gap-4">
               <a
                 href="https://facebook.com/greenengine"
                 target="_blank"
@@ -220,7 +236,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="min-[1320px]:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -230,7 +246,7 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t" data-testid="mobile-menu">
+          <div className="min-[1320px]:hidden py-4 border-t" data-testid="mobile-menu">
             <div className="space-y-1">
               <Link href="/" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-home">
                 Home

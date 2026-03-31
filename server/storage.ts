@@ -1,5 +1,5 @@
 import { 
-  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news,
+  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, heroSections,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -9,9 +9,13 @@ import {
   type Partner, type InsertPartner,
   type Page, type InsertPage,
   type News, type InsertNews,
+  type HeroSection, type InsertHeroSection,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
+
+type InstitutionRow = typeof institutions.$inferInsert;
+type EventRow = typeof events.$inferInsert;
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -23,6 +27,11 @@ export interface IStorage {
   createPage(page: InsertPage): Promise<Page>;
   updatePage(id: string, page: Partial<InsertPage>): Promise<Page>;
   deletePage(id: string): Promise<void>;
+
+  getHeroSections(): Promise<HeroSection[]>;
+  createHeroSection(heroSection: InsertHeroSection): Promise<HeroSection>;
+  updateHeroSection(id: string, heroSection: Partial<InsertHeroSection>): Promise<HeroSection>;
+  deleteHeroSection(id: string): Promise<void>;
 
   getInstitutions(): Promise<Institution[]>;
   getInstitutionBySlug(slug: string): Promise<Institution | undefined>;
@@ -101,6 +110,28 @@ export class DatabaseStorage implements IStorage {
     await db.delete(pages).where(eq(pages.id, id));
   }
 
+  async getHeroSections(): Promise<HeroSection[]> {
+    return await db.select().from(heroSections).orderBy(heroSections.order, heroSections.updatedAt);
+  }
+
+  async createHeroSection(heroSection: InsertHeroSection): Promise<HeroSection> {
+    const [created] = await db.insert(heroSections).values(heroSection).returning();
+    return created;
+  }
+
+  async updateHeroSection(id: string, heroSection: Partial<InsertHeroSection>): Promise<HeroSection> {
+    const [updated] = await db
+      .update(heroSections)
+      .set(heroSection)
+      .where(eq(heroSections.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteHeroSection(id: string): Promise<void> {
+    await db.delete(heroSections).where(eq(heroSections.id, id));
+  }
+
   async getInstitutions(): Promise<Institution[]> {
     return await db.select().from(institutions).orderBy(institutions.order);
   }
@@ -111,12 +142,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createInstitution(institution: InsertInstitution): Promise<Institution> {
-    const [created] = await db.insert(institutions).values(institution).returning();
+    const [created] = await db
+      .insert(institutions)
+      .values(institution as InstitutionRow)
+      .returning();
     return created;
   }
 
   async updateInstitution(id: string, institution: Partial<InsertInstitution>): Promise<Institution> {
-    const [updated] = await db.update(institutions).set(institution).where(eq(institutions.id, id)).returning();
+    const [updated] = await db
+      .update(institutions)
+      .set(institution as Partial<InstitutionRow>)
+      .where(eq(institutions.id, id))
+      .returning();
     return updated;
   }
 
@@ -134,12 +172,16 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createEvent(event: InsertEvent): Promise<Event> {
-    const [created] = await db.insert(events).values(event).returning();
+    const [created] = await db.insert(events).values(event as EventRow).returning();
     return created;
   }
 
   async updateEvent(id: string, event: Partial<InsertEvent>): Promise<Event> {
-    const [updated] = await db.update(events).set(event).where(eq(events.id, id)).returning();
+    const [updated] = await db
+      .update(events)
+      .set(event as Partial<EventRow>)
+      .where(eq(events.id, id))
+      .returning();
     return updated;
   }
 

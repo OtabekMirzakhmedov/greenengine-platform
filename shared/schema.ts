@@ -22,6 +22,15 @@ export const pages = sqliteTable("pages", {
   updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
+export const heroSections = sqliteTable("hero_sections", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  subtitle: text("subtitle").notNull(),
+  imageUrl: text("image_url").notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 export const institutions = sqliteTable("institutions", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull(),
@@ -120,6 +129,7 @@ export const news = sqliteTable("news", {
 
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
+export const insertHeroSectionSchema = createInsertSchema(heroSections).omit({ id: true, updatedAt: true });
 export const insertInstitutionSchema = createInsertSchema(institutions).omit({ id: true, updatedAt: true });
 export const insertEventSchema = createInsertSchema(events).omit({ id: true, updatedAt: true });
 export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({ id: true, updatedAt: true });
@@ -142,6 +152,8 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertPage = z.infer<typeof insertPageSchema>;
 export type Page = typeof pages.$inferSelect;
+export type InsertHeroSection = z.infer<typeof insertHeroSectionSchema>;
+export type HeroSection = typeof heroSections.$inferSelect;
 export type InsertInstitution = z.infer<typeof insertInstitutionSchema>;
 export type Institution = typeof institutions.$inferSelect;
 export type InsertEvent = z.infer<typeof insertEventSchema>;

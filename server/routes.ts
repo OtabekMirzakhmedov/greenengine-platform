@@ -8,7 +8,7 @@ import { generateToken, requireAuth, type AuthRequest } from "./middleware/auth"
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertNewsSchema, updateNewsSchema } from "@shared/schema";
+import { insertHeroSectionSchema, insertNewsSchema, updateNewsSchema } from "@shared/schema";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -145,6 +145,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Page deleted successfully" });
     } catch (error) {
       console.error("Delete page error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/hero-sections", async (_req, res) => {
+    try {
+      const heroSections = await storage.getHeroSections();
+      res.json(heroSections);
+    } catch (error) {
+      console.error("Get hero sections error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/hero-sections", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertHeroSectionSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const heroSection = await storage.createHeroSection(validation.data);
+      res.status(201).json(heroSection);
+    } catch (error) {
+      console.error("Create hero section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/hero-sections/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertHeroSectionSchema.partial().safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const heroSection = await storage.updateHeroSection(req.params.id, validation.data);
+      res.json(heroSection);
+    } catch (error) {
+      console.error("Update hero section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/hero-sections/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteHeroSection(req.params.id);
+      res.json({ message: "Hero section deleted successfully" });
+    } catch (error) {
+      console.error("Delete hero section error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });

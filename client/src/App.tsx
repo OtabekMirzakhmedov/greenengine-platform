@@ -27,6 +27,7 @@ import NewsPage from "@/pages/News";
 import NewsDetail from "@/pages/NewsDetail";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
+import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
 import InstitutionsAdmin from "@/pages/admin/InstitutionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
 import EventsAdmin from "@/pages/admin/EventsAdmin";
@@ -208,6 +209,14 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <InstitutionsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/hero-sections">
+        {() => (
+          <ProtectedRoute>
+            <HeroSectionsAdmin />
           </ProtectedRoute>
         )}
       </Route>
