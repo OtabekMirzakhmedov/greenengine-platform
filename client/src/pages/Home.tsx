@@ -5,7 +5,7 @@ import { BookOpen, Users, Target, Calendar, BarChart3, ArrowRight } from "lucide
 import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
 import NewsCarousel from "@/components/NewsCarousel";
 import { useQuery } from "@tanstack/react-query";
-import type { News } from "@shared/schema";
+import type { HeroSection, News } from "@shared/schema";
 import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
 import heroImage2 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
 import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
@@ -22,7 +22,11 @@ export default function Home() {
   const { data: newsData } = useQuery<News[]>({
     queryKey: ["/api/news"],
   });
-  const heroSlides: HeroSlide[] = [
+  const { data: heroSections } = useQuery<HeroSection[]>({
+    queryKey: ["/api/hero-sections"],
+  });
+
+  const fallbackHeroSlides: HeroSlide[] = [
     {
       id: "1",
       title: "Building Intercultural Competence for a Sustainable Future",
@@ -64,6 +68,16 @@ export default function Home() {
       secondaryCtaLink: "/infographics",
     },
   ];
+
+  const heroSlides: HeroSlide[] =
+    heroSections && heroSections.length > 0
+      ? heroSections.map((section) => ({
+          id: section.id,
+          title: section.title,
+          description: section.subtitle,
+          image: section.imageUrl,
+        }))
+      : fallbackHeroSlides;
 
   const features = [
     {

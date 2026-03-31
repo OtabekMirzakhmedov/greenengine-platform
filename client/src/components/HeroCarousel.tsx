@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "wouter";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface HeroSlide {
@@ -113,35 +111,6 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
                   {slide.description}
                 </p>
                 
-                {/* CTAs */}
-                {(slide.ctaText || slide.secondaryCtaText) && (
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    {slide.ctaText && slide.ctaLink && (
-                      <Link href={slide.ctaLink}>
-                        <Button 
-                          size="lg" 
-                          variant="default" 
-                          className="min-w-[180px]" 
-                          data-testid={`button-carousel-cta-${index}`}
-                        >
-                          {slide.ctaText}
-                        </Button>
-                      </Link>
-                    )}
-                    {slide.secondaryCtaText && slide.secondaryCtaLink && (
-                      <Link href={slide.secondaryCtaLink}>
-                        <Button 
-                          size="lg" 
-                          variant="outline" 
-                          className="min-w-[180px] bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20" 
-                          data-testid={`button-carousel-secondary-${index}`}
-                        >
-                          {slide.secondaryCtaText}
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
-                )}
               </div>
             </div>
           ))}
@@ -149,9 +118,8 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
       </div>
 
       {/* Navigation Arrows */}
-      <Button
-        variant="outline"
-        size="icon"
+      <button
+        type="button"
         onClick={scrollPrev}
         disabled={!canScrollPrev}
         className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 disabled:opacity-30"
@@ -159,11 +127,10 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
         data-testid="button-carousel-prev"
       >
         <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-      </Button>
+      </button>
 
-      <Button
-        variant="outline"
-        size="icon"
+      <button
+        type="button"
         onClick={scrollNext}
         disabled={!canScrollNext}
         className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 disabled:opacity-30"
@@ -171,7 +138,7 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
         data-testid="button-carousel-next"
       >
         <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-      </Button>
+      </button>
 
       {/* Pagination Dots */}
       <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-20">

@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Shield,
   Newspaper,
+  Images,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -49,6 +50,14 @@ export default function Dashboard() {
       description: "Manage About and Passport pages",
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
+    },
+    {
+      title: "Hero Slides",
+      icon: Images,
+      href: "/admin/hero-sections",
+      description: "Homepage hero images and copy",
+      color: "text-emerald-500",
+      bgColor: "bg-emerald-500/10",
     },
     {
       title: "Institutions",
