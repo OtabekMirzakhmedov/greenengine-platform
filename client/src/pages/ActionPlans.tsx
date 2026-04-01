@@ -107,9 +107,9 @@ export default function ActionPlans() {
                       <CardTitle className="text-2xl flex-1">{plan.title}</CardTitle>
                       {plan.fileUrl && (
                         <Button variant="default" size="sm" asChild data-testid={`button-download-${plan.slug}`}>
-                          <a href={plan.fileUrl} download>
+                          <a href={plan.fileUrl} download target="_blank" rel="noopener noreferrer">
                             <Download className="h-4 w-4 mr-2" />
-                            Download PDF
+                            Download File
                           </a>
                         </Button>
                       )}
@@ -117,13 +117,12 @@ export default function ActionPlans() {
                   </CardHeader>
                   <CardContent>
                     {plan.description ? (
-                      <div
-                        className="prose prose-lg max-w-none text-muted-foreground leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: plan.description }}
-                      />
+                      <p className="whitespace-pre-line text-muted-foreground leading-relaxed">
+                        {plan.description}
+                      </p>
                     ) : (
                       <p className="text-muted-foreground italic">
-                        Download the PDF to view the complete action plan.
+                        Download the file to view the complete action plan.
                       </p>
                     )}
                     {plan.fileSize && (
@@ -135,7 +134,17 @@ export default function ActionPlans() {
                 </Card>
               ))}
             </div>
-) : null}
+          ) : (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <FileText className="mx-auto mb-4 h-10 w-10 text-muted-foreground/60" />
+                <h3 className="mb-2 text-xl font-semibold">No action plans available yet</h3>
+                <p className="text-muted-foreground">
+                  Once plans are added in the admin panel, they will appear here automatically.
+                </p>
+              </CardContent>
+            </Card>
+          )}
           </div>
         </div>
       </div>
