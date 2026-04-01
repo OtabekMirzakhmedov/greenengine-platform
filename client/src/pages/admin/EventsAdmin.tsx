@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Plus, Edit, Trash2, ArrowLeft, Calendar as CalendarIcon, Upload, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, ArrowLeft, Calendar as CalendarIcon, Upload, Loader2, X, Image as ImageIcon, FileText } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Event } from "@shared/schema";
@@ -41,6 +41,8 @@ interface EventFormData {
   overview: string;
   agenda: string;
   agendaPdfUrl: string;
+  gallery: string[];
+  documents: Array<{ name: string; url: string; size: string }>;
   attendeeCount: number | null;
 }
 
@@ -53,6 +55,8 @@ const emptyFormData: EventFormData = {
   overview: "",
   agenda: "",
   agendaPdfUrl: "",
+  gallery: [],
+  documents: [],
   attendeeCount: null,
 };
 
@@ -62,7 +66,11 @@ export default function EventsAdmin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<EventFormData>(emptyFormData);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
+  const [isUploadingDocuments, setIsUploadingDocuments] = useState(false);
   const pdfInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+  const documentsInputRef = useRef<HTMLInputElement>(null);
 
   const { data: events, isLoading } = useQuery<Event[]>({
     queryKey: ["/api/events"],
@@ -93,6 +101,7 @@ export default function EventsAdmin() {
       return apiRequest("POST", "/api/events", {
         ...data,
         date: new Date(data.date),
+        photoCount: data.gallery.length,
         attendeeCount: data.attendeeCount || undefined,
       });
     },
@@ -120,6 +129,7 @@ export default function EventsAdmin() {
       return apiRequest("PUT", `/api/events/${id}`, {
         ...data,
         date: new Date(data.date),
+        photoCount: data.gallery.length,
         attendeeCount: data.attendeeCount || undefined,
       });
     },
@@ -162,6 +172,8 @@ export default function EventsAdmin() {
       overview: event.overview || "",
       agenda: event.agenda || "",
       agendaPdfUrl: event.agendaPdfUrl || "",
+      gallery: event.gallery || [],
+      documents: event.documents || [],
       attendeeCount: event.attendeeCount || null,
     });
     setDialogOpen(true);
@@ -218,6 +230,122 @@ export default function EventsAdmin() {
         pdfInputRef.current.value = "";
       }
     }
+  };
+
+  const formatFileSize = (size: number) => {
+    return size < 1024 * 1024
+      ? `${(size / 1024).toFixed(1)} KB`
+      : `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setIsUploadingImages(true);
+    try {
+      const uploadedUrls: string[] = [];
+
+      for (const file of files) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("file", file);
+
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formDataUpload,
+          credentials: "include",
+        });
+
+        if (!response.ok) throw new Error("Upload failed");
+
+        const data = await response.json();
+        uploadedUrls.push(data.url);
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        gallery: [...prev.gallery, ...uploadedUrls],
+      }));
+      toast({
+        title: "Success",
+        description: `${uploadedUrls.length} photo${uploadedUrls.length > 1 ? "s" : ""} uploaded successfully`,
+      });
+    } catch (_error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload event photos",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingImages(false);
+      if (galleryInputRef.current) {
+        galleryInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleDocumentsUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setIsUploadingDocuments(true);
+    try {
+      const uploadedDocuments: Array<{ name: string; url: string; size: string }> = [];
+
+      for (const file of files) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("file", file);
+
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formDataUpload,
+          credentials: "include",
+        });
+
+        if (!response.ok) throw new Error("Upload failed");
+
+        const data = await response.json();
+        uploadedDocuments.push({
+          name: file.name,
+          url: data.url,
+          size: formatFileSize(file.size),
+        });
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        documents: [...prev.documents, ...uploadedDocuments],
+      }));
+      toast({
+        title: "Success",
+        description: `${uploadedDocuments.length} material${uploadedDocuments.length > 1 ? "s" : ""} uploaded successfully`,
+      });
+    } catch (_error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload event materials",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingDocuments(false);
+      if (documentsInputRef.current) {
+        documentsInputRef.current.value = "";
+      }
+    }
+  };
+
+  const removeGalleryImage = (indexToRemove: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      gallery: prev.gallery.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+
+  const removeDocument = (indexToRemove: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      documents: prev.documents.filter((_, index) => index !== indexToRemove),
+    }));
   };
 
   return (
@@ -457,15 +585,121 @@ export default function EventsAdmin() {
                   </Button>
                 </div>
                 {formData.agendaPdfUrl ? (
-                  <a
-                    href={formData.agendaPdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary underline-offset-4 hover:underline"
-                  >
-                    Preview uploaded agenda PDF
-                  </a>
+                  <div className="space-y-1">
+                    <a
+                      href={formData.agendaPdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary underline-offset-4 hover:underline"
+                    >
+                      Preview uploaded agenda PDF
+                    </a>
+                    <p className="text-xs text-muted-foreground">Agenda PDF is now attached to this event draft.</p>
+                  </div>
                 ) : null}
+              </div>
+              <div className="grid gap-2">
+                <Label>Event Photos</Label>
+                <div className="flex gap-2">
+                  <input
+                    type="file"
+                    ref={galleryInputRef}
+                    onChange={handleGalleryUpload}
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => galleryInputRef.current?.click()}
+                    disabled={isUploadingImages}
+                  >
+                    {isUploadingImages ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ImageIcon className="h-4 w-4" />
+                    )}
+                    <span className="ml-2">Upload Photos</span>
+                  </Button>
+                </div>
+                {formData.gallery.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                    {formData.gallery.map((imageUrl, index) => (
+                      <div key={`${imageUrl}-${index}`} className="relative overflow-hidden rounded-md border bg-muted">
+                        <img src={imageUrl} alt={`Event gallery ${index + 1}`} className="h-28 w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryImage(index)}
+                          className="absolute right-2 top-2 rounded-full bg-black/70 p-1 text-white transition hover:bg-black"
+                          aria-label={`Remove photo ${index + 1}`}
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Uploaded event photos will appear here.</p>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label>Event Materials</Label>
+                <div className="flex gap-2">
+                  <input
+                    type="file"
+                    ref={documentsInputRef}
+                    onChange={handleDocumentsUpload}
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip"
+                    multiple
+                    className="hidden"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => documentsInputRef.current?.click()}
+                    disabled={isUploadingDocuments}
+                  >
+                    {isUploadingDocuments ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <FileText className="h-4 w-4" />
+                    )}
+                    <span className="ml-2">Upload Materials</span>
+                  </Button>
+                </div>
+                {formData.documents.length > 0 ? (
+                  <div className="space-y-2">
+                    {formData.documents.map((doc, index) => (
+                      <div
+                        key={`${doc.url}-${index}`}
+                        className="flex items-center justify-between gap-3 rounded-md border bg-muted/40 px-3 py-2"
+                      >
+                        <div className="min-w-0">
+                          <a
+                            href={doc.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block truncate text-sm font-medium text-primary underline-offset-4 hover:underline"
+                          >
+                            {doc.name}
+                          </a>
+                          <p className="text-xs text-muted-foreground">{doc.size}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeDocument(index)}
+                          className="rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                          aria-label={`Remove document ${doc.name}`}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Uploaded event materials will appear here.</p>
+                )}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="attendeeCount">Attendee Count</Label>

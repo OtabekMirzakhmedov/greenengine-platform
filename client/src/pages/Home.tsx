@@ -1,22 +1,16 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Users, Target, Calendar, BarChart3, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
 import NewsCarousel from "@/components/NewsCarousel";
 import { useQuery } from "@tanstack/react-query";
-import type { HeroSection, News } from "@shared/schema";
+import type { Activity, HeroSection, News } from "@shared/schema";
 import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
 import heroImage2 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
 import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
 import heroImage4 from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
-import discoverImage1 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
-import discoverImage2 from "@assets/stock_images/sustainable_green_ed_ab658307.jpg";
-import discoverImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
-import discoverImage4 from "@assets/stock_images/environmental_sustai_bb342fce.jpg";
-import discoverImage5 from "@assets/stock_images/environmental_sustai_4fd1c4ba.jpg";
 
 export default function Home() {
   const { data: newsData } = useQuery<News[]>({
@@ -24,6 +18,9 @@ export default function Home() {
   });
   const { data: heroSections } = useQuery<HeroSection[]>({
     queryKey: ["/api/hero-sections"],
+  });
+  const { data: activities } = useQuery<Activity[]>({
+    queryKey: ["/api/activities"],
   });
 
   const fallbackHeroSlides: HeroSlide[] = [
@@ -79,43 +76,7 @@ export default function Home() {
         }))
       : fallbackHeroSlides;
 
-  const features = [
-    {
-      icon: BookOpen,
-      title: "Intercultural Learning",
-      description: "Comprehensive programs fostering intercultural competence and digital storytelling across international institutions.",
-      href: "/passport",
-      image: discoverImage1,
-    },
-    {
-      icon: Users,
-      title: "Institution Stories",
-      description: "Discover the unique contributions and achievements of our partner universities across Central Asia, Georgia, and Europe.",
-      href: "/stories",
-      image: discoverImage2,
-    },
-    {
-      icon: Target,
-      title: "Action",
-      description: "Detailed strategies and implementation frameworks for sustainable educational development initiatives.",
-      href: "/action-plans",
-      image: discoverImage3,
-    },
-    {
-      icon: Calendar,
-      title: "Project Events",
-      description: "Explore our international meetings, workshops, and collaborative events with photo galleries and documentation.",
-      href: "/events",
-      image: discoverImage4,
-    },
-    {
-      icon: BarChart3,
-      title: "Infographic Reports",
-      description: "Visual insights and data-driven analysis of project outcomes and impact across partner institutions.",
-      href: "/infographics",
-      image: discoverImage5,
-    },
-  ];
+  const activitiesToDisplay = activities?.slice(0, 3) ?? [];
 
   return (
     <div className="flex flex-col">
@@ -144,19 +105,20 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Link key={feature.href} href={feature.href}>
+          {activitiesToDisplay.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {activitiesToDisplay.map((activity) => (
+                <Link key={activity.id} href={`/activities/${activity.slug}`}>
                 <div 
                   className="group relative h-[420px] overflow-visible cursor-pointer transition-all duration-500 hover-elevate active-elevate-2"
-                  data-testid={`card-feature-${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  data-testid={`card-feature-${activity.title.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   {/* Inner container with rounded corners and overflow hidden */}
                   <div className="absolute inset-0 rounded-2xl overflow-hidden">
                     {/* Background Image */}
                     <img
-                      src={feature.image}
-                      alt={feature.title}
+                      src={activity.imageUrl}
+                      alt={activity.title}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     
@@ -166,26 +128,19 @@ export default function Home() {
                   
                   {/* Content */}
                   <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                    {/* Icon */}
-                    <div className="mb-4 transform transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2">
-                      <div className="inline-flex h-14 w-14 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 items-center justify-center">
-                        <feature.icon className="h-7 w-7 text-white" />
-                      </div>
-                    </div>
-                    
                     {/* Title */}
                     <h3 className="text-2xl font-bold text-white mb-3 transform transition-all duration-500 group-hover:-translate-y-1">
-                      {feature.title}
+                      {activity.title}
                     </h3>
                     
                     {/* Description */}
                     <p className="text-white/90 text-sm leading-relaxed mb-4 line-clamp-3 transform transition-all duration-500 group-hover:text-white">
-                      {feature.description}
+                      {activity.description}
                     </p>
                     
                     {/* Arrow CTA */}
                     <div className="flex items-center gap-2 text-white font-semibold text-sm opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                      <span>Explore</span>
+                      <span>{activity.ctaText || "Read Activity"}</span>
                       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
                     </div>
                   </div>
@@ -194,8 +149,16 @@ export default function Home() {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/30 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
                 </div>
               </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border/80 bg-background/70 px-8 py-16 text-center">
+              <h3 className="mb-3 text-2xl font-semibold text-foreground">Activities Coming Soon</h3>
+              <p className="mx-auto max-w-2xl text-muted-foreground">
+                This section now shows only activity cards from the Activities module. Add activities in the admin panel to publish them here.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

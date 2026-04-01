@@ -1,5 +1,5 @@
 import { 
-  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, heroSections,
+  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, heroSections, homeActivityCards, activities, storyGalleries,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -10,12 +10,17 @@ import {
   type Page, type InsertPage,
   type News, type InsertNews,
   type HeroSection, type InsertHeroSection,
+  type HomeActivityCard, type InsertHomeActivityCard,
+  type Activity, type InsertActivity,
+  type StoryGallery, type InsertStoryGallery,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
 
 type InstitutionRow = typeof institutions.$inferInsert;
 type EventRow = typeof events.$inferInsert;
+type ActivityRow = typeof activities.$inferInsert;
+type StoryGalleryRow = typeof storyGalleries.$inferInsert;
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -32,6 +37,23 @@ export interface IStorage {
   createHeroSection(heroSection: InsertHeroSection): Promise<HeroSection>;
   updateHeroSection(id: string, heroSection: Partial<InsertHeroSection>): Promise<HeroSection>;
   deleteHeroSection(id: string): Promise<void>;
+
+  getHomeActivityCards(): Promise<HomeActivityCard[]>;
+  createHomeActivityCard(card: InsertHomeActivityCard): Promise<HomeActivityCard>;
+  updateHomeActivityCard(id: string, card: Partial<InsertHomeActivityCard>): Promise<HomeActivityCard>;
+  deleteHomeActivityCard(id: string): Promise<void>;
+
+  getActivities(): Promise<Activity[]>;
+  getActivityBySlug(slug: string): Promise<Activity | undefined>;
+  createActivity(activity: InsertActivity): Promise<Activity>;
+  updateActivity(id: string, activity: Partial<InsertActivity>): Promise<Activity>;
+  deleteActivity(id: string): Promise<void>;
+
+  getStoryGalleries(): Promise<StoryGallery[]>;
+  getStoryGalleryBySlug(slug: string): Promise<StoryGallery | undefined>;
+  createStoryGallery(gallery: InsertStoryGallery): Promise<StoryGallery>;
+  updateStoryGallery(id: string, gallery: Partial<InsertStoryGallery>): Promise<StoryGallery>;
+  deleteStoryGallery(id: string): Promise<void>;
 
   getInstitutions(): Promise<Institution[]>;
   getInstitutionBySlug(slug: string): Promise<Institution | undefined>;
@@ -130,6 +152,88 @@ export class DatabaseStorage implements IStorage {
 
   async deleteHeroSection(id: string): Promise<void> {
     await db.delete(heroSections).where(eq(heroSections.id, id));
+  }
+
+  async getHomeActivityCards(): Promise<HomeActivityCard[]> {
+    return await db.select().from(homeActivityCards).orderBy(homeActivityCards.order, homeActivityCards.updatedAt);
+  }
+
+  async createHomeActivityCard(card: InsertHomeActivityCard): Promise<HomeActivityCard> {
+    const [created] = await db.insert(homeActivityCards).values(card).returning();
+    return created;
+  }
+
+  async updateHomeActivityCard(id: string, card: Partial<InsertHomeActivityCard>): Promise<HomeActivityCard> {
+    const [updated] = await db
+      .update(homeActivityCards)
+      .set(card)
+      .where(eq(homeActivityCards.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteHomeActivityCard(id: string): Promise<void> {
+    await db.delete(homeActivityCards).where(eq(homeActivityCards.id, id));
+  }
+
+  async getActivities(): Promise<Activity[]> {
+    return await db.select().from(activities).orderBy(activities.order, activities.publishedAt, activities.updatedAt);
+  }
+
+  async getActivityBySlug(slug: string): Promise<Activity | undefined> {
+    const [activity] = await db.select().from(activities).where(eq(activities.slug, slug));
+    return activity || undefined;
+  }
+
+  async createActivity(activity: InsertActivity): Promise<Activity> {
+    const [created] = await db
+      .insert(activities)
+      .values(activity as ActivityRow)
+      .returning();
+    return created;
+  }
+
+  async updateActivity(id: string, activity: Partial<InsertActivity>): Promise<Activity> {
+    const [updated] = await db
+      .update(activities)
+      .set(activity as Partial<ActivityRow>)
+      .where(eq(activities.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteActivity(id: string): Promise<void> {
+    await db.delete(activities).where(eq(activities.id, id));
+  }
+
+  async getStoryGalleries(): Promise<StoryGallery[]> {
+    return await db.select().from(storyGalleries).orderBy(storyGalleries.order, storyGalleries.updatedAt);
+  }
+
+  async getStoryGalleryBySlug(slug: string): Promise<StoryGallery | undefined> {
+    const [gallery] = await db.select().from(storyGalleries).where(eq(storyGalleries.slug, slug));
+    return gallery || undefined;
+  }
+
+  async createStoryGallery(gallery: InsertStoryGallery): Promise<StoryGallery> {
+    const [created] = await db
+      .insert(storyGalleries)
+      .values(gallery as StoryGalleryRow)
+      .returning();
+    return created;
+  }
+
+  async updateStoryGallery(id: string, gallery: Partial<InsertStoryGallery>): Promise<StoryGallery> {
+    const [updated] = await db
+      .update(storyGalleries)
+      .set(gallery as Partial<StoryGalleryRow>)
+      .where(eq(storyGalleries.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteStoryGallery(id: string): Promise<void> {
+    await db.delete(storyGalleries).where(eq(storyGalleries.id, id));
   }
 
   async getInstitutions(): Promise<Institution[]> {

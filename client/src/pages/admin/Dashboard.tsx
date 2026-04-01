@@ -18,6 +18,8 @@ import {
   Shield,
   Newspaper,
   Images,
+  Grid3X3,
+  Camera,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -60,12 +62,28 @@ export default function Dashboard() {
       bgColor: "bg-emerald-500/10",
     },
     {
+      title: "Activities",
+      icon: Grid3X3,
+      href: "/admin/activities",
+      description: "Manage homepage cards, list page, and activity details",
+      color: "text-cyan-500",
+      bgColor: "bg-cyan-500/10",
+    },
+    {
       title: "Institutions",
       icon: Building2,
       href: "/admin/institutions",
       description: "Institution stories and profiles",
       color: "text-primary",
       bgColor: "bg-primary/10",
+    },
+    {
+      title: "Stories Galleries",
+      icon: Camera,
+      href: "/admin/story-galleries",
+      description: "Grouped photo galleries for the Stories section",
+      color: "text-sky-500",
+      bgColor: "bg-sky-500/10",
     },
     {
       title: "Events",

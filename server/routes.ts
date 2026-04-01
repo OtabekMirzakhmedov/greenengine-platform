@@ -9,15 +9,21 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import {
+  insertActivitySchema,
   insertActionPlanSchema,
   insertEventSchema,
   insertHeroSectionSchema,
+  insertHomeActivityCardSchema,
   insertNewsSchema,
   insertPartnerSchema,
+  insertStoryGallerySchema,
+  updateActivitySchema,
   updateActionPlanSchema,
   updateEventSchema,
+  updateHomeActivityCardSchema,
   updateNewsSchema,
   updatePartnerSchema,
+  updateStoryGallerySchema,
 } from "@shared/schema";
 
 const upload = multer({
@@ -211,6 +217,200 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Hero section deleted successfully" });
     } catch (error) {
       console.error("Delete hero section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/home-activity-cards", async (_req, res) => {
+    try {
+      const cards = await storage.getHomeActivityCards();
+      res.json(cards);
+    } catch (error) {
+      console.error("Get home activity cards error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/home-activity-cards", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertHomeActivityCardSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const card = await storage.createHomeActivityCard(validation.data);
+      res.status(201).json(card);
+    } catch (error) {
+      console.error("Create home activity card error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/home-activity-cards/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updateHomeActivityCardSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const card = await storage.updateHomeActivityCard(req.params.id, validation.data);
+      res.json(card);
+    } catch (error) {
+      console.error("Update home activity card error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/home-activity-cards/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteHomeActivityCard(req.params.id);
+      res.json({ message: "Home activity card deleted successfully" });
+    } catch (error) {
+      console.error("Delete home activity card error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/activities", async (_req, res) => {
+    try {
+      const activities = await storage.getActivities();
+      res.json(activities);
+    } catch (error) {
+      console.error("Get activities error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/activities/slug/:slug", async (req, res) => {
+    try {
+      const activity = await storage.getActivityBySlug(req.params.slug);
+      if (!activity) {
+        return res.status(404).json({ message: "Activity not found" });
+      }
+      res.json(activity);
+    } catch (error) {
+      console.error("Get activity error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/activities", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertActivitySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const activity = await storage.createActivity(validation.data);
+      res.status(201).json(activity);
+    } catch (error) {
+      console.error("Create activity error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/activities/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updateActivitySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const activity = await storage.updateActivity(req.params.id, validation.data);
+      res.json(activity);
+    } catch (error) {
+      console.error("Update activity error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/activities/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteActivity(req.params.id);
+      res.json({ message: "Activity deleted successfully" });
+    } catch (error) {
+      console.error("Delete activity error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/story-galleries", async (_req, res) => {
+    try {
+      const galleries = await storage.getStoryGalleries();
+      res.json(galleries);
+    } catch (error) {
+      console.error("Get story galleries error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/story-galleries/slug/:slug", async (req, res) => {
+    try {
+      const gallery = await storage.getStoryGalleryBySlug(req.params.slug);
+      if (!gallery) {
+        return res.status(404).json({ message: "Gallery not found" });
+      }
+      res.json(gallery);
+    } catch (error) {
+      console.error("Get story gallery error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/story-galleries", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertStoryGallerySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const gallery = await storage.createStoryGallery(validation.data);
+      res.status(201).json(gallery);
+    } catch (error) {
+      console.error("Create story gallery error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/story-galleries/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updateStoryGallerySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const gallery = await storage.updateStoryGallery(req.params.id, validation.data);
+      res.json(gallery);
+    } catch (error) {
+      console.error("Update story gallery error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/story-galleries/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteStoryGallery(req.params.id);
+      res.json({ message: "Story gallery deleted successfully" });
+    } catch (error) {
+      console.error("Delete story gallery error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
