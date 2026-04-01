@@ -31,6 +31,44 @@ export const heroSections = sqliteTable("hero_sections", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+export const homeActivityCards = sqliteTable("home_activity_cards", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  imageUrl: text("image_url").notNull(),
+  ctaText: text("cta_text").notNull(),
+  ctaLink: text("cta_link").notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const activities = sqliteTable("activities", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  content: text("content"),
+  imageUrl: text("image_url").notNull(),
+  gallery: text("gallery", { mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  attachments: text("attachments", { mode: "json" }).$type<Array<{ name: string; url: string; size: string }>>().default(sql`'[]'`),
+  author: text("author"),
+  ctaText: text("cta_text").notNull().default("Read Activity"),
+  ctaLink: text("cta_link"),
+  order: integer("order").notNull().default(0),
+  publishedAt: integer("published_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const storyGalleries = sqliteTable("story_galleries", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  images: text("images", { mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  order: integer("order").notNull().default(0),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 export const institutions = sqliteTable("institutions", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull(),
@@ -130,6 +168,35 @@ export const news = sqliteTable("news", {
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
 export const insertHeroSectionSchema = createInsertSchema(heroSections).omit({ id: true, updatedAt: true });
+export const insertHomeActivityCardSchema = createInsertSchema(homeActivityCards).omit({ id: true, updatedAt: true });
+export const updateHomeActivityCardSchema = insertHomeActivityCardSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
+export const insertActivitySchema = createInsertSchema(activities).omit({ id: true, updatedAt: true }).extend({
+  publishedAt: z.coerce.date(),
+});
+export const updateActivitySchema = insertActivitySchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
+export const insertStoryGallerySchema = createInsertSchema(storyGalleries).omit({ id: true, updatedAt: true });
+export const updateStoryGallerySchema = insertStoryGallerySchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
 export const insertInstitutionSchema = createInsertSchema(institutions).omit({ id: true, updatedAt: true });
 export const insertEventSchema = createInsertSchema(events).omit({ id: true, updatedAt: true }).extend({
   date: z.coerce.date(),
@@ -180,6 +247,12 @@ export type InsertPage = z.infer<typeof insertPageSchema>;
 export type Page = typeof pages.$inferSelect;
 export type InsertHeroSection = z.infer<typeof insertHeroSectionSchema>;
 export type HeroSection = typeof heroSections.$inferSelect;
+export type InsertHomeActivityCard = z.infer<typeof insertHomeActivityCardSchema>;
+export type HomeActivityCard = typeof homeActivityCards.$inferSelect;
+export type InsertActivity = z.infer<typeof insertActivitySchema>;
+export type Activity = typeof activities.$inferSelect;
+export type InsertStoryGallery = z.infer<typeof insertStoryGallerySchema>;
+export type StoryGallery = typeof storyGalleries.$inferSelect;
 export type InsertInstitution = z.infer<typeof insertInstitutionSchema>;
 export type Institution = typeof institutions.$inferSelect;
 export type InsertEvent = z.infer<typeof insertEventSchema>;

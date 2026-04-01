@@ -8,9 +8,10 @@ import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Home from "@/pages/Home";
+import ActivitiesPage from "@/pages/Activities";
+import ActivityDetail from "@/pages/ActivityDetail";
 import About from "@/pages/about/About";
 import Goals from "@/pages/about/Goals";
-import Activities from "@/pages/about/Activities";
 import Management from "@/pages/about/Management";
 import Passport from "@/pages/passport/Passport";
 import MOOC from "@/pages/passport/MOOC";
@@ -27,6 +28,8 @@ import NewsPage from "@/pages/News";
 import NewsDetail from "@/pages/NewsDetail";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
+import ActivitiesAdmin from "@/pages/admin/ActivitiesAdmin";
+import StoryGalleriesAdmin from "@/pages/admin/StoryGalleriesAdmin";
 import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
 import InstitutionsAdmin from "@/pages/admin/InstitutionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
@@ -78,7 +81,23 @@ function Router() {
       <Route path="/about/activities">
         {() => (
           <PublicLayout>
-            <Activities />
+            <ActivitiesPage />
+          </PublicLayout>
+        )}
+      </Route>
+
+      <Route path="/activities">
+        {() => (
+          <PublicLayout>
+            <ActivitiesPage />
+          </PublicLayout>
+        )}
+      </Route>
+
+      <Route path="/activities/:slug">
+        {() => (
+          <PublicLayout>
+            <ActivityDetail />
           </PublicLayout>
         )}
       </Route>
@@ -217,6 +236,22 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <HeroSectionsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/activities">
+        {() => (
+          <ProtectedRoute>
+            <ActivitiesAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/story-galleries">
+        {() => (
+          <ProtectedRoute>
+            <StoryGalleriesAdmin />
           </ProtectedRoute>
         )}
       </Route>

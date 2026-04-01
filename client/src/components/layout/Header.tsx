@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,7 +17,6 @@ import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_176343318
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
   { title: "Goals and Objectives", href: "/about/goals" },
-  { title: "Activities and Outcomes", href: "/about/activities" },
   { title: "Management and Quality", href: "/about/management" },
 ];
 
@@ -132,6 +131,16 @@ export default function Header() {
               </NavigationMenu>
 
               <Link 
+                href="/activities"
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
+                  location.startsWith("/activities") || location.startsWith("/about/activities") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-activities"
+              >
+                Activities
+              </Link>
+
+              <Link 
                 href="/stories"
                 className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/stories") ? "bg-accent text-accent-foreground" : "text-foreground/80"
@@ -186,7 +195,7 @@ export default function Header() {
           <div className="ml-auto flex shrink-0 items-center gap-3 2xl:gap-4">
             <div className="hidden min-[1500px]:flex items-center gap-3 2xl:gap-4">
               <a
-                href="https://facebook.com/greenengine"
+                href="https://www.facebook.com/profile.php?id=61586359144401"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -196,7 +205,7 @@ export default function Header() {
                 <FaFacebook className="h-5 w-5" />
               </a>
               <a
-                href="https://instagram.com/greenengine"
+                href="https://www.instagram.com/greenengine26?igsh=cnF5NzUzcXY3ZXY%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -206,17 +215,7 @@ export default function Header() {
                 <FaInstagram className="h-5 w-5" />
               </a>
               <a
-                href="https://youtube.com/greenengine"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                data-testid="link-youtube"
-                aria-label="YouTube"
-              >
-                <FaYoutube className="h-5 w-5" />
-              </a>
-              <a
-                href="https://linkedin.com/company/greenengine"
+                href="https://www.linkedin.com/company/greenengine-cbhe"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -282,6 +281,10 @@ export default function Header() {
 
               <Link href="/stories" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-stories">
                 Stories
+              </Link>
+
+              <Link href="/activities" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-activities">
+                Activities
               </Link>
 
               <Link href="/events" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">

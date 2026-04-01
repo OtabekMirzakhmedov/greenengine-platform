@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -64,7 +64,7 @@ export default function Footer() {
                 Events
               </Link>
               <Link 
-                href="/action" 
+                href="/action-plans" 
                 className="text-sm text-muted-foreground hover:text-primary transition-colors" 
                 data-testid="link-footer-action"
               >
@@ -89,7 +89,7 @@ export default function Footer() {
                   data-testid="link-footer-facebook"
                 >
                   <a
-                    href="https://facebook.com/greenengine"
+                    href="https://www.facebook.com/profile.php?id=61586359144401"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook"
@@ -104,7 +104,7 @@ export default function Footer() {
                   data-testid="link-footer-instagram"
                 >
                   <a
-                    href="https://instagram.com/greenengine"
+                    href="https://www.instagram.com/greenengine26?igsh=cnF5NzUzcXY3ZXY%3D&utm_source=qr"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
@@ -116,25 +116,10 @@ export default function Footer() {
                   size="icon"
                   variant="outline"
                   asChild
-                  data-testid="link-footer-youtube"
-                >
-                  <a
-                    href="https://youtube.com/greenengine"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="YouTube"
-                  >
-                    <FaYoutube className="h-4 w-4" />
-                  </a>
-                </Button>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  asChild
                   data-testid="link-footer-linkedin"
                 >
                   <a
-                    href="https://linkedin.com/company/greenengine"
+                    href="https://www.linkedin.com/company/greenengine-cbhe"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
