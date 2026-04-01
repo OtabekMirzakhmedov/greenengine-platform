@@ -83,7 +83,7 @@ export default function Home() {
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
 
-      <section className="relative py-20 md:py-24 overflow-hidden">
+      <section className="relative overflow-hidden py-20 md:py-24">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10 opacity-50"></div>
         <div className="absolute inset-0 opacity-5">
@@ -106,56 +106,71 @@ export default function Home() {
           </div>
 
           {activitiesToDisplay.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {activitiesToDisplay.map((activity) => (
-                <Link key={activity.id} href={`/activities/${activity.slug}`}>
-                <div 
-                  className="group relative h-[420px] overflow-visible cursor-pointer transition-all duration-500 hover-elevate active-elevate-2"
-                  data-testid={`card-feature-${activity.title.toLowerCase().replace(/\s+/g, '-')}`}
-                >
-                  {/* Inner container with rounded corners and overflow hidden */}
-                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                    {/* Background Image */}
-                    <img
-                      src={activity.imageUrl}
-                      alt={activity.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90 transition-opacity duration-500 group-hover:from-primary/40 group-hover:via-primary/70 group-hover:to-primary/95"></div>
+            <div className="rounded-[2rem] border border-white/60 bg-white/60 px-6 py-10 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm md:px-8 lg:px-10">
+              <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                    <span className="h-2 w-2 rounded-full bg-primary" />
+                    Dynamic Activities Module
                   </div>
-                  
-                  {/* Content */}
-                  <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-white mb-3 transform transition-all duration-500 group-hover:-translate-y-1">
-                      {activity.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p className="text-white/90 text-sm leading-relaxed mb-4 line-clamp-3 transform transition-all duration-500 group-hover:text-white">
-                      {activity.description}
-                    </p>
-                    
-                    {/* Arrow CTA */}
-                    <div className="flex items-center gap-2 text-white font-semibold text-sm opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                      <span>{activity.ctaText || "Read Activity"}</span>
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
-                    </div>
-                  </div>
-
-                  {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/30 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">Work Packages</h2>
+                  <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    Explore the latest three work packages published in the Activities module. Each card opens its dedicated activity page with full content, visuals, and supporting materials.
+                  </p>
                 </div>
-              </Link>
-              ))}
+              </div>
+
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+                {activitiesToDisplay.map((activity) => (
+                  <Link key={activity.id} href={`/activities/${activity.slug}`}>
+                    <div
+                      className="group relative h-[430px] cursor-pointer overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-950 shadow-[0_20px_60px_rgba(15,23,42,0.18)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_80px_rgba(15,23,42,0.28)]"
+                      data-testid={`card-feature-${activity.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <img
+                        src={activity.imageUrl}
+                        alt={activity.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/15 via-slate-950/45 to-slate-950/95 transition-all duration-500 group-hover:from-emerald-400/25 group-hover:via-slate-950/55 group-hover:to-slate-950/98" />
+                      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/10 to-transparent opacity-70" />
+
+                      <div className="absolute inset-0 flex flex-col justify-end p-8">
+                        <div className="mb-5 inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/85 backdrop-blur-md">
+                          Work Package
+                        </div>
+
+                        <h3 className="mb-3 text-2xl font-bold text-white transition-transform duration-500 group-hover:-translate-y-1">
+                          {activity.title}
+                        </h3>
+
+                        <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-white/85 transition-colors duration-500 group-hover:text-white">
+                          {activity.description}
+                        </p>
+
+                        <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur-md transition-colors duration-300 group-hover:bg-white/20">
+                            {activity.ctaText || "Read Activity"}
+                          </span>
+                          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
+                        </div>
+                      </div>
+
+                      <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-emerald-300/20 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed border-border/80 bg-background/70 px-8 py-16 text-center">
-              <h3 className="mb-3 text-2xl font-semibold text-foreground">Activities Coming Soon</h3>
+              <h2 className="mb-3 text-3xl font-bold text-foreground">Work Packages</h2>
+              <p className="mx-auto mb-4 max-w-2xl text-muted-foreground">
+                This section shows only activity cards from the Activities module.
+              </p>
               <p className="mx-auto max-w-2xl text-muted-foreground">
-                This section now shows only activity cards from the Activities module. Add activities in the admin panel to publish them here.
+                Add published activities in the admin panel to display the latest three work packages here automatically.
               </p>
             </div>
           )}
