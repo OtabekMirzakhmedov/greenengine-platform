@@ -88,6 +88,7 @@ export default function ActionPlansAdmin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/action-plans"] });
       setDialogOpen(false);
+      setEditingId(null);
       setFormData(emptyFormData);
       toast({
         title: "Success",
@@ -128,7 +129,10 @@ export default function ActionPlansAdmin() {
 
   const handleOpenCreate = () => {
     setEditingId(null);
-    setFormData(emptyFormData);
+    setFormData({
+      ...emptyFormData,
+      order: actionPlans?.length ?? 0,
+    });
     setDialogOpen(true);
   };
 
@@ -392,9 +396,17 @@ export default function ActionPlansAdmin() {
                   </Button>
                 </div>
                 {formData.fileUrl && (
-                  <p className="text-sm text-muted-foreground">
-                    File: {formData.fileSize || "Uploaded"}
-                  </p>
+                  <div className="space-y-1 text-sm text-muted-foreground">
+                    <p>File: {formData.fileSize || "Uploaded"}</p>
+                    <a
+                      href={formData.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline-offset-4 hover:underline"
+                    >
+                      Preview uploaded file
+                    </a>
+                  </div>
                 )}
               </div>
               <div className="grid gap-2">

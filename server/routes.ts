@@ -8,7 +8,17 @@ import { generateToken, requireAuth, type AuthRequest } from "./middleware/auth"
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertHeroSectionSchema, insertNewsSchema, updateNewsSchema } from "@shared/schema";
+import {
+  insertActionPlanSchema,
+  insertEventSchema,
+  insertHeroSectionSchema,
+  insertNewsSchema,
+  insertPartnerSchema,
+  updateActionPlanSchema,
+  updateEventSchema,
+  updateNewsSchema,
+  updatePartnerSchema,
+} from "@shared/schema";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -257,7 +267,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/events", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const event = await storage.createEvent(req.body);
+      const validation = insertEventSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const event = await storage.createEvent(validation.data);
       res.status(201).json(event);
     } catch (error) {
       console.error("Create event error:", error);
@@ -267,7 +285,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/events/:id", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const event = await storage.updateEvent(req.params.id, req.body);
+      const validation = updateEventSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const event = await storage.updateEvent(req.params.id, validation.data);
       res.json(event);
     } catch (error) {
       console.error("Update event error:", error);
@@ -297,7 +323,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/action-plans", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const plan = await storage.createActionPlan(req.body);
+      const validation = insertActionPlanSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const plan = await storage.createActionPlan(validation.data);
       res.status(201).json(plan);
     } catch (error) {
       console.error("Create action plan error:", error);
@@ -307,7 +341,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/action-plans/:id", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const plan = await storage.updateActionPlan(req.params.id, req.body);
+      const validation = updateActionPlanSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const plan = await storage.updateActionPlan(req.params.id, validation.data);
       res.json(plan);
     } catch (error) {
       console.error("Update action plan error:", error);
@@ -417,7 +459,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/partners", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const partner = await storage.createPartner(req.body);
+      const validation = insertPartnerSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const partner = await storage.createPartner(validation.data);
       res.status(201).json(partner);
     } catch (error) {
       console.error("Create partner error:", error);
@@ -427,7 +477,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/partners/:id", requireAuth, async (req: AuthRequest, res) => {
     try {
-      const partner = await storage.updatePartner(req.params.id, req.body);
+      const validation = updatePartnerSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const partner = await storage.updatePartner(req.params.id, validation.data);
       res.json(partner);
     } catch (error) {
       console.error("Update partner error:", error);

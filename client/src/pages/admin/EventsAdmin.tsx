@@ -99,6 +99,7 @@ export default function EventsAdmin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/events"] });
       setDialogOpen(false);
+      setEditingId(null);
       setFormData(emptyFormData);
       toast({
         title: "Success",
@@ -143,7 +144,10 @@ export default function EventsAdmin() {
 
   const handleOpenCreate = () => {
     setEditingId(null);
-    setFormData(emptyFormData);
+    setFormData({
+      ...emptyFormData,
+      date: new Date().toISOString().split("T")[0],
+    });
     setDialogOpen(true);
   };
 
@@ -452,6 +456,16 @@ export default function EventsAdmin() {
                     )}
                   </Button>
                 </div>
+                {formData.agendaPdfUrl ? (
+                  <a
+                    href={formData.agendaPdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary underline-offset-4 hover:underline"
+                  >
+                    Preview uploaded agenda PDF
+                  </a>
+                ) : null}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="attendeeCount">Attendee Count</Label>

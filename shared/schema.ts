@@ -131,11 +131,37 @@ export const insertUserSchema = createInsertSchema(users).omit({ id: true, creat
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
 export const insertHeroSectionSchema = createInsertSchema(heroSections).omit({ id: true, updatedAt: true });
 export const insertInstitutionSchema = createInsertSchema(institutions).omit({ id: true, updatedAt: true });
-export const insertEventSchema = createInsertSchema(events).omit({ id: true, updatedAt: true });
+export const insertEventSchema = createInsertSchema(events).omit({ id: true, updatedAt: true }).extend({
+  date: z.coerce.date(),
+});
+export const updateEventSchema = insertEventSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
 export const insertActionPlanSchema = createInsertSchema(actionPlans).omit({ id: true, updatedAt: true });
+export const updateActionPlanSchema = insertActionPlanSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
 export const insertInfographicSchema = createInsertSchema(infographics).omit({ id: true, updatedAt: true });
 export const insertCommunityPlanSchema = createInsertSchema(communityPlans).omit({ id: true, updatedAt: true });
 export const insertPartnerSchema = createInsertSchema(partners).omit({ id: true });
+export const updatePartnerSchema = insertPartnerSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
 export const insertNewsSchema = createInsertSchema(news).omit({ id: true, updatedAt: true }).extend({
   publishedAt: z.coerce.date(),
 });

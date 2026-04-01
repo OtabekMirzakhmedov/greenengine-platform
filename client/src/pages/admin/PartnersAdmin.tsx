@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Plus, Edit, Trash2, ArrowLeft, Users } from "lucide-react";
+import { Plus, Edit, Trash2, ArrowLeft, Users, Upload, Loader2 } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Partner } from "@shared/schema";
@@ -66,6 +66,8 @@ export default function PartnersAdmin() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPartner, setEditingPartner] = useState<Partner | null>(null);
   const [formData, setFormData] = useState<PartnerFormData>(emptyFormData);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { data: partners, isLoading } = useQuery<Partner[]>({
     queryKey: ["/api/partners"],
@@ -135,7 +137,10 @@ export default function PartnersAdmin() {
 
   const openAddDialog = () => {
     setEditingPartner(null);
-    setFormData(emptyFormData);
+    setFormData({
+      ...emptyFormData,
+      order: partners?.length ?? 0,
+    });
     setDialogOpen(true);
   };
 
@@ -162,6 +167,45 @@ export default function PartnersAdmin() {
     setDialogOpen(false);
     setEditingPartner(null);
     setFormData(emptyFormData);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formDataUpload,
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+      setFormData((prev) => ({ ...prev, logoUrl: data.url }));
+      toast({
+        title: "Success",
+        description: "Partner photo uploaded successfully",
+      });
+    } catch (_error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload partner photo",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingImage(false);
+      if (imageInputRef.current) {
+        imageInputRef.current.value = "";
+      }
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -411,12 +455,44 @@ export default function PartnersAdmin() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="logoUrl">Logo URL</Label>
-                  <Input
-                    id="logoUrl"
-                    value={formData.logoUrl}
-                    onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
-                  />
+                  <Label htmlFor="logoUrl">Photo / Logo</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="logoUrl"
+                      value={formData.logoUrl}
+                      onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
+                      placeholder="Image URL"
+                      className="flex-1"
+                    />
+                    <input
+                      type="file"
+                      ref={imageInputRef}
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => imageInputRef.current?.click()}
+                      disabled={isUploadingImage}
+                    >
+                      {isUploadingImage ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Upload className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  {formData.logoUrl ? (
+                    <div className="mt-2 h-28 overflow-hidden rounded-md bg-muted">
+                      <img
+                        src={formData.logoUrl}
+                        alt="Partner preview"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : null}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="websiteUrl">Website URL</Label>
