@@ -11,7 +11,8 @@ import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
 import heroImage4 from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
-import logoImage from "/attached_assets/greenengine-logo-new.jpg";
+
+const logoImage = "/attached_assets/greenengine-logo-new.jpg";
 
 export default function Home() {
   const { data: newsData } = useQuery<News[]>({
