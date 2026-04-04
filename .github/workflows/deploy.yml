@@ -1,0 +1,34 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - develop  # Auto-deploy when pushing to develop branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 95.130.227.200
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/greenengine/app
+            git pull origin develop
+            npm install
+            npm run db:push
+            npm run build
+            pm2 restart greenengine
+            pm2 status
+
+      - name: Deployment Status
+        if: success()
+        run: echo "✅ Deployment successful!"
+
+      - name: Deployment Failed
+        if: failure()
+        run: echo "❌ Deployment failed - check logs"
