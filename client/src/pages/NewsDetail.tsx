@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import PageHero from "@/components/layout/PageHero";
-import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar, ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { News } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,11 +12,10 @@ export default function NewsDetail() {
   const [, params] = useRoute("/news/:slug");
   const slug = params?.slug;
 
-  const { data: newsItems, isLoading } = useQuery<News[]>({
-    queryKey: ["/api/news"],
+  const { data: newsItem, isLoading } = useQuery<News>({
+    enabled: Boolean(slug),
+    queryKey: [slug ? `/api/news/slug/${slug}` : "/api/news/slug"],
   });
-
-  const newsItem = newsItems?.find((item) => item.slug === slug);
 
   if (isLoading) {
     return (
@@ -87,26 +86,55 @@ export default function NewsDetail() {
             </Card>
           )}
 
-          {newsItem.content && (
-            <Card>
-              <CardContent className="p-8">
-                <div
-                  className="prose prose-lg max-w-none text-foreground leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: newsItem.content }}
-                />
-              </CardContent>
-            </Card>
-          )}
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_320px]">
+            <div className="space-y-8">
+              {newsItem.content ? (
+                <Card>
+                  <CardContent className="p-8">
+                    <div
+                      className="prose prose-lg max-w-none text-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: newsItem.content }}
+                    />
+                  </CardContent>
+                </Card>
+              ) : null}
 
-          {!newsItem.content && !newsItem.excerpt && (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <p className="text-muted-foreground">
-                  No content available for this article.
-                </p>
-              </CardContent>
-            </Card>
-          )}
+              {!newsItem.content && !newsItem.excerpt ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <p className="text-muted-foreground">
+                      No content available for this article.
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : null}
+            </div>
+
+            {newsItem.attachments && newsItem.attachments.length > 0 ? (
+              <Card className="h-fit">
+                <CardHeader>
+                  <CardTitle className="text-xl">Downloads</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {newsItem.attachments.map((attachment, index) => (
+                    <a
+                      key={`${attachment.url}-${index}`}
+                      href={attachment.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between gap-3 rounded-2xl border bg-muted/20 px-4 py-3 transition hover:border-primary/40 hover:bg-muted/40"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-foreground">{attachment.name}</p>
+                        <p className="text-xs text-muted-foreground">{attachment.size}</p>
+                      </div>
+                      <Download className="h-4 w-4 text-primary" />
+                    </a>
+                  ))}
+                </CardContent>
+              </Card>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

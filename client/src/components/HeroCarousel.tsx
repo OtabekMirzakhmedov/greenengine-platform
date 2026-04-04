@@ -100,10 +100,14 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
               />
               
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/85 via-emerald-900/55 to-lime-950/75" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,247,208,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(163,230,53,0.14),transparent_28%)]" />
 
               {/* Content */}
               <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold tracking-[0.18em] text-white/90 backdrop-blur-md">
+                  Sustainable Innovation
+                </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-[1.1]">
                   {slide.title}
                 </h1>

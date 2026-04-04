@@ -1,5 +1,5 @@
 import { 
-  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, heroSections, homeActivityCards, activities, storyGalleries,
+  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, tenders, heroSections, homeActivityCards, activities, storyGalleries,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -9,18 +9,21 @@ import {
   type Partner, type InsertPartner,
   type Page, type InsertPage,
   type News, type InsertNews,
+  type Tender, type InsertTender,
   type HeroSection, type InsertHeroSection,
   type HomeActivityCard, type InsertHomeActivityCard,
   type Activity, type InsertActivity,
   type StoryGallery, type InsertStoryGallery,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, asc, and } from "drizzle-orm";
 
 type InstitutionRow = typeof institutions.$inferInsert;
 type EventRow = typeof events.$inferInsert;
 type ActivityRow = typeof activities.$inferInsert;
 type StoryGalleryRow = typeof storyGalleries.$inferInsert;
+type NewsRow = typeof news.$inferInsert;
+type TenderRow = typeof tenders.$inferInsert;
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -88,9 +91,18 @@ export interface IStorage {
   deletePartner(id: string): Promise<void>;
 
   getNews(): Promise<News[]>;
+  getPublishedNews(): Promise<News[]>;
+  getPublishedNewsBySlug(slug: string): Promise<News | undefined>;
   createNews(newsItem: InsertNews): Promise<News>;
   updateNews(id: string, newsItem: Partial<InsertNews>): Promise<News>;
   deleteNews(id: string): Promise<void>;
+
+  getTenders(): Promise<Tender[]>;
+  getPublishedTenders(): Promise<Tender[]>;
+  getPublishedTenderBySlug(slug: string): Promise<Tender | undefined>;
+  createTender(tender: InsertTender): Promise<Tender>;
+  updateTender(id: string, tender: Partial<InsertTender>): Promise<Tender>;
+  deleteTender(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -366,21 +378,71 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getNews(): Promise<News[]> {
-    return await db.select().from(news).orderBy(desc(news.publishedAt), desc(news.order));
+    return await db.select().from(news).orderBy(asc(news.order), desc(news.publishedAt), desc(news.updatedAt));
+  }
+
+  async getPublishedNews(): Promise<News[]> {
+    return await db
+      .select()
+      .from(news)
+      .where(eq(news.status, "published"))
+      .orderBy(asc(news.order), desc(news.publishedAt), desc(news.updatedAt));
+  }
+
+  async getPublishedNewsBySlug(slug: string): Promise<News | undefined> {
+    const [item] = await db
+      .select()
+      .from(news)
+      .where(and(eq(news.slug, slug), eq(news.status, "published")));
+    return item || undefined;
   }
 
   async createNews(newsItem: InsertNews): Promise<News> {
-    const [created] = await db.insert(news).values(newsItem).returning();
+    const [created] = await db.insert(news).values(newsItem as NewsRow).returning();
     return created;
   }
 
   async updateNews(id: string, newsItem: Partial<InsertNews>): Promise<News> {
-    const [updated] = await db.update(news).set(newsItem).where(eq(news.id, id)).returning();
+    const [updated] = await db.update(news).set(newsItem as Partial<NewsRow>).where(eq(news.id, id)).returning();
     return updated;
   }
 
   async deleteNews(id: string): Promise<void> {
     await db.delete(news).where(eq(news.id, id));
+  }
+
+  async getTenders(): Promise<Tender[]> {
+    return await db.select().from(tenders).orderBy(asc(tenders.order), desc(tenders.publishedAt), desc(tenders.updatedAt));
+  }
+
+  async getPublishedTenders(): Promise<Tender[]> {
+    return await db
+      .select()
+      .from(tenders)
+      .where(eq(tenders.status, "published"))
+      .orderBy(asc(tenders.order), desc(tenders.publishedAt), desc(tenders.updatedAt));
+  }
+
+  async getPublishedTenderBySlug(slug: string): Promise<Tender | undefined> {
+    const [item] = await db
+      .select()
+      .from(tenders)
+      .where(and(eq(tenders.slug, slug), eq(tenders.status, "published")));
+    return item || undefined;
+  }
+
+  async createTender(tender: InsertTender): Promise<Tender> {
+    const [created] = await db.insert(tenders).values(tender as TenderRow).returning();
+    return created;
+  }
+
+  async updateTender(id: string, tender: Partial<InsertTender>): Promise<Tender> {
+    const [updated] = await db.update(tenders).set(tender as Partial<TenderRow>).where(eq(tenders.id, id)).returning();
+    return updated;
+  }
+
+  async deleteTender(id: string): Promise<void> {
+    await db.delete(tenders).where(eq(tenders.id, id));
   }
 }
 

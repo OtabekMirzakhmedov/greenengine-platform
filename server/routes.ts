@@ -16,6 +16,7 @@ import {
   insertHomeActivityCardSchema,
   insertNewsSchema,
   insertPartnerSchema,
+  insertTenderSchema,
   insertStoryGallerySchema,
   updateActivitySchema,
   updateActionPlanSchema,
@@ -23,6 +24,7 @@ import {
   updateHomeActivityCardSchema,
   updateNewsSchema,
   updatePartnerSchema,
+  updateTenderSchema,
   updateStoryGallerySchema,
 } from "@shared/schema";
 
@@ -705,10 +707,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/news", async (req, res) => {
     try {
-      const news = await storage.getNews();
+      const news = await storage.getPublishedNews();
       res.json(news);
     } catch (error) {
       console.error("Get news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/news/slug/:slug", async (req, res) => {
+    try {
+      const newsItem = await storage.getPublishedNewsBySlug(req.params.slug);
+      if (!newsItem) {
+        return res.status(404).json({ message: "News item not found" });
+      }
+      res.json(newsItem);
+    } catch (error) {
+      console.error("Get news detail error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/news", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const news = await storage.getNews();
+      res.json(news);
+    } catch (error) {
+      console.error("Get admin news error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
@@ -754,6 +779,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "News deleted successfully" });
     } catch (error) {
       console.error("Delete news error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/tenders", async (req, res) => {
+    try {
+      const tenders = await storage.getPublishedTenders();
+      res.json(tenders);
+    } catch (error) {
+      console.error("Get tenders error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/tenders/slug/:slug", async (req, res) => {
+    try {
+      const tender = await storage.getPublishedTenderBySlug(req.params.slug);
+      if (!tender) {
+        return res.status(404).json({ message: "Tender not found" });
+      }
+      res.json(tender);
+    } catch (error) {
+      console.error("Get tender detail error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/tenders", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const tenders = await storage.getTenders();
+      res.json(tenders);
+    } catch (error) {
+      console.error("Get admin tenders error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/tenders", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertTenderSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors
+        });
+      }
+      const tender = await storage.createTender(validation.data);
+      res.status(201).json(tender);
+    } catch (error) {
+      console.error("Create tender error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/tenders/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updateTenderSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors
+        });
+      }
+
+      const tender = await storage.updateTender(req.params.id, validation.data);
+      res.json(tender);
+    } catch (error) {
+      console.error("Update tender error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/tenders/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteTender(req.params.id);
+      res.json({ message: "Tender deleted successfully" });
+    } catch (error) {
+      console.error("Delete tender error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
