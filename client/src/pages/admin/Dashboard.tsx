@@ -10,17 +10,17 @@ import {
   Users,
   Calendar,
   FileText,
-  BarChart3,
   FolderOpen,
-  Building2,
   LogOut,
   ChevronRight,
   Shield,
   Newspaper,
   Images,
   Grid3X3,
-  Camera,
+  BriefcaseBusiness,
 } from "lucide-react";
+
+const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -70,22 +70,6 @@ export default function Dashboard() {
       bgColor: "bg-cyan-500/10",
     },
     {
-      title: "Institutions",
-      icon: Building2,
-      href: "/admin/institutions",
-      description: "Institution stories and profiles",
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      title: "Stories Galleries",
-      icon: Camera,
-      href: "/admin/story-galleries",
-      description: "Grouped photo galleries for the Stories section",
-      color: "text-sky-500",
-      bgColor: "bg-sky-500/10",
-    },
-    {
       title: "Events",
       icon: Calendar,
       href: "/admin/events",
@@ -100,14 +84,6 @@ export default function Dashboard() {
       description: "Strategic implementation plans",
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
-    },
-    {
-      title: "Infographics",
-      icon: BarChart3,
-      href: "/admin/infographics",
-      description: "Visual reports and data",
-      color: "text-pink-500",
-      bgColor: "bg-pink-500/10",
     },
     {
       title: "Community Plans",
@@ -129,9 +105,17 @@ export default function Dashboard() {
       title: "News",
       icon: Newspaper,
       href: "/admin/news",
-      description: "Latest news and articles",
+      description: "Latest news, publishing status, and downloadable assets",
       color: "text-rose-500",
       bgColor: "bg-rose-500/10",
+    },
+    {
+      title: "Tenders",
+      icon: BriefcaseBusiness,
+      href: "/admin/tenders",
+      description: "Tender notices, procurement files, and publish controls",
+      color: "text-amber-600",
+      bgColor: "bg-amber-500/10",
     },
   ];
 
@@ -142,9 +126,11 @@ export default function Dashboard() {
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Shield className="h-5 w-5 text-primary" />
-                </div>
+                <img
+                  src={brandLogoUrl}
+                  alt="GREENENGINE Logo"
+                  className="h-12 w-auto max-w-[180px] object-contain"
+                />
                 <div>
                   <h1 className="text-2xl font-bold text-foreground">GREENENGINE CMS</h1>
                   <p className="text-sm text-muted-foreground">Content Management System</p>

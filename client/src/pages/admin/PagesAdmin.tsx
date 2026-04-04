@@ -26,6 +26,8 @@ export default function PagesAdmin() {
     queryKey: ["/api/pages"],
   });
 
+  const visiblePages = pages?.filter((page) => page.slug !== "passport-mooc" && page.slug !== "mooc" && page.slug !== "iacd-mooc") ?? [];
+
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       return apiRequest("DELETE", `/api/pages/${id}`);
@@ -75,7 +77,7 @@ export default function PagesAdmin() {
               <Skeleton key={i} className="h-32 w-full" />
             ))}
           </div>
-        ) : !pages || pages.length === 0 ? (
+        ) : visiblePages.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
               <p className="text-muted-foreground mb-4">No pages found</p>
@@ -87,7 +89,7 @@ export default function PagesAdmin() {
           </Card>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {pages.map((page) => (
+            {visiblePages.map((page) => (
               <Card key={page.id} className="hover-elevate" data-testid={`card-page-${page.slug}`}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-2">
                   <CardTitle className="text-lg font-semibold line-clamp-1">

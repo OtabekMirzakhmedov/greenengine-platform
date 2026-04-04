@@ -11,8 +11,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import logoImage from "@assets/green-logo.png";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
+
+const flagImageUrl = "/attached_assets/flag-collage.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -22,7 +24,6 @@ const aboutLinks = [
 
 const passportLinks = [
   { title: "Overview", href: "/passport" },
-  { title: "IACD MOOC", href: "/passport/mooc" },
   { title: "Digital Storytelling", href: "/passport/storytelling" },
 ];
 
@@ -58,9 +59,9 @@ export default function Header() {
               data-testid="link-home"
             >
               <img
-                src={logoImage}
+                src={brandLogoUrl}
                 alt="GREENENGINE Logo"
-                className="h-16 w-auto object-contain sm:h-20 lg:h-24"
+                className="h-[4.75rem] w-auto max-w-[260px] object-contain sm:h-[5.5rem] sm:max-w-[320px] lg:h-[6.4rem] lg:max-w-[390px]"
               />
             </Link>
 
@@ -69,6 +70,14 @@ export default function Header() {
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
                 className="h-10 w-auto max-w-[180px] object-contain 2xl:h-12 2xl:max-w-[210px]"
+              />
+            </div>
+
+            <div className="hidden min-[1320px]:flex items-center border-l border-border/80 pl-3 2xl:pl-4">
+              <img
+                src={flagImageUrl}
+                alt="Partner country and EU flags"
+                className="h-16 w-auto rounded-xl object-cover shadow-sm 2xl:h-[4.5rem]"
               />
             </div>
 
@@ -141,13 +150,13 @@ export default function Header() {
               </Link>
 
               <Link 
-                href="/stories"
+                href="/news"
                 className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/stories") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                  location.startsWith("/news") ? "bg-accent text-accent-foreground" : "text-foreground/80"
                 }`}
-                data-testid="link-nav-stories"
+                data-testid="link-nav-news"
               >
-                Stories
+                News
               </Link>
 
               <Link 
@@ -161,6 +170,16 @@ export default function Header() {
               </Link>
 
               <Link 
+                href="/tenders"
+                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
+                  location.startsWith("/tenders") ? "bg-accent text-accent-foreground" : "text-foreground/80"
+                }`}
+                data-testid="link-nav-tenders"
+              >
+                Tenders
+              </Link>
+
+              <Link 
                 href="/action-plans"
                 className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
                   location.startsWith("/action-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
@@ -168,16 +187,6 @@ export default function Header() {
                 data-testid="link-nav-action-plans"
               >
                 Action
-              </Link>
-
-              <Link 
-                href="/infographics"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/infographics") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
-                data-testid="link-nav-infographics"
-              >
-                Infographics
               </Link>
 
               <Link 
@@ -193,6 +202,14 @@ export default function Header() {
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-3 2xl:gap-4">
+            <div className="hidden sm:flex min-[1320px]:hidden items-center">
+              <img
+                src={flagImageUrl}
+                alt="Partner country and EU flags"
+                className="h-12 w-auto rounded-lg object-cover shadow-sm"
+              />
+            </div>
+
             <div className="hidden min-[1500px]:flex items-center gap-3 2xl:gap-4">
               <a
                 href="https://www.facebook.com/profile.php?id=61586359144401"
@@ -279,24 +296,24 @@ export default function Header() {
                 ))}
               </div>
 
-              <Link href="/stories" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-stories">
-                Stories
-              </Link>
-
               <Link href="/activities" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-activities">
                 Activities
+              </Link>
+
+              <Link href="/news" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-news">
+                News
               </Link>
 
               <Link href="/events" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">
                 Events
               </Link>
 
-              <Link href="/action-plans" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
-                Action
+              <Link href="/tenders" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-tenders">
+                Tenders
               </Link>
 
-              <Link href="/infographics" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-infographics">
-                Infographics
+              <Link href="/action-plans" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
+                Action
               </Link>
 
               <Link href="/partners" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-partners">

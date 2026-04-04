@@ -11,6 +11,7 @@ import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
 import heroImage4 from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
+import logoImage from "/attached_assets/greenengine-logo-new.jpg";
 
 export default function Home() {
   const { data: newsData } = useQuery<News[]>({
@@ -83,48 +84,101 @@ export default function Home() {
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
 
-      <section className="relative overflow-hidden py-20 md:py-24">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10 opacity-50"></div>
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-primary rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-20 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f5fbf5_0%,#edf7ee_42%,#ffffff_100%)] py-20 md:py-28">
+        <div className="absolute inset-0">
+          <div className="absolute left-[-8rem] top-16 h-72 w-72 rounded-full bg-primary/12 blur-3xl" />
+          <div className="absolute right-[-5rem] top-10 h-64 w-64 rounded-full bg-accent/25 blur-3xl" />
+          <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-emerald-200/30 blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_1px_1px,hsl(var(--primary))_1px,transparent_0)] [background-size:28px_28px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              ERASMUS-EDU-2023-CBHE-STRAND-2 / Project Number: 101236240
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
+            <div className="max-w-3xl">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white/80 px-4 py-2 text-sm font-semibold text-primary shadow-sm backdrop-blur-sm">
+                <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+                ERASMUS-EDU-2025-CBHE-STRAND-2 / Project Number: 101236240
+              </div>
+              <h2 className="font-serif text-4xl font-semibold leading-tight text-foreground md:text-6xl">
+                Engineering education with a greener, more human-centered future in mind.
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
+                GREENENGINE modernizes engineering education through sustainability, creative problem solving, and intercultural collaboration, preparing students to build resilient systems and environmentally responsible solutions.
+              </p>
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <Link href="/about">
+                  <Button size="lg" className="w-full rounded-full px-7 shadow-[0_16px_36px_rgba(43,116,70,0.18)] sm:w-auto" data-testid="button-home-about">
+                    Discover the Mission
+                  </Button>
+                </Link>
+                <Link href="/activities">
+                  <Button variant="outline" size="lg" className="w-full rounded-full border-primary/25 bg-white/80 px-7 text-primary hover:bg-primary/5 sm:w-auto" data-testid="button-home-activities">
+                    Explore Activities
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Fostering Creative Engineering for a Sustainable Green World
-            </h2>
-            <p className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-              GreenEngine aims to develop a new generation of engineers through modernization of engineering education by integrating sustainability principles, green practices and soft skills, while fostering creativity, innovation and social responsibility among students.
-            </p>
+
+            <div className="relative">
+              <div className="absolute -left-6 top-8 hidden h-28 w-28 rounded-full bg-accent/40 blur-2xl md:block" />
+              <div className="absolute -bottom-8 right-10 hidden h-32 w-32 rounded-full bg-primary/20 blur-3xl md:block" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_30px_90px_rgba(40,89,57,0.14)] backdrop-blur-xl">
+                <div className="grid gap-4">
+                  <div className="flex items-center justify-between gap-4 rounded-[1.5rem] bg-[linear-gradient(135deg,rgba(31,104,57,0.96),rgba(65,143,91,0.92))] px-6 py-5 text-white shadow-lg">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Green Identity</p>
+                      <p className="mt-2 text-2xl font-semibold">Sustainable innovation ecosystem</p>
+                    </div>
+                    <img src={logoImage} alt="GREENENGINE brand mark" className="h-16 w-auto object-contain opacity-95" />
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-[1.5rem] border border-primary/10 bg-secondary/65 p-5">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Primary</p>
+                      <p className="mt-3 text-base font-medium text-foreground">Deep Forest Green</p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Core actions, buttons, hero labels, and key emphasis.</p>
+                    </div>
+                    <div className="rounded-[1.5rem] border border-primary/10 bg-white p-5">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Secondary</p>
+                      <p className="mt-3 text-base font-medium text-foreground">Soft Botanical Green</p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Section backgrounds, cards, and calm supporting surfaces.</p>
+                    </div>
+                    <div className="rounded-[1.5rem] border border-primary/10 bg-accent/35 p-5 sm:col-span-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Accent</p>
+                      <p className="mt-3 text-base font-medium text-foreground">Eco Lime Highlight</p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Subtle gradients, environmental highlights, and warm contrast for innovation cues.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {activitiesToDisplay.length > 0 ? (
-            <div className="rounded-[2rem] border border-white/60 bg-white/60 px-6 py-10 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm md:px-8 lg:px-10">
-              <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="mt-16 rounded-[2.25rem] border border-primary/10 bg-white/80 px-6 py-10 shadow-[0_34px_90px_rgba(31,65,43,0.12)] backdrop-blur-xl md:px-8 lg:px-10">
+              <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-2xl">
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-                    <span className="h-2 w-2 rounded-full bg-primary" />
-                    Dynamic Activities Module
+                    <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+                    Sustainability Action Hub
                   </div>
                   <h2 className="text-3xl font-bold text-foreground md:text-4xl">Work Packages</h2>
-                  <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Explore the latest three work packages published in the Activities module. Each card opens its dedicated activity page with full content, visuals, and supporting materials.
+                  <p className="mt-3 text-base leading-7 text-muted-foreground md:text-lg">
+                    Three dynamic activity cards surface the current work packages shaping GREENENGINE, from institutional transformation to collaborative sustainability practices.
                   </p>
                 </div>
+                <Link href="/activities">
+                  <Button variant="outline" className="w-full rounded-full border-primary/20 bg-secondary/55 text-primary hover:bg-primary/5 lg:w-auto">
+                    View All Activities
+                  </Button>
+                </Link>
               </div>
 
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
                 {activitiesToDisplay.map((activity) => (
                   <Link key={activity.id} href={`/activities/${activity.slug}`}>
                     <div
-                      className="group relative h-[430px] cursor-pointer overflow-hidden rounded-[1.75rem] border border-white/20 bg-slate-950 shadow-[0_20px_60px_rgba(15,23,42,0.18)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_80px_rgba(15,23,42,0.28)]"
+                      className="group relative h-[440px] cursor-pointer overflow-hidden rounded-[1.9rem] border border-emerald-950/10 bg-emerald-950 shadow-[0_24px_70px_rgba(17,24,39,0.16)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_90px_rgba(17,24,39,0.22)]"
                       data-testid={`card-feature-${activity.title.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       <img
@@ -133,11 +187,12 @@ export default function Home() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/15 via-slate-950/45 to-slate-950/95 transition-all duration-500 group-hover:from-emerald-400/25 group-hover:via-slate-950/55 group-hover:to-slate-950/98" />
-                      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/10 to-transparent opacity-70" />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(22,52,32,0.10)_0%,rgba(21,78,39,0.38)_35%,rgba(5,25,13,0.92)_100%)]" />
+                      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-lime-100/20 to-transparent" />
 
                       <div className="absolute inset-0 flex flex-col justify-end p-8">
-                        <div className="mb-5 inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/85 backdrop-blur-md">
+                        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
+                          <span className="h-2 w-2 rounded-full bg-lime-300" />
                           Work Package
                         </div>
 
@@ -145,26 +200,26 @@ export default function Home() {
                           {activity.title}
                         </h3>
 
-                        <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-white/85 transition-colors duration-500 group-hover:text-white">
+                        <p className="mb-6 line-clamp-3 text-sm leading-7 text-white/84 transition-colors duration-500 group-hover:text-white">
                           {activity.description}
                         </p>
 
-                        <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                          <span className="rounded-full bg-white/10 px-4 py-2 backdrop-blur-md transition-colors duration-300 group-hover:bg-white/20">
+                        <div className="flex items-center gap-3 text-sm font-semibold text-white">
+                          <span className="rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-lg shadow-primary/20 transition-colors duration-300 group-hover:bg-lime-400 group-hover:text-emerald-950">
                             {activity.ctaText || "Read Activity"}
                           </span>
                           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
                         </div>
                       </div>
 
-                      <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-emerald-300/20 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-lime-300/25 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
                     </div>
                   </Link>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-border/80 bg-background/70 px-8 py-16 text-center">
+            <div className="mt-16 rounded-[2rem] border border-dashed border-primary/20 bg-white/75 px-8 py-16 text-center shadow-sm">
               <h2 className="mb-3 text-3xl font-bold text-foreground">Work Packages</h2>
               <p className="mx-auto mb-4 max-w-2xl text-muted-foreground">
                 This section shows only activity cards from the Activities module.
@@ -177,51 +232,90 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">About the Project</h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                GREENENGINE is an international educational initiative co-funded by the European Union's Erasmus+ Programme, bringing together universities and institutions from Central Asia, Georgia, and Europe to foster intercultural competence, sustainable development, and collaborative innovation in higher education.
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#f4faf4_100%)] py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+            <div className="relative order-2 lg:order-1">
+              <div className="absolute -left-4 top-10 hidden h-24 w-24 rounded-full bg-primary/10 blur-2xl md:block" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-primary/10 shadow-[0_24px_80px_rgba(44,94,60,0.14)]">
+                <img
+                  src={sustainabilityImage}
+                  alt="Sustainable green energy and environmental innovation"
+                  className="h-[430px] w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/30 via-transparent to-lime-100/10" />
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <div className="mb-4 inline-flex rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-primary">
+                About the Project
+              </div>
+              <h2 className="text-3xl font-bold leading-tight text-foreground md:text-5xl">
+                A collaborative model for green transformation in higher education.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                GREENENGINE connects universities and institutions across Central Asia, Georgia, and Europe to strengthen sustainability literacy, engineering quality, and intercultural competence through applied learning and innovation.
               </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-[1.5rem] border border-primary/10 bg-white p-5 shadow-sm">
+                  <p className="text-sm font-semibold text-primary">Mission</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">Embed environmental responsibility and future-ready skills into engineering education.</p>
+                </div>
+                <div className="rounded-[1.5rem] border border-primary/10 bg-white p-5 shadow-sm">
+                  <p className="text-sm font-semibold text-primary">Impact</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">Support institutions with modern methods, collaboration, and innovation across regions.</p>
+                </div>
+              </div>
+
               <Link href="/about">
-                <Button variant="outline" size="lg" data-testid="button-read-more-about">
+                <Button variant="outline" size="lg" className="mt-8 rounded-full border-primary/25 bg-white px-7 text-primary hover:bg-primary/5" data-testid="button-read-more-about">
                   Read More About GREENENGINE
                 </Button>
               </Link>
-            </div>
-            <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg">
-              <img
-                src={sustainabilityImage}
-                alt="Sustainable green energy and environmental innovation"
-                className="w-full h-full object-cover"
-              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] rounded-md overflow-hidden shadow-lg order-2 md:order-1">
-              <img
-                src={collaborationImage}
-                alt="Diverse students collaborating on sustainable development"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="order-1 md:order-2">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Partner Institutions</h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Collaborating with leading universities and institutions across three continents to advance intercultural education and sustainable development through innovative partnerships and shared learning experiences.
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#10351f_0%,#184c2d_45%,#215f39_100%)] py-16 text-white md:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(190,242,100,0.16),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(187,247,208,0.12),transparent_32%)]" />
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+            <div>
+              <div className="mb-4 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur-sm">
+                International Collaboration
+              </div>
+              <h2 className="text-3xl font-bold leading-tight md:text-5xl">
+                Partner institutions advancing sustainable change together.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-white/80">
+                The network behind GREENENGINE brings together universities, educators, and innovators who are shaping greener curricula, stronger partnerships, and practical transformation in engineering and environmental fields.
               </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <span className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/85">Cross-regional expertise</span>
+                <span className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/85">Applied sustainability</span>
+                <span className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/85">Research collaboration</span>
+              </div>
+
               <Link href="/partners">
-                <Button variant="default" size="lg" data-testid="button-view-partners">
+                <Button size="lg" className="mt-8 rounded-full bg-white px-7 text-primary hover:bg-lime-50" data-testid="button-view-partners">
                   View All Partners
                 </Button>
               </Link>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -right-6 top-6 hidden h-24 w-24 rounded-full bg-lime-200/20 blur-2xl md:block" />
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.28)]">
+                <img
+                  src={collaborationImage}
+                  alt="Diverse students collaborating on sustainable development"
+                  className="h-[430px] w-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>

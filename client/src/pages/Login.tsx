@@ -8,6 +8,8 @@ import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { Lock } from "lucide-react";
 
+const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+
 export default function Login() {
   const [, setLocation] = useLocation();
   const { login, user } = useAuth();
@@ -47,6 +49,11 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-muted/30 px-6 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
+          <img
+            src={brandLogoUrl}
+            alt="GREENENGINE Logo"
+            className="mx-auto mb-5 h-20 w-auto max-w-[300px] object-contain sm:h-24"
+          />
           <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <Lock className="h-8 w-8 text-primary" />
           </div>

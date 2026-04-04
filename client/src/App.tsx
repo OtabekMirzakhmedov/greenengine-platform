@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/auth";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import SiteFooter from "@/components/layout/SiteFooter";
 import Home from "@/pages/Home";
 import ActivitiesPage from "@/pages/Activities";
 import ActivityDetail from "@/pages/ActivityDetail";
@@ -14,31 +14,27 @@ import About from "@/pages/about/About";
 import Goals from "@/pages/about/Goals";
 import Management from "@/pages/about/Management";
 import Passport from "@/pages/passport/Passport";
-import MOOC from "@/pages/passport/MOOC";
 import Storytelling from "@/pages/passport/Storytelling";
-import Stories from "@/pages/Stories";
-import StoryDetail from "@/pages/StoryDetail";
 import Events from "@/pages/Events";
 import EventDetail from "@/pages/EventDetail";
 import ActionPlans from "@/pages/ActionPlans";
-import Infographics from "@/pages/Infographics";
 import CommunityPlans from "@/pages/CommunityPlans";
 import Partners from "@/pages/Partners";
 import NewsPage from "@/pages/News";
 import NewsDetail from "@/pages/NewsDetail";
+import TendersPage from "@/pages/Tenders";
+import TenderDetail from "@/pages/TenderDetail";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import ActivitiesAdmin from "@/pages/admin/ActivitiesAdmin";
-import StoryGalleriesAdmin from "@/pages/admin/StoryGalleriesAdmin";
 import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
-import InstitutionsAdmin from "@/pages/admin/InstitutionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
 import EventsAdmin from "@/pages/admin/EventsAdmin";
 import ActionPlansAdmin from "@/pages/admin/ActionPlansAdmin";
-import InfographicsAdmin from "@/pages/admin/InfographicsAdmin";
 import CommunityPlansAdmin from "@/pages/admin/CommunityPlansAdmin";
 import PartnersAdmin from "@/pages/admin/PartnersAdmin";
 import NewsAdmin from "@/pages/admin/NewsAdmin";
+import TendersAdmin from "@/pages/admin/TendersAdmin";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -46,7 +42,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1">{children}</main>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
@@ -118,34 +114,10 @@ function Router() {
         )}
       </Route>
 
-      <Route path="/passport/mooc">
-        {() => (
-          <PublicLayout>
-            <MOOC />
-          </PublicLayout>
-        )}
-      </Route>
-
       <Route path="/passport/storytelling">
         {() => (
           <PublicLayout>
             <Storytelling />
-          </PublicLayout>
-        )}
-      </Route>
-
-      <Route path="/stories">
-        {() => (
-          <PublicLayout>
-            <Stories />
-          </PublicLayout>
-        )}
-      </Route>
-
-      <Route path="/stories/:slug">
-        {() => (
-          <PublicLayout>
-            <StoryDetail />
           </PublicLayout>
         )}
       </Route>
@@ -170,14 +142,6 @@ function Router() {
         {() => (
           <PublicLayout>
             <ActionPlans />
-          </PublicLayout>
-        )}
-      </Route>
-
-      <Route path="/infographics">
-        {() => (
-          <PublicLayout>
-            <Infographics />
           </PublicLayout>
         )}
       </Route>
@@ -214,20 +178,28 @@ function Router() {
         )}
       </Route>
 
+      <Route path="/tenders">
+        {() => (
+          <PublicLayout>
+            <TendersPage />
+          </PublicLayout>
+        )}
+      </Route>
+
+      <Route path="/tenders/:slug">
+        {() => (
+          <PublicLayout>
+            <TenderDetail />
+          </PublicLayout>
+        )}
+      </Route>
+
       <Route path="/login" component={Login} />
 
       <Route path="/admin">
         {() => (
           <ProtectedRoute>
             <Dashboard />
-          </ProtectedRoute>
-        )}
-      </Route>
-
-      <Route path="/admin/institutions">
-        {() => (
-          <ProtectedRoute>
-            <InstitutionsAdmin />
           </ProtectedRoute>
         )}
       </Route>
@@ -244,14 +216,6 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <ActivitiesAdmin />
-          </ProtectedRoute>
-        )}
-      </Route>
-
-      <Route path="/admin/story-galleries">
-        {() => (
-          <ProtectedRoute>
-            <StoryGalleriesAdmin />
           </ProtectedRoute>
         )}
       </Route>
@@ -280,14 +244,6 @@ function Router() {
         )}
       </Route>
 
-      <Route path="/admin/infographics">
-        {() => (
-          <ProtectedRoute>
-            <InfographicsAdmin />
-          </ProtectedRoute>
-        )}
-      </Route>
-
       <Route path="/admin/community-plans">
         {() => (
           <ProtectedRoute>
@@ -308,6 +264,14 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <NewsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/tenders">
+        {() => (
+          <ProtectedRoute>
+            <TendersAdmin />
           </ProtectedRoute>
         )}
       </Route>

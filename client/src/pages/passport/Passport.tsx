@@ -2,23 +2,23 @@ import PageHero from "@/components/layout/PageHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { BookOpen, Video, Award, Globe } from "lucide-react";
+import { Video, Award, Globe, Compass } from "lucide-react";
 
 export default function Passport() {
   const components = [
-    {
-      icon: BookOpen,
-      title: "IACD MOOC",
-      description:
-        "Comprehensive online course on Intercultural Awareness and Communication Development, featuring 10+ interactive modules designed to build essential intercultural competencies.",
-      href: "/passport/mooc",
-    },
     {
       icon: Video,
       title: "Digital Storytelling",
       description:
         "Innovative methodology combining personal narratives with digital media, enabling students to share cultural experiences and develop creative communication skills.",
       href: "/passport/storytelling",
+    },
+    {
+      icon: Compass,
+      title: "Intercultural Learning Journey",
+      description:
+        "A guided passport experience focused on reflection, dialogue, collaborative tasks, and practical global citizenship skills across diverse academic contexts.",
+      href: "/passport",
     },
   ];
 
@@ -100,7 +100,7 @@ export default function Passport() {
 
               <div className="flex items-start gap-4">
                 <div className="h-10 w-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="h-5 w-5 text-primary" />
+                  <Compass className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2 text-foreground">Critical Thinking</h3>

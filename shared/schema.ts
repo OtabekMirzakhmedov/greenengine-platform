@@ -160,9 +160,25 @@ export const news = sqliteTable("news", {
   excerpt: text("excerpt"),
   content: text("content"),
   imageUrl: text("image_url"),
+  attachments: text("attachments", { mode: "json" }).$type<Array<{ name: string; url: string; size: string }>>().default(sql`'[]'`),
+  status: text("status").notNull().default("published"),
   publishedAt: integer("published_at", { mode: 'timestamp' }).notNull(),
   order: integer("order").notNull().default(0),
   updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
+});
+
+export const tenders = sqliteTable("tenders", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  imageUrl: text("image_url"),
+  attachments: text("attachments", { mode: "json" }).$type<Array<{ name: string; url: string; size: string }>>().default(sql`'[]'`),
+  status: text("status").notNull().default("draft"),
+  publishedAt: integer("published_at", { mode: "timestamp" }).notNull(),
+  order: integer("order").notNull().default(0),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
@@ -240,6 +256,17 @@ export const updateNewsSchema = insertNewsSchema.partial().superRefine((data, ct
     });
   }
 });
+export const insertTenderSchema = createInsertSchema(tenders).omit({ id: true, updatedAt: true }).extend({
+  publishedAt: z.coerce.date(),
+});
+export const updateTenderSchema = insertTenderSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update"
+    });
+  }
+});
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -267,3 +294,5 @@ export type InsertPartner = z.infer<typeof insertPartnerSchema>;
 export type Partner = typeof partners.$inferSelect;
 export type InsertNews = z.infer<typeof insertNewsSchema>;
 export type News = typeof news.$inferSelect;
+export type InsertTender = z.infer<typeof insertTenderSchema>;
+export type Tender = typeof tenders.$inferSelect;
