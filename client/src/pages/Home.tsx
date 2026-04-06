@@ -1,10 +1,9 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import HeroCarousel, { HeroSlide } from "@/components/HeroCarousel";
 import NewsCarousel from "@/components/NewsCarousel";
 import { useQuery } from "@tanstack/react-query";
-import type { Activity, HeroSection, News } from "@shared/schema";
+import type { HeroSection, News } from "@shared/schema";
 import heroImage1 from "@assets/stock_images/green_forest_nature__56ef692b.jpg";
 import heroImage2 from "@assets/stock_images/sustainable_green_ed_e49cdfda.jpg";
 import heroImage3 from "@assets/stock_images/environmental_sustai_b0941dde.jpg";
@@ -18,9 +17,6 @@ export default function Home() {
   });
   const { data: heroSections } = useQuery<HeroSection[]>({
     queryKey: ["/api/hero-sections"],
-  });
-  const { data: activities } = useQuery<Activity[]>({
-    queryKey: ["/api/activities"],
   });
 
   const fallbackHeroSlides: HeroSlide[] = [
@@ -76,97 +72,11 @@ export default function Home() {
         }))
       : fallbackHeroSlides;
 
-  const activitiesToDisplay = activities?.slice(0, 3) ?? [];
-
   return (
     <div className="flex flex-col">
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
-
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f5fbf5_0%,#edf7ee_38%,#ffffff_100%)] py-14 md:py-18">
-        <div className="absolute inset-0">
-          <div className="absolute left-[-8rem] top-8 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-          <div className="absolute right-[-5rem] top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          {activitiesToDisplay.length > 0 ? (
-            <div className="rounded-[2.25rem] border border-primary/10 bg-white/80 px-6 py-10 shadow-[0_34px_90px_rgba(31,65,43,0.12)] backdrop-blur-xl md:px-8 lg:px-10">
-              <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-2xl">
-                  <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-                    <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-                    Sustainability Action Hub
-                  </div>
-                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">Work Packages</h2>
-                  <p className="mt-3 text-base leading-7 text-muted-foreground md:text-lg">
-                    Three dynamic activity cards surface the current work packages shaping GREENENGINE, from institutional transformation to collaborative sustainability practices.
-                  </p>
-                </div>
-                <Link href="/activities">
-                  <Button variant="outline" className="w-full rounded-full border-primary/20 bg-secondary/55 text-primary hover:bg-primary/5 lg:w-auto">
-                    View All Activities
-                  </Button>
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-                {activitiesToDisplay.map((activity) => (
-                  <Link key={activity.id} href={`/activities/${activity.slug}`}>
-                    <div
-                      className="group relative h-[440px] cursor-pointer overflow-hidden rounded-[1.9rem] border border-emerald-950/10 bg-emerald-950 shadow-[0_24px_70px_rgba(17,24,39,0.16)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_90px_rgba(17,24,39,0.22)]"
-                      data-testid={`card-feature-${activity.title.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      <img
-                        src={activity.imageUrl}
-                        alt={activity.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(22,52,32,0.10)_0%,rgba(21,78,39,0.38)_35%,rgba(5,25,13,0.92)_100%)]" />
-                      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-lime-100/20 to-transparent" />
-
-                      <div className="absolute inset-0 flex flex-col justify-end p-8">
-                        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
-                          <span className="h-2 w-2 rounded-full bg-lime-300" />
-                          Work Package
-                        </div>
-
-                        <h3 className="mb-3 text-2xl font-bold text-white transition-transform duration-500 group-hover:-translate-y-1">
-                          {activity.title}
-                        </h3>
-
-                        <p className="mb-6 line-clamp-3 text-sm leading-7 text-white/84 transition-colors duration-500 group-hover:text-white">
-                          {activity.description}
-                        </p>
-
-                        <div className="flex items-center gap-3 text-sm font-semibold text-white">
-                          <span className="rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-lg shadow-primary/20 transition-colors duration-300 group-hover:bg-lime-400 group-hover:text-emerald-950">
-                            {activity.ctaText || "Read Activity"}
-                          </span>
-                          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
-                        </div>
-                      </div>
-
-                      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-lime-300/25 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="mt-16 rounded-[2rem] border border-dashed border-primary/20 bg-white/75 px-8 py-16 text-center shadow-sm">
-              <h2 className="mb-3 text-3xl font-bold text-foreground">Work Packages</h2>
-              <p className="mx-auto mb-4 max-w-2xl text-muted-foreground">
-                This section shows only activity cards from the Activities module.
-              </p>
-              <p className="mx-auto max-w-2xl text-muted-foreground">
-                Add published activities in the admin panel to display the latest three work packages here automatically.
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+      {newsData && newsData.length > 0 ? <NewsCarousel news={newsData.slice(0, 6)} /> : null}
 
       <section className="bg-[linear-gradient(180deg,#ffffff_0%,#f4faf4_100%)] py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -256,10 +166,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {newsData && newsData.length > 0 && (
-        <NewsCarousel news={newsData.slice(0, 6)} />
-      )}
     </div>
   );
 }

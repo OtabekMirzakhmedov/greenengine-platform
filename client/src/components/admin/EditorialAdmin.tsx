@@ -51,6 +51,8 @@ interface EditorialAdminProps {
   pluralLabel: string;
   endpoint: "/api/news" | "/api/tenders";
   adminEndpoint: "/api/admin/news" | "/api/admin/tenders";
+  sectionLabel?: string;
+  highlights?: string[];
 }
 
 const emptyFormData: EditorialFormData = {
@@ -66,7 +68,7 @@ const emptyFormData: EditorialFormData = {
 };
 
 export default function EditorialAdmin(props: EditorialAdminProps) {
-  const { title, description, singularLabel, pluralLabel, endpoint, adminEndpoint } = props;
+  const { title, description, singularLabel, pluralLabel, endpoint, adminEndpoint, sectionLabel, highlights = [] } = props;
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -245,6 +247,27 @@ export default function EditorialAdmin(props: EditorialAdminProps) {
       </header>
 
       <div className="mx-auto max-w-7xl px-6 py-10">
+        {sectionLabel ? (
+          <Card className="overflow-hidden border-primary/10 bg-[linear-gradient(135deg,rgba(16,53,31,0.96),rgba(33,95,57,0.96))] text-white shadow-[0_24px_70px_rgba(16,53,31,0.28)]">
+            <CardContent className="grid gap-6 p-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:p-8">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.26em] text-white/70">{sectionLabel}</p>
+                <h2 className="mt-3 text-2xl font-semibold md:text-3xl">{title}</h2>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80">{description}</p>
+              </div>
+              {highlights.length > 0 ? (
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {highlights.map((highlight) => (
+                    <div key={highlight} className="rounded-2xl border border-white/12 bg-white/10 px-4 py-4 text-sm leading-6 text-white/85 backdrop-blur-sm">
+                      {highlight}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </CardContent>
+          </Card>
+        ) : null}
+
         <div className="grid gap-4 md:grid-cols-3">
           <Card><CardHeader className="pb-2"><CardDescription>Total {pluralLabel}</CardDescription><CardTitle className="text-3xl">{items?.length ?? 0}</CardTitle></CardHeader></Card>
           <Card><CardHeader className="pb-2"><CardDescription>Published</CardDescription><CardTitle className="text-3xl text-emerald-600">{publishedCount}</CardTitle></CardHeader></Card>

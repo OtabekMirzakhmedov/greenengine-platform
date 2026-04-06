@@ -2,12 +2,10 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -44,52 +42,48 @@ export default function Header() {
     setMobileMenuOpen(false);
   }, [location]);
 
+  const navLinkClass = (isActive: boolean) =>
+    `inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+      isActive
+        ? "bg-secondary text-primary shadow-sm ring-1 ring-primary/10"
+        : "text-foreground/78 hover:bg-secondary/70 hover:text-foreground"
+    }`;
+
   return (
     <header
       className={`sticky top-0 z-50 w-full border-b bg-white transition-shadow ${
-        scrolled ? "shadow-md" : ""
+        scrolled ? "shadow-[0_12px_34px_rgba(15,23,42,0.08)]" : ""
       }`}
     >
-      <div className="mx-auto w-full max-w-[1780px] px-4 lg:px-6 xl:px-8">
-        <div className="flex min-h-24 items-center gap-3 py-3 2xl:gap-6">
-          <div className="flex shrink-0 items-center gap-3 xl:gap-4">
+      <div className="mx-auto w-full max-w-[1760px] px-4 lg:px-6 xl:px-8">
+        <div className="flex min-h-[84px] items-center gap-4 py-3 xl:gap-6">
+          <div className="flex shrink-0 items-center gap-4 xl:gap-5">
             <Link
               href="/"
-              className="flex shrink-0 items-center rounded-md px-2 py-1 transition-colors hover-elevate active-elevate-2"
+              className="flex shrink-0 items-center rounded-2xl px-1 py-1 transition-colors hover-elevate active-elevate-2"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
                 alt="GREENENGINE Logo"
-                className="h-[4.75rem] w-auto max-w-[260px] object-contain sm:h-[5.5rem] sm:max-w-[320px] lg:h-[6.4rem] lg:max-w-[390px]"
+                className="h-[3.7rem] w-auto max-w-[250px] object-contain sm:h-[4rem] sm:max-w-[300px] lg:h-[4.35rem] lg:max-w-[360px]"
               />
             </Link>
 
-            <div className="hidden min-[1320px]:flex items-center border-l border-border/80 pl-3 2xl:pl-4">
+            <div className="hidden min-[1200px]:flex items-center border-l border-border/80 pl-4">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className="h-10 w-auto max-w-[180px] object-contain 2xl:h-12 2xl:max-w-[210px]"
+                className="h-[3.2rem] w-auto max-w-[220px] object-contain xl:h-[3.5rem] xl:max-w-[250px]"
               />
             </div>
-
-            <div className="hidden min-[1320px]:flex items-center border-l border-border/80 pl-3 2xl:pl-4">
-              <img
-                src={flagImageUrl}
-                alt="Partner country and EU flags"
-                className="h-16 w-auto rounded-xl object-cover shadow-sm 2xl:h-[4.5rem]"
-              />
-            </div>
-
           </div>
 
-          <div className="hidden min-[1320px]:flex min-w-0 flex-1 justify-center px-4">
-            <nav className="flex items-center gap-0.5 2xl:gap-1">
+          <div className="hidden min-[1280px]:flex min-w-0 flex-1 justify-center px-4">
+            <nav className="flex items-center gap-1.5 2xl:gap-2.5">
               <Link 
                 href="/"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location === "/" ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location === "/")}
                 data-testid="link-nav-home"
               >
                 Home
@@ -98,16 +92,16 @@ export default function Header() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-10 px-2 text-sm font-medium 2xl:px-3" data-testid="button-about-menu">
+                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-foreground/78 hover:bg-secondary/70 hover:text-foreground focus:bg-secondary/70 data-[state=open]:bg-secondary data-[state=open]:text-primary [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-primary/75" data-testid="button-about-menu">
                       About GREENENGINE
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-64 p-2">
+                      <div className="w-72 rounded-2xl p-2">
                         {aboutLinks.map((link) => (
                           <Link 
                             key={link.href} 
                             href={link.href}
-                            className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" 
+                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary/70 hover:text-foreground" 
                             data-testid={`link-${link.href.replace(/\//g, '-')}`}
                           >
                             {link.title}
@@ -118,16 +112,16 @@ export default function Header() {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-10 px-2 text-sm font-medium 2xl:px-3" data-testid="button-passport-menu">
+                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-foreground/78 hover:bg-secondary/70 hover:text-foreground focus:bg-secondary/70 data-[state=open]:bg-secondary data-[state=open]:text-primary [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-primary/75" data-testid="button-passport-menu">
                       Intercultural Passport
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-64 p-2">
+                      <div className="w-72 rounded-2xl p-2">
                         {passportLinks.map((link) => (
                           <Link 
                             key={link.href} 
                             href={link.href}
-                            className="block px-3 py-2 text-sm rounded-md hover-elevate active-elevate-2 transition-colors" 
+                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary/70 hover:text-foreground" 
                             data-testid={`link-${link.href.replace(/\//g, '-')}`}
                           >
                             {link.title}
@@ -141,9 +135,7 @@ export default function Header() {
 
               <Link 
                 href="/activities"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/activities") || location.startsWith("/about/activities") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location.startsWith("/activities") || location.startsWith("/about/activities"))}
                 data-testid="link-nav-activities"
               >
                 Activities
@@ -151,9 +143,7 @@ export default function Header() {
 
               <Link 
                 href="/news"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/news") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location.startsWith("/news"))}
                 data-testid="link-nav-news"
               >
                 News
@@ -161,9 +151,7 @@ export default function Header() {
 
               <Link 
                 href="/events"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/events") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location.startsWith("/events"))}
                 data-testid="link-nav-events"
               >
                 Events
@@ -171,9 +159,7 @@ export default function Header() {
 
               <Link 
                 href="/tenders"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/tenders") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location.startsWith("/tenders"))}
                 data-testid="link-nav-tenders"
               >
                 Tenders
@@ -181,9 +167,7 @@ export default function Header() {
 
               <Link 
                 href="/action-plans"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location.startsWith("/action-plans") ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location.startsWith("/action-plans"))}
                 data-testid="link-nav-action-plans"
               >
                 Action
@@ -191,9 +175,7 @@ export default function Header() {
 
               <Link 
                 href="/partners"
-                className={`px-2 py-2 text-sm font-medium rounded-md hover-elevate active-elevate-2 transition-colors 2xl:px-3 ${
-                  location === "/partners" ? "bg-accent text-accent-foreground" : "text-foreground/80"
-                }`}
+                className={navLinkClass(location === "/partners")}
                 data-testid="link-nav-partners"
               >
                 Partners
@@ -201,58 +183,33 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-3 2xl:gap-4">
-            <div className="hidden sm:flex min-[1320px]:hidden items-center">
+          <div className="ml-auto flex shrink-0 items-center gap-3 xl:gap-4">
+            <div className="hidden items-center min-[1100px]:flex min-[1200px]:hidden">
               <img
-                src={flagImageUrl}
-                alt="Partner country and EU flags"
-                className="h-12 w-auto rounded-lg object-cover shadow-sm"
+                src={erasmusLogo}
+                alt="Co-funded by the Erasmus+ Programme of the European Union"
+                className="h-10 w-auto max-w-[170px] object-contain"
               />
             </div>
 
-            <div className="hidden min-[1500px]:flex items-center gap-3 2xl:gap-4">
-              <a
-                href="https://www.facebook.com/profile.php?id=61586359144401"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                data-testid="link-facebook"
-                aria-label="Facebook"
-              >
-                <FaFacebook className="h-5 w-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/greenengine26?igsh=cnF5NzUzcXY3ZXY%3D&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                data-testid="link-instagram"
-                aria-label="Instagram"
-              >
-                <FaInstagram className="h-5 w-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/greenengine-cbhe"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                data-testid="link-linkedin"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin className="h-5 w-5" />
-              </a>
+            <div className="hidden items-center min-[1100px]:flex">
+              <img
+                src={flagImageUrl}
+                alt="Partner country and EU flags"
+                className="h-11 w-auto rounded-xl object-cover shadow-sm"
+              />
             </div>
 
             <Link href="/login" className="hidden sm:inline-flex">
-              <Button variant="outline" size="sm" data-testid="button-login">
+              <Button variant="outline" className="min-h-11 rounded-full border-primary/15 bg-white px-5 text-sm font-semibold text-primary shadow-[0_12px_30px_rgba(34,76,48,0.05)] transition-all hover:bg-primary hover:text-primary-foreground" data-testid="button-login">
                 Login
               </Button>
             </Link>
 
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
-              className="min-[1320px]:hidden"
+              className="h-11 w-11 rounded-full border-primary/15 bg-white text-primary min-[1280px]:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -262,19 +219,31 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="min-[1320px]:hidden py-4 border-t" data-testid="mobile-menu">
-            <div className="space-y-1">
-              <Link href="/" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-home">
+          <div className="min-[1280px]:hidden border-t border-primary/10 py-4" data-testid="mobile-menu">
+            <div className="space-y-1 rounded-3xl bg-white/95 p-2 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+              <div className="flex items-center justify-between gap-3 rounded-2xl bg-muted/35 px-3 py-3 min-[540px]:hidden">
+                <img
+                  src={erasmusLogo}
+                  alt="Co-funded by the European Union"
+                  className="h-10 w-auto max-w-[160px] object-contain"
+                />
+                <img
+                  src={flagImageUrl}
+                  alt="Partner country and EU flags"
+                  className="h-10 w-auto rounded-xl object-cover shadow-sm"
+                />
+              </div>
+              <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-home">
                 Home
               </Link>
 
-              <div className="space-y-1">
-                <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">About GREENENGINE</div>
+              <div className="space-y-1 rounded-2xl bg-muted/35 p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">About GREENENGINE</div>
                 {aboutLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block px-5 py-2 text-sm rounded-md hover-elevate" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-foreground/78 hover:bg-white hover:text-foreground" 
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -282,13 +251,13 @@ export default function Header() {
                 ))}
               </div>
 
-              <div className="space-y-1">
-                <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">Intercultural Passport</div>
+              <div className="space-y-1 rounded-2xl bg-muted/35 p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Intercultural Passport</div>
                 {passportLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block px-5 py-2 text-sm rounded-md hover-elevate" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-foreground/78 hover:bg-white hover:text-foreground" 
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -296,33 +265,37 @@ export default function Header() {
                 ))}
               </div>
 
-              <Link href="/activities" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-activities">
+              <Link href="/activities" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-activities">
                 Activities
               </Link>
 
-              <Link href="/news" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-news">
+              <Link href="/news" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-news">
                 News
               </Link>
 
-              <Link href="/events" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-events">
+              <Link href="/events" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-events">
                 Events
               </Link>
 
-              <Link href="/tenders" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-tenders">
+              <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-tenders">
                 Tenders
               </Link>
 
-              <Link href="/action-plans" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-action-plans">
+              <Link href="/action-plans" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-action-plans">
                 Action
               </Link>
 
-              <Link href="/partners" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-partners">
+              <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-partners">
                 Partners
               </Link>
 
-              <Link href="/login" className="block px-3 py-2 text-sm font-medium rounded-md hover-elevate" data-testid="link-mobile-login">
-                Admin Login
-              </Link>
+              <div className="pt-2">
+                <Link href="/login" className="block">
+                  <span className="flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_14px_34px_rgba(34,76,48,0.16)]">
+                    Admin Login
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         )}

@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/auth";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/Header";
-import SiteFooter from "@/components/layout/SiteFooter";
+import SiteFooter from "@/components/layout/ModernFooter";
 import Home from "@/pages/Home";
 import ActivitiesPage from "@/pages/Activities";
 import ActivityDetail from "@/pages/ActivityDetail";

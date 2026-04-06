@@ -58,9 +58,9 @@ export default function Partners() {
           </div>
 
           {isLoading ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {Array.from({ length: 6 }).map((_, i) => (
-                <Card key={i}>
+                <Card key={i} className="h-full">
                   <CardHeader>
                     <Skeleton className="h-48 w-full mb-4" />
                     <Skeleton className="h-6 w-3/4" />
@@ -72,113 +72,101 @@ export default function Partners() {
               ))}
             </div>
           ) : partners && partners.length > 0 ? (
-            <div className="space-y-8">
-              {/* Group partners by country */}
-              {["Uzbekistan", "Georgia", "Turkey", "Greece", "Italy"].map((country) => {
-                const countryPartners = partners.filter(p => p.country === country);
-                if (countryPartners.length === 0) return null;
-
-                return (
-                  <div key={country} className="space-y-6">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-2xl font-bold">{country}</h2>
-                      <Badge variant="secondary">{countryPartners.length} {countryPartners.length === 1 ? 'Partner' : 'Partners'}</Badge>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      {countryPartners.map((partner, index) => (
-                        <Card key={partner.id} className="hover-elevate overflow-hidden" data-testid={`card-partner-${partner.id}`}>
-                          <div className="relative h-48 bg-muted overflow-hidden">
-                            <img
-                              src={partner.logoUrl || placeholderImages[index % placeholderImages.length]}
-                              alt={partner.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          
-                          <CardHeader>
-                            <CardTitle className="text-xl leading-tight">{partner.name}</CardTitle>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {partner.established && (
-                                <Badge variant="outline">Est. {partner.established}</Badge>
-                              )}
-                              {partner.pic && (
-                                <Badge variant="secondary">PIC: {partner.pic}</Badge>
-                              )}
-                            </div>
-                          </CardHeader>
-
-                          <CardContent className="space-y-4">
-                            {partner.description && (
-                              <div>
-                                <h4 className="text-sm font-semibold mb-2">Brief Information</h4>
-                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                  {partner.description}
-                                </p>
-                              </div>
-                            )}
-
-                            {partner.roleInProject && (
-                              <div>
-                                <h4 className="text-sm font-semibold mb-2">Role in GreenEngine</h4>
-                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                  {partner.roleInProject}
-                                </p>
-                              </div>
-                            )}
-
-                            <Separator />
-
-                            <div className="space-y-3">
-                              {partner.address && (
-                                <div className="flex gap-3 text-sm">
-                                  <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <p className="text-muted-foreground">{partner.address}</p>
-                                </div>
-                              )}
-                              
-                              {partner.phone && (
-                                <div className="flex gap-3 text-sm">
-                                  <Phone className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <a 
-                                    href={`tel:${partner.phone}`} 
-                                    className="text-muted-foreground hover:text-foreground transition-colors"
-                                    data-testid={`link-phone-${partner.id}`}
-                                  >
-                                    {partner.phone}
-                                  </a>
-                                </div>
-                              )}
-                              
-                              {partner.email && (
-                                <div className="flex gap-3 text-sm">
-                                  <Mail className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <a 
-                                    href={`mailto:${partner.email}`} 
-                                    className="text-muted-foreground hover:text-foreground transition-colors"
-                                    data-testid={`link-email-${partner.id}`}
-                                  >
-                                    {partner.email}
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-
-                            {partner.websiteUrl && (
-                              <Button variant="outline" className="w-full" asChild data-testid={`button-website-${partner.id}`}>
-                                <a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer">
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  Visit Website
-                                </a>
-                              </Button>
-                            )}
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {partners.map((partner, index) => (
+                <Card
+                  key={partner.id}
+                  className="flex h-full flex-col overflow-hidden hover-elevate"
+                  data-testid={`card-partner-${partner.id}`}
+                >
+                  <div className="relative h-48 bg-muted overflow-hidden">
+                    <img
+                      src={partner.logoUrl || placeholderImages[index % placeholderImages.length]}
+                      alt={partner.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                );
-              })}
+
+                  <CardHeader className="space-y-4">
+                    <div className="flex flex-wrap gap-2">
+                      {partner.country && <Badge variant="secondary">{partner.country}</Badge>}
+                      {partner.established && (
+                        <Badge variant="outline">Est. {partner.established}</Badge>
+                      )}
+                      {partner.pic && (
+                        <Badge variant="outline">PIC: {partner.pic}</Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-xl leading-tight">{partner.name}</CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="flex flex-1 flex-col space-y-4">
+                    {partner.description && (
+                      <div>
+                        <h4 className="text-sm font-semibold mb-2">Brief Information</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {partner.description}
+                        </p>
+                      </div>
+                    )}
+
+                    {partner.roleInProject && (
+                      <div>
+                        <h4 className="text-sm font-semibold mb-2">Role in GreenEngine</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {partner.roleInProject}
+                        </p>
+                      </div>
+                    )}
+
+                    <Separator />
+
+                    <div className="space-y-3">
+                      {partner.address && (
+                        <div className="flex gap-3 text-sm">
+                          <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+                          <p className="text-muted-foreground">{partner.address}</p>
+                        </div>
+                      )}
+
+                      {partner.phone && (
+                        <div className="flex gap-3 text-sm">
+                          <Phone className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+                          <a
+                            href={`tel:${partner.phone}`}
+                            className="text-muted-foreground hover:text-foreground transition-colors"
+                            data-testid={`link-phone-${partner.id}`}
+                          >
+                            {partner.phone}
+                          </a>
+                        </div>
+                      )}
+
+                      {partner.email && (
+                        <div className="flex gap-3 text-sm">
+                          <Mail className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+                          <a
+                            href={`mailto:${partner.email}`}
+                            className="text-muted-foreground hover:text-foreground transition-colors"
+                            data-testid={`link-email-${partner.id}`}
+                          >
+                            {partner.email}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+
+                    {partner.websiteUrl && (
+                      <Button variant="outline" className="mt-auto w-full" asChild data-testid={`button-website-${partner.id}`}>
+                        <a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Visit Website
+                        </a>
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           ) : (
             <div className="text-center py-12">

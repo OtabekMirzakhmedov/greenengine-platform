@@ -129,7 +129,7 @@ export default function Dashboard() {
                 <img
                   src={brandLogoUrl}
                   alt="GREENENGINE Logo"
-                  className="h-12 w-auto max-w-[180px] object-contain"
+                  className="h-12 w-auto max-w-[240px] object-contain"
                 />
                 <div>
                   <h1 className="text-2xl font-bold text-foreground">GREENENGINE CMS</h1>

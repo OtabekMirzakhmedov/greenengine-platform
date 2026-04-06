@@ -52,7 +52,7 @@ export default function Login() {
           <img
             src={brandLogoUrl}
             alt="GREENENGINE Logo"
-            className="mx-auto mb-5 h-20 w-auto max-w-[300px] object-contain sm:h-24"
+            className="mx-auto mb-5 h-20 w-auto max-w-[360px] object-contain sm:h-24 sm:max-w-[440px]"
           />
           <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <Lock className="h-8 w-8 text-primary" />

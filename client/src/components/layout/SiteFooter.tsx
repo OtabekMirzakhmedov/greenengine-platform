@@ -15,7 +15,7 @@ export default function SiteFooter() {
           <div className="space-y-6">
             <div>
               <Link href="/" data-testid="link-footer-home">
-                <img src={brandLogoUrl} alt="GREENENGINE Logo" className="h-28 w-auto max-w-full object-contain sm:h-32" />
+                <img src={brandLogoUrl} alt="GREENENGINE Logo" className="h-24 w-auto max-w-[340px] object-contain sm:h-28 sm:max-w-[420px]" />
               </Link>
             </div>
 
