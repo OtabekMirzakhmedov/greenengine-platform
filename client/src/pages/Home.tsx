@@ -12,8 +12,6 @@ import heroImage4 from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import sustainabilityImage from "@assets/stock_images/modern_green_sustain_70ad4357.jpg";
 import collaborationImage from "@assets/stock_images/diverse_students_col_518f0c0a.jpg";
 
-const logoImage = "/attached_assets/greenengine-logo-new.jpg";
-
 export default function Home() {
   const { data: newsData } = useQuery<News[]>({
     queryKey: ["/api/news"],
@@ -85,78 +83,15 @@ export default function Home() {
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
 
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f5fbf5_0%,#edf7ee_42%,#ffffff_100%)] py-20 md:py-28">
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f5fbf5_0%,#edf7ee_38%,#ffffff_100%)] py-14 md:py-18">
         <div className="absolute inset-0">
-          <div className="absolute left-[-8rem] top-16 h-72 w-72 rounded-full bg-primary/12 blur-3xl" />
-          <div className="absolute right-[-5rem] top-10 h-64 w-64 rounded-full bg-accent/25 blur-3xl" />
-          <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-emerald-200/30 blur-3xl" />
-          <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_1px_1px,hsl(var(--primary))_1px,transparent_0)] [background-size:28px_28px]" />
+          <div className="absolute left-[-8rem] top-8 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute right-[-5rem] top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
-            <div className="max-w-3xl">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white/80 px-4 py-2 text-sm font-semibold text-primary shadow-sm backdrop-blur-sm">
-                <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-                ERASMUS-EDU-2025-CBHE-STRAND-2 / Project Number: 101236240
-              </div>
-              <h2 className="font-serif text-4xl font-semibold leading-tight text-foreground md:text-6xl">
-                Engineering education with a greener, more human-centered future in mind.
-              </h2>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                GREENENGINE modernizes engineering education through sustainability, creative problem solving, and intercultural collaboration, preparing students to build resilient systems and environmentally responsible solutions.
-              </p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <Link href="/about">
-                  <Button size="lg" className="w-full rounded-full px-7 shadow-[0_16px_36px_rgba(43,116,70,0.18)] sm:w-auto" data-testid="button-home-about">
-                    Discover the Mission
-                  </Button>
-                </Link>
-                <Link href="/activities">
-                  <Button variant="outline" size="lg" className="w-full rounded-full border-primary/25 bg-white/80 px-7 text-primary hover:bg-primary/5 sm:w-auto" data-testid="button-home-activities">
-                    Explore Activities
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="absolute -left-6 top-8 hidden h-28 w-28 rounded-full bg-accent/40 blur-2xl md:block" />
-              <div className="absolute -bottom-8 right-10 hidden h-32 w-32 rounded-full bg-primary/20 blur-3xl md:block" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_30px_90px_rgba(40,89,57,0.14)] backdrop-blur-xl">
-                <div className="grid gap-4">
-                  <div className="flex items-center justify-between gap-4 rounded-[1.5rem] bg-[linear-gradient(135deg,rgba(31,104,57,0.96),rgba(65,143,91,0.92))] px-6 py-5 text-white shadow-lg">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Green Identity</p>
-                      <p className="mt-2 text-2xl font-semibold">Sustainable innovation ecosystem</p>
-                    </div>
-                    <img src={logoImage} alt="GREENENGINE brand mark" className="h-16 w-auto object-contain opacity-95" />
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-[1.5rem] border border-primary/10 bg-secondary/65 p-5">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Primary</p>
-                      <p className="mt-3 text-base font-medium text-foreground">Deep Forest Green</p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Core actions, buttons, hero labels, and key emphasis.</p>
-                    </div>
-                    <div className="rounded-[1.5rem] border border-primary/10 bg-white p-5">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Secondary</p>
-                      <p className="mt-3 text-base font-medium text-foreground">Soft Botanical Green</p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Section backgrounds, cards, and calm supporting surfaces.</p>
-                    </div>
-                    <div className="rounded-[1.5rem] border border-primary/10 bg-accent/35 p-5 sm:col-span-2">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Accent</p>
-                      <p className="mt-3 text-base font-medium text-foreground">Eco Lime Highlight</p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">Subtle gradients, environmental highlights, and warm contrast for innovation cues.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {activitiesToDisplay.length > 0 ? (
-            <div className="mt-16 rounded-[2.25rem] border border-primary/10 bg-white/80 px-6 py-10 shadow-[0_34px_90px_rgba(31,65,43,0.12)] backdrop-blur-xl md:px-8 lg:px-10">
+            <div className="rounded-[2.25rem] border border-primary/10 bg-white/80 px-6 py-10 shadow-[0_34px_90px_rgba(31,65,43,0.12)] backdrop-blur-xl md:px-8 lg:px-10">
               <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-2xl">
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
