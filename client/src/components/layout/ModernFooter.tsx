@@ -41,48 +41,14 @@ const socialLinks = [
 
 export default function ModernFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-primary/10 bg-[linear-gradient(180deg,#0f2d1a_0%,#133b22_42%,#f7fbf7_42%,#ffffff_100%)]">
-      <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,rgba(190,242,100,0.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(187,247,208,0.14),transparent_32%)]" />
+    <footer className="relative overflow-hidden border-t border-primary/10 bg-[linear-gradient(180deg,#f7fbf7_0%,#f1f7f1_48%,#ffffff_100%)]">
+      <div className="absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_top_left,rgba(190,242,100,0.14),transparent_34%),radial-gradient(circle_at_top_right,rgba(187,247,208,0.10),transparent_32%)]" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-8 py-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end">
-          <div className="space-y-6 text-white">
-            <div className="inline-flex items-center rounded-full border border-white/12 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/75 backdrop-blur-sm">
-              International Educational Initiative
-            </div>
-            <div className="max-w-3xl space-y-4">
-              <h2 className="text-3xl font-semibold leading-tight md:text-4xl">
-                Building greener engineering education through collaboration, innovation, and intercultural learning.
-              </h2>
-              <p className="max-w-2xl text-sm leading-7 text-white/78 md:text-base">
-                GREEN ENGINE connects institutions across Central Asia and Europe to support sustainability, strengthen engineering education, and create practical impact through shared research, mobility, and modern learning approaches.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/8 p-5 text-white shadow-[0_24px_60px_rgba(0,0,0,0.16)] backdrop-blur-md">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/65">Admin Access</p>
-                <p className="text-sm leading-6 text-white/78">
-                  Sign in to manage homepage content, activities, events, news, tenders, and partner information.
-                </p>
-              </div>
-              <Button
-                asChild
-                className="h-12 rounded-full bg-white px-6 text-primary shadow-[0_14px_30px_rgba(255,255,255,0.18)] hover:bg-lime-50"
-                data-testid="button-footer-admin"
-              >
-                <Link href="/login">
-                  Admin Login
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative -mt-2 rounded-[2rem] border border-primary/10 bg-white/96 p-8 shadow-[0_32px_90px_rgba(16,53,31,0.14)] backdrop-blur-xl md:p-10">
+        <div className="relative py-10 md:py-12">
+          <div className="overflow-hidden rounded-[2rem] border border-primary/10 bg-white/96 shadow-[0_26px_70px_rgba(16,53,31,0.10)] backdrop-blur-xl">
+            <div className="h-2 bg-[linear-gradient(90deg,#1a4a2f_0%,#2f6b45_52%,#7aa36d_100%)]" />
+            <div className="p-8 md:p-10">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.9fr)_minmax(0,0.95fr)_minmax(0,0.85fr)]">
             <div className="space-y-6">
               <Link href="/" data-testid="link-footer-home">
@@ -205,6 +171,16 @@ export default function ModernFooter() {
                   Sustainability, engineering innovation, intercultural learning, and international academic collaboration.
                 </p>
               </div>
+              <Button
+                asChild
+                className="h-12 w-full rounded-full bg-primary px-6 text-primary-foreground shadow-[0_18px_36px_rgba(16,53,31,0.18)] hover:bg-primary/90"
+                data-testid="button-footer-admin"
+              >
+                <Link href="/login">
+                  Admin Login
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </div>
 
@@ -230,6 +206,8 @@ export default function ModernFooter() {
                 Admin Access
               </Link>
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
