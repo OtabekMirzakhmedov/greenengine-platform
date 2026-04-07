@@ -73,7 +73,7 @@ export default function Home() {
       : fallbackHeroSlides;
 
   return (
-    <div className="flex flex-col bg-[linear-gradient(180deg,#fcfefb_0%,#f4f8f3_28%,#ffffff_58%,#f7fbf7_100%)]">
+    <div className="flex flex-col bg-[linear-gradient(180deg,#edf5ec_0%,#f3f8f2_44%,#eef5ed_100%)]">
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} autoplayDelay={2000} />
       {newsData && newsData.length > 0 ? <NewsCarousel news={newsData.slice(0, 6)} /> : null}

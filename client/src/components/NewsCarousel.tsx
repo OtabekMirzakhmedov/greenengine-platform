@@ -66,16 +66,9 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
         <div className="rounded-[2.25rem] border border-primary/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(248,252,248,0.96)_100%)] px-6 py-10 shadow-[0_30px_80px_rgba(31,65,43,0.10)] backdrop-blur-xl md:px-8 lg:px-10">
           <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-                <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-                Read the latest news
-              </div>
               <h2 className="text-3xl font-bold text-foreground md:text-4xl">
-                Project updates, announcements, and recent progress
+                Project News
               </h2>
-              <p className="mt-3 text-base leading-7 text-muted-foreground md:text-lg">
-                Follow the most recent GREENENGINE milestones, partner updates, and project developments from across the network.
-              </p>
             </div>
             <Link href="/news">
               <Button

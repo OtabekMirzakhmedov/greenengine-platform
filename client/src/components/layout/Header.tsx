@@ -70,11 +70,11 @@ export default function Header() {
               />
             </Link>
 
-            <div className="hidden min-[1200px]:flex items-center border-l border-border/80 pl-4">
+            <div className="hidden min-[1200px]:flex items-center self-center border-l border-border/80 pl-4 xl:pl-5">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className="h-[3.2rem] w-auto max-w-[220px] object-contain xl:h-[3.5rem] xl:max-w-[250px]"
+                className="block h-[3.35rem] w-auto max-w-[230px] object-contain xl:h-[3.6rem] xl:max-w-[255px]"
               />
             </div>
           </div>
@@ -184,19 +184,19 @@ export default function Header() {
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-3 xl:gap-4">
-            <div className="hidden items-center min-[1100px]:flex min-[1200px]:hidden">
+            <div className="hidden items-center self-center min-[1100px]:flex min-[1200px]:hidden">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className="h-10 w-auto max-w-[170px] object-contain"
+                className="block h-[2.9rem] w-auto max-w-[185px] object-contain"
               />
             </div>
 
-            <div className="hidden items-center min-[1100px]:flex">
+            <div className="hidden items-center self-center pl-1 min-[1100px]:flex">
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
-                className="h-11 w-auto rounded-xl object-cover shadow-sm"
+                className="h-[3.15rem] w-auto rounded-xl object-cover shadow-sm"
               />
             </div>
 
