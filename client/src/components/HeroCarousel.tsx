@@ -100,8 +100,8 @@ export default function HeroCarousel({ slides, autoplayDelay = 6000 }: HeroCarou
               />
               
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(11,41,26,0.82)_0%,rgba(19,58,37,0.58)_45%,rgba(28,70,44,0.72)_100%)]" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(210,245,227,0.16),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(191,219,174,0.12),transparent_30%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(14,44,29,0.46)_0%,rgba(24,62,41,0.18)_44%,rgba(25,67,42,0.38)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(224,248,236,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(205,229,187,0.10),transparent_30%)]" />
 
               {/* Content */}
               <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
