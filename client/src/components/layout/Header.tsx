@@ -45,14 +45,14 @@ export default function Header() {
   const navLinkClass = (isActive: boolean) =>
     `inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
       isActive
-        ? "bg-secondary text-primary shadow-sm ring-1 ring-primary/10"
-        : "text-foreground/78 hover:bg-secondary/70 hover:text-foreground"
+        ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
+        : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
     }`;
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b bg-white transition-shadow ${
-        scrolled ? "shadow-[0_12px_34px_rgba(15,23,42,0.08)]" : ""
+      className={`sticky top-0 z-50 w-full border-b border-[#9aac25] bg-[#c6d309] transition-shadow ${
+        scrolled ? "shadow-[0_14px_34px_rgba(62,78,11,0.18)]" : "shadow-[0_1px_0_rgba(110,127,24,0.18)]"
       }`}
     >
       <div className="mx-auto w-full max-w-[1760px] px-4 lg:px-6 xl:px-8">
@@ -60,7 +60,7 @@ export default function Header() {
           <div className="flex shrink-0 items-center gap-4 xl:gap-5">
             <Link
               href="/"
-              className="flex shrink-0 items-center rounded-2xl px-1 py-1 transition-colors hover-elevate active-elevate-2"
+              className="flex shrink-0 items-center rounded-2xl px-1 py-1 transition-colors hover:bg-[#b8c924]/70"
               data-testid="link-home"
             >
               <img
@@ -70,7 +70,7 @@ export default function Header() {
               />
             </Link>
 
-            <div className="hidden min-[1200px]:flex items-center self-center border-l border-border/80 pl-4 xl:pl-5">
+            <div className="hidden min-[1200px]:flex items-center self-center border-l border-[#a8ba29] pl-4 xl:pl-5">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -93,15 +93,16 @@ export default function Header() {
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-foreground/78 hover:bg-secondary/70 hover:text-foreground focus:bg-secondary/70 data-[state=open]:bg-secondary data-[state=open]:text-primary [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-primary/75" data-testid="button-about-menu">
+                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-about-menu">
                       About GREENENGINE
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-72 rounded-2xl p-2">
+                      <div className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
                         {aboutLinks.map((link) => (
                           <Link 
                             key={link.href} 
                             href={link.href}
-                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary/70 hover:text-foreground" 
+                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
                             data-testid={`link-${link.href.replace(/\//g, '-')}`}
                           >
                             {link.title}
@@ -112,16 +113,16 @@ export default function Header() {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-foreground/78 hover:bg-secondary/70 hover:text-foreground focus:bg-secondary/70 data-[state=open]:bg-secondary data-[state=open]:text-primary [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-primary/75" data-testid="button-passport-menu">
+                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-passport-menu">
                       Intercultural Passport
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-72 rounded-2xl p-2">
+                      <div className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
                         {passportLinks.map((link) => (
                           <Link 
                             key={link.href} 
                             href={link.href}
-                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary/70 hover:text-foreground" 
+                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
                             data-testid={`link-${link.href.replace(/\//g, '-')}`}
                           >
                             {link.title}
@@ -201,7 +202,7 @@ export default function Header() {
             </div>
 
             <Link href="/login" className="hidden sm:inline-flex">
-              <Button variant="outline" className="min-h-11 rounded-full border-primary/15 bg-white px-5 text-sm font-semibold text-primary shadow-[0_12px_30px_rgba(34,76,48,0.05)] transition-all hover:bg-primary hover:text-primary-foreground" data-testid="button-login">
+              <Button variant="outline" className="min-h-11 rounded-full border-[#8ea01f] bg-[#f8fbe9] px-5 text-sm font-semibold text-[#30400d] shadow-[0_12px_28px_rgba(73,90,14,0.10)] transition-all hover:border-[#708117] hover:bg-[#8ca11f] hover:text-[#f8fbe9]" data-testid="button-login">
                 Login
               </Button>
             </Link>
@@ -209,7 +210,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="h-11 w-11 rounded-full border-primary/15 bg-white text-primary min-[1280px]:hidden"
+              className="h-11 w-11 rounded-full border-[#8ea01f] bg-[#f8fbe9] text-[#30400d] min-[1280px]:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -219,9 +220,9 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="min-[1280px]:hidden border-t border-primary/10 py-4" data-testid="mobile-menu">
-            <div className="space-y-1 rounded-3xl bg-white/95 p-2 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
-              <div className="flex items-center justify-between gap-3 rounded-2xl bg-muted/35 px-3 py-3 min-[540px]:hidden">
+          <div className="min-[1280px]:hidden border-t border-[#9aac25] py-4" data-testid="mobile-menu">
+            <div className="space-y-1 rounded-3xl bg-[#d6df52]/95 p-2 shadow-[0_16px_40px_rgba(62,78,11,0.18)]">
+              <div className="flex items-center justify-between gap-3 rounded-2xl bg-[#edf2c6] px-3 py-3 min-[540px]:hidden">
                 <img
                   src={erasmusLogo}
                   alt="Co-funded by the European Union"
@@ -233,17 +234,17 @@ export default function Header() {
                   className="h-10 w-auto rounded-xl object-cover shadow-sm"
                 />
               </div>
-              <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-home">
+              <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-home">
                 Home
               </Link>
 
-              <div className="space-y-1 rounded-2xl bg-muted/35 p-2">
-                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">About GREENENGINE</div>
+              <div className="space-y-1 rounded-2xl bg-[#edf2c6] p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">About GREENENGINE</div>
                 {aboutLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-foreground/78 hover:bg-white hover:text-foreground" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#2f3a0c] hover:bg-white hover:text-[#1b2405]" 
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -251,13 +252,13 @@ export default function Header() {
                 ))}
               </div>
 
-              <div className="space-y-1 rounded-2xl bg-muted/35 p-2">
-                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Intercultural Passport</div>
+              <div className="space-y-1 rounded-2xl bg-[#edf2c6] p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">Intercultural Passport</div>
                 {passportLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-foreground/78 hover:bg-white hover:text-foreground" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#2f3a0c] hover:bg-white hover:text-[#1b2405]" 
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -265,33 +266,33 @@ export default function Header() {
                 ))}
               </div>
 
-              <Link href="/activities" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-activities">
+              <Link href="/activities" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-activities">
                 Activities
               </Link>
 
-              <Link href="/news" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-news">
+              <Link href="/news" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-news">
                 News
               </Link>
 
-              <Link href="/events" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-events">
+              <Link href="/events" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-events">
                 Events
               </Link>
 
-              <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-tenders">
+              <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-tenders">
                 Tenders
               </Link>
 
-              <Link href="/action-plans" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-action-plans">
+              <Link href="/action-plans" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-action-plans">
                 Action
               </Link>
 
-              <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-secondary/70 hover:text-foreground" data-testid="link-mobile-partners">
+              <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-partners">
                 Partners
               </Link>
 
               <div className="pt-2">
                 <Link href="/login" className="block">
-                  <span className="flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_14px_34px_rgba(34,76,48,0.16)]">
+                  <span className="flex min-h-11 items-center justify-center rounded-full bg-[#8ca11f] px-5 text-sm font-semibold text-[#f8fbe9] shadow-[0_14px_34px_rgba(62,78,11,0.20)]">
                     Admin Login
                   </span>
                 </Link>

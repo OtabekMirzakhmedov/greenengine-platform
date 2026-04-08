@@ -137,7 +137,7 @@ export default function EditorialAdmin(props: EditorialAdminProps) {
 
   const filteredItems = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
-    return (items ?? []).filter((item) => {
+    const nextItems = (items ?? []).filter((item) => {
       const matchesStatus = statusFilter === "all" || item.status === statusFilter;
       const matchesSearch =
         normalizedSearch.length === 0 ||
@@ -146,11 +146,28 @@ export default function EditorialAdmin(props: EditorialAdminProps) {
         (item.excerpt ?? "").toLowerCase().includes(normalizedSearch);
       return matchesStatus && matchesSearch;
     });
-  }, [items, search, statusFilter]);
+
+    return nextItems.sort((a, b) => {
+      if (endpoint === "/api/news") {
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+      }
+
+      if (a.order !== b.order) {
+        return a.order - b.order;
+      }
+
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+    });
+  }, [endpoint, items, search, statusFilter]);
 
   const openCreateDialog = () => {
     setEditingId(null);
-    setFormData({ ...emptyFormData, order: items?.length ?? 0, status: endpoint === "/api/news" ? "published" : "draft", publishedAt: new Date().toISOString().split("T")[0] });
+    setFormData({
+      ...emptyFormData,
+      order: endpoint === "/api/news" ? 0 : items?.length ?? 0,
+      status: endpoint === "/api/news" ? "published" : "draft",
+      publishedAt: new Date().toISOString().split("T")[0],
+    });
     setDialogOpen(true);
   };
 
