@@ -412,7 +412,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTenders(): Promise<Tender[]> {
-    return await db.select().from(tenders).orderBy(asc(tenders.order), desc(tenders.publishedAt), desc(tenders.updatedAt));
+    return await db
+      .select()
+      .from(tenders)
+      .orderBy(desc(tenders.publishedAt), desc(tenders.updatedAt), asc(tenders.order));
   }
 
   async getPublishedTenders(): Promise<Tender[]> {
@@ -420,7 +423,7 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(tenders)
       .where(eq(tenders.status, "published"))
-      .orderBy(asc(tenders.order), desc(tenders.publishedAt), desc(tenders.updatedAt));
+      .orderBy(desc(tenders.publishedAt), desc(tenders.updatedAt), asc(tenders.order));
   }
 
   async getPublishedTenderBySlug(slug: string): Promise<Tender | undefined> {

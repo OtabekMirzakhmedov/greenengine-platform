@@ -49,6 +49,9 @@ export default function Header() {
         : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
     }`;
 
+  const erasmusLogoClass =
+    "block w-auto object-contain mix-blend-multiply [filter:saturate(1.02)_contrast(1.04)]";
+
   return (
     <header
       className={`sticky top-0 z-50 w-full border-b border-[#9aac25] bg-[#c6d309] transition-shadow ${
@@ -74,7 +77,7 @@ export default function Header() {
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className="block h-[3.35rem] w-auto max-w-[230px] object-contain xl:h-[3.6rem] xl:max-w-[255px]"
+                className={`${erasmusLogoClass} h-[3.35rem] max-w-[230px] xl:h-[3.6rem] xl:max-w-[255px]`}
               />
             </div>
           </div>
@@ -92,7 +95,6 @@ export default function Header() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-foreground/78 hover:bg-secondary/70 hover:text-foreground focus:bg-secondary/70 data-[state=open]:bg-secondary data-[state=open]:text-primary [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-primary/75" data-testid="button-about-menu">
                     <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-about-menu">
                       About GREENENGINE
                     </NavigationMenuTrigger>
@@ -189,7 +191,7 @@ export default function Header() {
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className="block h-[2.9rem] w-auto max-w-[185px] object-contain"
+                className={`${erasmusLogoClass} h-[2.9rem] max-w-[185px]`}
               />
             </div>
 
@@ -226,7 +228,7 @@ export default function Header() {
                 <img
                   src={erasmusLogo}
                   alt="Co-funded by the European Union"
-                  className="h-10 w-auto max-w-[160px] object-contain"
+                  className={`${erasmusLogoClass} h-10 max-w-[160px]`}
                 />
                 <img
                   src={flagImageUrl}

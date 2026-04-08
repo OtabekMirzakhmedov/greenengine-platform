@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { format } from "date-fns";
-import { ArrowRight, Calendar, FileText, Leaf, Sprout } from "lucide-react";
+import { ArrowRight, Calendar, Download, FileText, Leaf, Sprout } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,9 @@ export default function Tenders() {
   const { data: tenders, isLoading } = useQuery<Tender[]>({
     queryKey: ["/api/tenders"],
   });
+  const sortedTenders = [...(tenders ?? [])].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -71,11 +74,10 @@ export default function Tenders() {
                 <Skeleton key={index} className="h-[26rem] w-full rounded-[1.75rem]" />
               ))}
             </div>
-          ) : tenders && tenders.length > 0 ? (
+          ) : sortedTenders.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {tenders.map((tender) => (
-                <Link key={tender.id} href={`/tenders/${tender.slug}`}>
-                  <Card className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-[1.75rem] border border-primary/10 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdfb_100%)] shadow-[0_16px_44px_rgba(25,58,40,0.07)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_26px_60px_rgba(25,58,40,0.12)]">
+              {sortedTenders.map((tender) => (
+                <Card key={tender.id} className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-primary/10 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdfb_100%)] shadow-[0_16px_44px_rgba(25,58,40,0.07)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_26px_60px_rgba(25,58,40,0.12)]">
                     <div className="relative h-56 overflow-hidden bg-muted">
                       {tender.imageUrl ? (
                         <img
@@ -96,7 +98,7 @@ export default function Tenders() {
                           Tender
                         </Badge>
                         <Badge variant="secondary" className="bg-emerald-950/60 text-white">
-                          {tender.attachments?.length ?? 0} file(s)
+                          {tender.attachments?.length ?? 0} material(s)
                         </Badge>
                       </div>
                     </div>
@@ -113,15 +115,49 @@ export default function Tenders() {
                       <p className="line-clamp-4 text-sm leading-7 text-muted-foreground">
                         {tender.excerpt || "Open this tender to review the full notice and attached files."}
                       </p>
+
+                      <div className="mt-5 space-y-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">Tender Materials</p>
+                        {tender.attachments && tender.attachments.length > 0 ? (
+                          <div className="space-y-2">
+                            {tender.attachments.slice(0, 2).map((attachment, index) => (
+                              <a
+                                key={`${attachment.url}-${index}`}
+                                href={attachment.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between gap-3 rounded-2xl border border-primary/10 bg-secondary/20 px-3 py-3 text-sm text-foreground transition-colors hover:border-primary/25 hover:bg-secondary/35"
+                              >
+                                <div className="min-w-0">
+                                  <p className="truncate font-medium">{attachment.name}</p>
+                                  <p className="text-xs text-muted-foreground">{attachment.size}</p>
+                                </div>
+                                <Download className="h-4 w-4 shrink-0 text-primary" />
+                              </a>
+                            ))}
+                            {tender.attachments.length > 2 ? (
+                              <p className="text-xs text-muted-foreground">
+                                +{tender.attachments.length - 2} more file(s) inside this tender notice
+                              </p>
+                            ) : null}
+                          </div>
+                        ) : (
+                          <div className="rounded-2xl border border-dashed border-primary/10 bg-secondary/10 px-3 py-4 text-sm text-muted-foreground">
+                            No tender materials uploaded yet.
+                          </div>
+                        )}
+                      </div>
+
                       <div className="mt-6">
-                        <Button variant="outline" className="w-full justify-between rounded-full border-primary/15 bg-white hover:bg-primary hover:text-primary-foreground">
-                          View Tender
-                          <ArrowRight className="h-4 w-4" />
-                        </Button>
+                        <Link href={`/tenders/${tender.slug}`}>
+                          <Button variant="outline" className="w-full justify-between rounded-full border-primary/15 bg-white hover:bg-primary hover:text-primary-foreground">
+                            View Tender
+                            <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
-                </Link>
               ))}
             </div>
           ) : (

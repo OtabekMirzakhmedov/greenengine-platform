@@ -148,7 +148,7 @@ export default function EditorialAdmin(props: EditorialAdminProps) {
     });
 
     return nextItems.sort((a, b) => {
-      if (endpoint === "/api/news") {
+      if (endpoint === "/api/news" || endpoint === "/api/tenders") {
         return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
       }
 
@@ -164,8 +164,8 @@ export default function EditorialAdmin(props: EditorialAdminProps) {
     setEditingId(null);
     setFormData({
       ...emptyFormData,
-      order: endpoint === "/api/news" ? 0 : items?.length ?? 0,
-      status: endpoint === "/api/news" ? "published" : "draft",
+      order: endpoint === "/api/news" || endpoint === "/api/tenders" ? 0 : items?.length ?? 0,
+      status: endpoint === "/api/news" || endpoint === "/api/tenders" ? "published" : "draft",
       publishedAt: new Date().toISOString().split("T")[0],
     });
     setDialogOpen(true);

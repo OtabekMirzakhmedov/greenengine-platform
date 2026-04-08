@@ -86,7 +86,7 @@ export default function NewsCarousel({ news }: NewsCarouselProps) {
           </div>
 
           <div className="relative px-1 md:px-2">
-            <div className="overflow-visible" ref={emblaRef}>
+            <div className="overflow-hidden" ref={emblaRef}>
               <div className="-ml-5 flex md:-ml-6">
                 {sortedNews.map((item) => (
                   <div
