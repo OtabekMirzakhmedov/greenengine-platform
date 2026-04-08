@@ -16,7 +16,7 @@ import {
   type StoryGallery, type InsertStoryGallery,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, asc, and } from "drizzle-orm";
+import { eq, desc, asc, and, or } from "drizzle-orm";
 
 type InstitutionRow = typeof institutions.$inferInsert;
 type EventRow = typeof events.$inferInsert;
@@ -24,6 +24,76 @@ type ActivityRow = typeof activities.$inferInsert;
 type StoryGalleryRow = typeof storyGalleries.$inferInsert;
 type NewsRow = typeof news.$inferInsert;
 type TenderRow = typeof tenders.$inferInsert;
+type UploadedAttachment = { name: string; url: string; size: string };
+
+const normalizeAttachmentUrl = (value: unknown): string => {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  if (value.startsWith("http://") || value.startsWith("https://") || value.startsWith("/")) {
+    return value;
+  }
+
+  return value.startsWith("uploads/") ? `/${value}` : `/uploads/${value}`;
+};
+
+const normalizeAttachments = (value: unknown): UploadedAttachment[] => {
+  const parsedValue =
+    typeof value === "string"
+      ? (() => {
+          try {
+            return JSON.parse(value);
+          } catch {
+            return [];
+          }
+        })()
+      : value;
+
+  if (!Array.isArray(parsedValue)) {
+    return [];
+  }
+
+  return parsedValue
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const record = item as Record<string, unknown>;
+      const url = normalizeAttachmentUrl(
+        record.url ?? record.path ?? record.fileUrl ?? record.file_url ?? record.href
+      );
+      const nameSource =
+        record.name ?? record.filename ?? record.fileName ?? record.originalname ?? record.title;
+      const sizeSource = record.size ?? record.fileSize ?? record.file_size ?? "";
+
+      if (!url) {
+        return null;
+      }
+
+      return {
+        name: typeof nameSource === "string" && nameSource.trim().length > 0 ? nameSource : "Tender file",
+        url,
+        size: typeof sizeSource === "string" ? sizeSource : String(sizeSource || ""),
+      };
+    })
+    .filter((item): item is UploadedAttachment => Boolean(item));
+};
+
+const normalizeTenderStatus = (value: unknown): "published" | "draft" => {
+  if (typeof value !== "string") {
+    return "draft";
+  }
+
+  return ["published", "active", "visible", "public"].includes(value.toLowerCase()) ? "published" : "draft";
+};
+
+const normalizeTender = (item: Tender): Tender => ({
+  ...item,
+  attachments: normalizeAttachments(item.attachments),
+  status: normalizeTenderStatus(item.status),
+});
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -412,36 +482,40 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTenders(): Promise<Tender[]> {
-    return await db
+    const rows = await db
       .select()
       .from(tenders)
       .orderBy(desc(tenders.publishedAt), desc(tenders.updatedAt), asc(tenders.order));
+
+    return rows.map(normalizeTender);
   }
 
   async getPublishedTenders(): Promise<Tender[]> {
-    return await db
+    const rows = await db
       .select()
       .from(tenders)
-      .where(eq(tenders.status, "published"))
+      .where(or(eq(tenders.status, "published"), eq(tenders.status, "active")))
       .orderBy(desc(tenders.publishedAt), desc(tenders.updatedAt), asc(tenders.order));
+
+    return rows.map(normalizeTender);
   }
 
   async getPublishedTenderBySlug(slug: string): Promise<Tender | undefined> {
     const [item] = await db
       .select()
       .from(tenders)
-      .where(and(eq(tenders.slug, slug), eq(tenders.status, "published")));
-    return item || undefined;
+      .where(and(eq(tenders.slug, slug), or(eq(tenders.status, "published"), eq(tenders.status, "active"))));
+    return item ? normalizeTender(item) : undefined;
   }
 
   async createTender(tender: InsertTender): Promise<Tender> {
     const [created] = await db.insert(tenders).values(tender as TenderRow).returning();
-    return created;
+    return normalizeTender(created);
   }
 
   async updateTender(id: string, tender: Partial<InsertTender>): Promise<Tender> {
     const [updated] = await db.update(tenders).set(tender as Partial<TenderRow>).where(eq(tenders.id, id)).returning();
-    return updated;
+    return normalizeTender(updated);
   }
 
   async deleteTender(id: string): Promise<void> {
