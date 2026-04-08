@@ -12,7 +12,7 @@ import {
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
-const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },

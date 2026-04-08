@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
-const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
 
 export default function Footer() {
   return (
@@ -26,7 +26,7 @@ export default function Footer() {
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-7">
-                The project brings together partners from Central Asia and Europe to enhance education quality, promote research collaboration, and implement modern technologies in engineering and environmental fields.
+                The project brings together partners from Uzbekistan and Europe to enhance education quality, promote research collaboration, and implement modern technologies in engineering and environmental fields.
               </p>
             </div>
             <div className="pt-1">
@@ -186,7 +186,7 @@ export default function Footer() {
                 <div>
                   <p className="text-xs text-muted-foreground mb-1 uppercase tracking-[0.18em]">Location</p>
                   <p className="text-sm text-foreground">
-                    Central Asia & Europe
+                    Uzbekistan & Europe
                   </p>
                 </div>
               </div>

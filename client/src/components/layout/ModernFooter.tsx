@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
-const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
 
 const quickLinks = [
   { href: "/about", label: "About" },
@@ -67,7 +67,7 @@ export default function ModernFooter() {
                   </p>
                 </div>
                 <p className="text-sm leading-7 text-muted-foreground">
-                  The project brings together partners from Central Asia and Europe to improve education quality, support collaborative research, and introduce modern technologies in engineering and environmental fields.
+                  The project brings together partners from Uzbekistan and Europe to improve education quality, support collaborative research, and introduce modern technologies in engineering and environmental fields.
                 </p>
               </div>
 
@@ -127,7 +127,7 @@ export default function ModernFooter() {
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Location</p>
-                    <p className="mt-1 text-sm text-foreground">Central Asia & Europe</p>
+                    <p className="mt-1 text-sm text-foreground">Uzbekistan & Europe</p>
                   </div>
                 </div>
 

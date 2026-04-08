@@ -20,7 +20,7 @@ import {
   BriefcaseBusiness,
 } from "lucide-react";
 
-const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();

@@ -23,7 +23,7 @@ export default function Home() {
     {
       id: "1",
       title: "Building Intercultural Competence for a Sustainable Future",
-      description: "Empowering higher education institutions across Central Asia, Georgia, and Europe through collaborative learning and sustainable development.",
+      description: "Empowering higher education institutions across Uzbekistan, Georgia, and Europe through collaborative learning and sustainable development.",
       image: heroImage1,
       ctaText: "Learn More",
       ctaLink: "/about",
@@ -91,7 +91,7 @@ export default function Home() {
                   Engineering education designed for sustainability, collaboration, and real institutional impact.
                 </h2>
                 <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-                  GREENENGINE connects universities and institutions across Central Asia, Georgia, and Europe to strengthen sustainability literacy, engineering quality, and intercultural competence through applied learning, partnership, and innovation.
+                  GREENENGINE connects universities and institutions across Uzbekistan, Georgia, and Europe to strengthen sustainability literacy, engineering quality, and intercultural competence through applied learning, partnership, and innovation.
                 </p>
               </div>
 
@@ -99,7 +99,7 @@ export default function Home() {
                 <div className="rounded-[1.5rem] border border-primary/10 bg-white/85 p-5 shadow-[0_14px_32px_rgba(25,58,40,0.06)]">
                   <p className="text-3xl font-bold text-primary">3</p>
                   <p className="mt-2 text-sm font-semibold text-foreground">Regions Connected</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">Central Asia, Georgia, and Europe advancing shared educational goals.</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">Uzbekistan, Georgia, and Europe advancing shared educational goals.</p>
                 </div>
                 <div className="rounded-[1.5rem] border border-primary/10 bg-white/85 p-5 shadow-[0_14px_32px_rgba(25,58,40,0.06)]">
                   <p className="text-3xl font-bold text-primary">1</p>

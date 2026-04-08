@@ -24,7 +24,7 @@ export default function About() {
               </div>
               <h2 className="text-3xl font-semibold mb-6 text-foreground">About the Project</h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                GREENENGINE (Promoting Creative Engineering Education for a Sustainable Green World) is an international project funded by the Erasmus+ Capacity Building in Higher Education (CBHE) program of the European Commission. The project brings together universities, research institutions, and innovation organizations from Europe and Central Asia to modernize engineering education and promote sustainable development.
+                GREENENGINE (Promoting Creative Engineering Education for a Sustainable Green World) is an international project funded by the Erasmus+ Capacity Building in Higher Education (CBHE) program of the European Commission. The project brings together universities, research institutions, and innovation organizations from Europe and Uzbekistan to modernize engineering education and promote sustainable development.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 The project focuses on integrating green technologies, environmental sustainability principles, and innovative teaching methodologies into engineering programs at partner universities. Through international collaboration, GREENENGINE aims to strengthen the capacity of higher education institutions to prepare future engineers who can address global environmental challenges and contribute to sustainable technological development.
@@ -68,7 +68,7 @@ export default function About() {
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-3 text-foreground">Knowledge Exchange</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      Fostering interdisciplinary cooperation and knowledge exchange among partner institutions across Europe and Central Asia.
+                      Fostering interdisciplinary cooperation and knowledge exchange among partner institutions across Europe and Uzbekistan.
                     </p>
                   </CardContent>
                 </Card>
@@ -138,7 +138,7 @@ export default function About() {
                 GREENENGINE is funded by the Erasmus+ Capacity Building in Higher Education (CBHE) program of the European Commission, which supports modernization and reform of higher education institutions in partner countries.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                This funding enables us to create meaningful partnerships between European and Central Asian institutions, develop innovative educational resources, and contribute to the advancement of sustainable engineering education that addresses global environmental challenges.
+                This funding enables us to create meaningful partnerships between European and Uzbek institutions, develop innovative educational resources, and contribute to the advancement of sustainable engineering education that addresses global environmental challenges.
               </p>
             </section>
           </div>

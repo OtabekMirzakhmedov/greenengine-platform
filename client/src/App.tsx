@@ -17,7 +17,6 @@ import Passport from "@/pages/passport/Passport";
 import Storytelling from "@/pages/passport/Storytelling";
 import Events from "@/pages/Events";
 import EventDetail from "@/pages/EventDetail";
-import ActionPlans from "@/pages/ActionPlans";
 import CommunityPlans from "@/pages/CommunityPlans";
 import Partners from "@/pages/Partners";
 import NewsPage from "@/pages/News";
@@ -30,7 +29,6 @@ import ActivitiesAdmin from "@/pages/admin/ActivitiesAdmin";
 import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
 import EventsAdmin from "@/pages/admin/EventsAdmin";
-import ActionPlansAdmin from "@/pages/admin/ActionPlansAdmin";
 import CommunityPlansAdmin from "@/pages/admin/CommunityPlansAdmin";
 import PartnersAdmin from "@/pages/admin/PartnersAdmin";
 import NewsAdmin from "@/pages/admin/NewsAdmin";
@@ -138,14 +136,6 @@ function Router() {
         )}
       </Route>
 
-      <Route path="/action-plans">
-        {() => (
-          <PublicLayout>
-            <ActionPlans />
-          </PublicLayout>
-        )}
-      </Route>
-
       <Route path="/community-plans">
         {() => (
           <PublicLayout>
@@ -232,14 +222,6 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <EventsAdmin />
-          </ProtectedRoute>
-        )}
-      </Route>
-
-      <Route path="/admin/action-plans">
-        {() => (
-          <ProtectedRoute>
-            <ActionPlansAdmin />
           </ProtectedRoute>
         )}
       </Route>

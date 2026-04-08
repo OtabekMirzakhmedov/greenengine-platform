@@ -184,7 +184,7 @@ function seed() {
       title: "GREENENGINE Project Kickoff Conference in Tashkent",
       slug: "greenengine-kickoff-conference-tashkent",
       excerpt: "The GREENENGINE project officially launched with a successful kickoff conference bringing together all 11 partner institutions in Tashkent, Uzbekistan.",
-      content: "The GREENENGINE project officially began with an inspiring kickoff conference held in Tashkent, Uzbekistan. Over 50 participants from 11 partner institutions across Central Asia, Georgia, and Europe gathered to establish the foundation for this transformative educational initiative. The three-day event featured collaborative workshops, strategic planning sessions, and networking opportunities. Partners discussed the project's goals of promoting intercultural competence and sustainable development in higher education, outlining a comprehensive roadmap for the next three years.",
+      content: "The GREENENGINE project officially began with an inspiring kickoff conference held in Tashkent, Uzbekistan. Over 50 participants from 11 partner institutions across Uzbekistan, Georgia, and Europe gathered to establish the foundation for this transformative educational initiative. The three-day event featured collaborative workshops, strategic planning sessions, and networking opportunities. Partners discussed the project's goals of promoting intercultural competence and sustainable development in higher education, outlining a comprehensive roadmap for the next three years.",
       imageUrl: "/attached_assets/stock_images/educational_conferen_f6f10e1d.jpg",
       publishedAt: new Date("2025-09-15T09:00:00Z"),
       order: 1
@@ -238,7 +238,7 @@ function seed() {
       title: "Student Mobility Program Applications Now Open",
       slug: "student-mobility-program-applications-open",
       excerpt: "GREENENGINE announces the opening of applications for its student exchange program, offering semester-long study opportunities at partner universities.",
-      content: "We are thrilled to announce that applications are now open for the GREENENGINE Student Mobility Program for the 2025-2026 academic year! This exciting initiative enables undergraduate and graduate students to spend one semester at a partner university in Central Asia, Georgia, or Europe. The program covers tuition, provides monthly stipends, and includes pre-departure intercultural training. Students will have the opportunity to immerse themselves in new cultural contexts, improve language skills, build international networks, and gain unique academic perspectives. The first cohort of 50 students will begin their exchanges in September 2026. Don't miss this life-changing opportunity!",
+      content: "We are thrilled to announce that applications are now open for the GREENENGINE Student Mobility Program for the 2025-2026 academic year! This exciting initiative enables undergraduate and graduate students to spend one semester at a partner university in Uzbekistan, Georgia, or Europe. The program covers tuition, provides monthly stipends, and includes pre-departure intercultural training. Students will have the opportunity to immerse themselves in new cultural contexts, improve language skills, build international networks, and gain unique academic perspectives. The first cohort of 50 students will begin their exchanges in September 2026. Don't miss this life-changing opportunity!",
       imageUrl: "/attached_assets/stock_images/university_workshop__92f15da7.jpg",
       publishedAt: new Date("2025-11-12T10:00:00Z"),
       order: 7
@@ -256,7 +256,7 @@ function seed() {
       title: "Erasmus+ Co-Funding Milestone Reached",
       slug: "erasmus-cofunding-milestone-reached",
       excerpt: "The GREENENGINE project successfully achieves its first-year objectives and receives continued Erasmus+ support for years two and three.",
-      content: "We are proud to announce that GREENENGINE has successfully met all first-year milestones and deliverables, securing continued Erasmus+ co-funding for the remainder of the project! The European Commission's positive evaluation highlighted the project's innovative approach to intercultural education, strong partnership collaboration, and measurable impact on students and faculty. This achievement reflects the dedication and hard work of all partners and participants. With this continued support, we can expand our activities, reach more students, and deepen our impact on higher education across Central Asia, Georgia, and Europe.",
+      content: "We are proud to announce that GREENENGINE has successfully met all first-year milestones and deliverables, securing continued Erasmus+ co-funding for the remainder of the project! The European Commission's positive evaluation highlighted the project's innovative approach to intercultural education, strong partnership collaboration, and measurable impact on students and faculty. This achievement reflects the dedication and hard work of all partners and participants. With this continued support, we can expand our activities, reach more students, and deepen our impact on higher education across Uzbekistan, Georgia, and Europe.",
       imageUrl: "/attached_assets/stock_images/university_workshop__212dc14f.jpg",
       publishedAt: new Date("2025-11-18T09:00:00Z"),
       order: 9

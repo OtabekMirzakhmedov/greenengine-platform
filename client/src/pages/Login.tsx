@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { Lock } from "lucide-react";
 
-const brandLogoUrl = "/attached_assets/greenengine-logo-new.jpg";
+const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
 
 export default function Login() {
   const [, setLocation] = useLocation();

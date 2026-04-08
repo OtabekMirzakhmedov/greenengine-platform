@@ -53,7 +53,7 @@ export default function Partners() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mb-12 max-w-3xl mx-auto text-center">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              GREENENGINE brings together leading universities and institutions from Central Asia, Georgia, and Europe to advance intercultural competence and sustainable development in higher education.
+              GREENENGINE brings together leading universities and institutions from Uzbekistan, Georgia, and Europe to advance intercultural competence and sustainable development in higher education.
             </p>
           </div>
 

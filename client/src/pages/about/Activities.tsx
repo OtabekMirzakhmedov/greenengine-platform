@@ -32,7 +32,7 @@ export default function Activities() {
         "New sustainability-focused modules integrated into engineering programs",
         "Comprehensive teaching materials and course resources",
         "Trained faculty equipped with modern pedagogical approaches",
-        "Knowledge exchange between European and Central Asian partners",
+        "Knowledge exchange between European and Uzbek partners",
       ],
     },
     {
