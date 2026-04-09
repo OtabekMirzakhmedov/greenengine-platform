@@ -63,13 +63,13 @@ export default function Header() {
           <div className="flex shrink-0 items-center gap-4 xl:gap-5">
             <Link
               href="/"
-              className="flex shrink-0 items-center rounded-2xl px-1 py-1 transition-colors hover:bg-[#b8c924]/70"
+              className="flex shrink-0 items-center rounded-[1.6rem] border border-[#9faf22]/55 bg-[#cfda2d]/60 px-2 py-1.5 shadow-[0_10px_24px_rgba(73,90,14,0.10)] transition-all hover:border-[#8da01f] hover:bg-[#d7e23f]/75"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
                 alt="GREENENGINE Logo"
-                className="h-[3.7rem] w-auto max-w-[250px] object-contain sm:h-[4rem] sm:max-w-[300px] lg:h-[4.35rem] lg:max-w-[360px]"
+                className="h-[4.15rem] w-auto max-w-[280px] object-contain drop-shadow-[0_8px_18px_rgba(54,78,13,0.12)] sm:h-[4.45rem] sm:max-w-[330px] lg:h-[4.85rem] lg:max-w-[390px]"
               />
             </Link>
 
@@ -166,14 +166,6 @@ export default function Header() {
                 data-testid="link-nav-tenders"
               >
                 Tenders
-              </Link>
-
-              <Link 
-                href="/action-plans"
-                className={navLinkClass(location.startsWith("/action-plans"))}
-                data-testid="link-nav-action-plans"
-              >
-                Action
               </Link>
 
               <Link 
@@ -282,10 +274,6 @@ export default function Header() {
 
               <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-tenders">
                 Tenders
-              </Link>
-
-              <Link href="/action-plans" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-action-plans">
-                Action
               </Link>
 
               <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-partners">
