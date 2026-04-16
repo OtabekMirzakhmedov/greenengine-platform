@@ -42,6 +42,68 @@ export const homeActivityCards = sqliteTable("home_activity_cards", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+export const passportSections = sqliteTable("passport_sections", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  navLabel: text("nav_label").notNull(),
+  slug: text("slug").notNull().unique(),
+  summary: text("summary"),
+  content: text("content"),
+  imageUrl: text("image_url"),
+  mediaUrl: text("media_url"),
+  links: text("links", { mode: "json" })
+    .$type<Array<{ label: string; url: string }>>()
+    .default(sql`'[]'`),
+  translations: text("translations", { mode: "json" })
+    .$type<Record<string, {
+      title?: string;
+      navLabel?: string;
+      summary?: string;
+      content?: string;
+      imageUrl?: string;
+      mediaUrl?: string;
+      links?: Array<{ label: string; url: string }>;
+    }>>()
+    .default(sql`'{}'`),
+  order: integer("order").notNull().default(0),
+  isVisible: integer("is_visible", { mode: "boolean" }).notNull().default(true),
+  showInMenu: integer("show_in_menu", { mode: "boolean" }).notNull().default(true),
+  isLanding: integer("is_landing", { mode: "boolean" }).notNull().default(false),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const passportStories = sqliteTable("passport_stories", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  sectionId: text("section_id").notNull().references(() => passportSections.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  imageUrl: text("image_url"),
+  gallery: text("gallery", { mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  mediaUrl: text("media_url"),
+  attachments: text("attachments", { mode: "json" })
+    .$type<Array<{ name: string; url: string; size: string }>>()
+    .default(sql`'[]'`),
+  author: text("author"),
+  order: integer("order").notNull().default(0),
+  isPublished: integer("is_published", { mode: "boolean" }).notNull().default(true),
+  publishedAt: integer("published_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  translations: text("translations", { mode: "json" })
+    .$type<Record<string, {
+      title?: string;
+      excerpt?: string;
+      content?: string;
+      imageUrl?: string;
+      mediaUrl?: string;
+      author?: string;
+      gallery?: string[];
+      attachments?: Array<{ name: string; url: string; size: string }>;
+    }>>()
+    .default(sql`'{}'`),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 export const activities = sqliteTable("activities", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
@@ -185,6 +247,64 @@ export const insertUserSchema = createInsertSchema(users).omit({ id: true, creat
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
 export const insertHeroSectionSchema = createInsertSchema(heroSections).omit({ id: true, updatedAt: true });
 export const insertHomeActivityCardSchema = createInsertSchema(homeActivityCards).omit({ id: true, updatedAt: true });
+const passportLinkSchema = z.object({
+  label: z.string().min(1, "Link label is required"),
+  url: z.string().min(1, "Link URL is required"),
+});
+const passportTranslationSchema = z.object({
+  title: z.string().optional(),
+  navLabel: z.string().optional(),
+  summary: z.string().optional(),
+  content: z.string().optional(),
+  imageUrl: z.string().optional(),
+  mediaUrl: z.string().optional(),
+  links: z.array(passportLinkSchema).optional(),
+});
+export const insertPassportSectionSchema = createInsertSchema(passportSections)
+  .omit({ id: true, updatedAt: true })
+  .extend({
+    links: z.array(passportLinkSchema).default([]),
+    translations: z.record(z.string(), passportTranslationSchema).default({}),
+  });
+const uploadedAttachmentSchema = z.object({
+  name: z.string().min(1, "Attachment name is required"),
+  url: z.string().min(1, "Attachment URL is required"),
+  size: z.string().optional().default(""),
+});
+const passportStoryTranslationSchema = z.object({
+  title: z.string().optional(),
+  excerpt: z.string().optional(),
+  content: z.string().optional(),
+  imageUrl: z.string().optional(),
+  mediaUrl: z.string().optional(),
+  author: z.string().optional(),
+  gallery: z.array(z.string()).optional(),
+  attachments: z.array(uploadedAttachmentSchema).optional(),
+});
+export const insertPassportStorySchema = createInsertSchema(passportStories)
+  .omit({ id: true, updatedAt: true })
+  .extend({
+    gallery: z.array(z.string()).default([]),
+    attachments: z.array(uploadedAttachmentSchema).default([]),
+    publishedAt: z.coerce.date().optional(),
+    translations: z.record(z.string(), passportStoryTranslationSchema).default({}),
+  });
+export const updatePassportStorySchema = insertPassportStorySchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
+export const updatePassportSectionSchema = insertPassportSectionSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+});
 export const updateHomeActivityCardSchema = insertHomeActivityCardSchema.partial().superRefine((data, ctx) => {
   if (Object.keys(data).length === 0) {
     ctx.addIssue({
@@ -276,6 +396,10 @@ export type InsertHeroSection = z.infer<typeof insertHeroSectionSchema>;
 export type HeroSection = typeof heroSections.$inferSelect;
 export type InsertHomeActivityCard = z.infer<typeof insertHomeActivityCardSchema>;
 export type HomeActivityCard = typeof homeActivityCards.$inferSelect;
+export type InsertPassportSection = z.infer<typeof insertPassportSectionSchema>;
+export type PassportSection = typeof passportSections.$inferSelect;
+export type InsertPassportStory = z.infer<typeof insertPassportStorySchema>;
+export type PassportStory = typeof passportStories.$inferSelect;
 export type InsertActivity = z.infer<typeof insertActivitySchema>;
 export type Activity = typeof activities.$inferSelect;
 export type InsertStoryGallery = z.infer<typeof insertStoryGallerySchema>;

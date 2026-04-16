@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { users, partners, news } from "@shared/schema";
+import { users, partners, news, passportSections, passportStories } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 
@@ -285,6 +285,127 @@ function seed() {
       console.log(`✓ Added news: ${newsItem.title}`);
     } else {
       console.log(`- News already exists: ${newsItem.title}`);
+    }
+  }
+
+  console.log("\nSeeding passport sections...");
+
+  const passportSectionsData = [
+    {
+      title: "Intercultural Passport",
+      navLabel: "Intercultural Passport",
+      slug: "overview",
+      summary: "Developing global competencies through innovative learning experiences, creative reflection, and cross-cultural dialogue.",
+      content:
+        "<p>The Intercultural Passport is an evolving educational framework designed to help students and educators strengthen intercultural awareness, communication, and collaborative problem-solving across diverse academic environments.</p><p>This module can now be managed entirely from the admin panel, including submenu labels, content ordering, visibility, media, and multilingual content variants.</p>",
+      imageUrl: null,
+      mediaUrl: null,
+      links: [
+        { label: "Open Digital Storytelling", url: "/passport/digital-storytelling" },
+      ],
+      translations: {},
+      order: 0,
+      isVisible: true,
+      showInMenu: true,
+      isLanding: true,
+    },
+    {
+      title: "Digital Storytelling",
+      navLabel: "Digital Storytelling",
+      slug: "digital-storytelling",
+      summary: "Sharing cultural experiences through multimedia narratives, reflection, and student-led storytelling practices.",
+      content:
+        "<p>Digital Storytelling combines personal narrative, cultural reflection, and accessible media tools to help participants express intercultural experiences in meaningful ways.</p><p>This page now highlights real stories curated through the admin panel, complete with professional card layouts, media, and multilingual detail pages.</p>",
+      imageUrl: "/attached_assets/passport-stories/image1.png",
+      mediaUrl: null,
+      links: [
+        { label: "Back to Passport Overview", url: "/passport" },
+      ],
+      translations: {},
+      order: 1,
+      isVisible: true,
+      showInMenu: true,
+      isLanding: false,
+    },
+  ];
+
+  for (const section of passportSectionsData) {
+    const existing = db
+      .select()
+      .from(passportSections)
+      .where(eq(passportSections.slug, section.slug))
+      .limit(1)
+      .all();
+
+    if (existing.length === 0) {
+      db.insert(passportSections).values(section).run();
+      console.log(`✓ Added passport section: ${section.title}`);
+    } else {
+      console.log(`- Passport section already exists: ${section.title}`);
+    }
+  }
+
+  console.log("\nSeeding passport stories...");
+
+  const digitalStorytellingSection = db
+    .select()
+    .from(passportSections)
+    .where(eq(passportSections.slug, "digital-storytelling"))
+    .limit(1)
+    .all()[0];
+
+  if (digitalStorytellingSection) {
+    const passportStoriesData = [
+      {
+        sectionId: digitalStorytellingSection.id,
+        title: "Where the Sea Once Was",
+        slug: "where-the-sea-once-was",
+        excerpt:
+          "A personal reflection from Uzbekistan on the Aral Sea, loss, memory, and how environmental change reshapes communities and responsibility.",
+        content:
+          "<p>Did you know that one of the world’s largest inland seas once existed in Uzbekistan?</p><p>The Aral Sea, once the fourth-largest lake on Earth, supported thriving communities, rich biodiversity, and a vibrant fishing industry. Ships sailed across its waters, and life flourished along its shores. Today, much of it has disappeared.</p><p>What remains is the Aralkum Desert, a powerful reminder of how human decisions can reshape nature. Growing up in Uzbekistan, stories about beaches, fish markets, and ports were never just historical details. They formed part of a living cultural memory that still shapes how many people understand place, loss, and resilience.</p><p>Seeing images of abandoned ships resting in the sand can feel unreal, yet they ask a very real question: how do we balance development and sustainability?</p><p>Through the GREENENGINE project, this story becomes more than a local environmental case. It connects Uzbekistan’s experience with wider conversations across Europe and beyond about climate change, resource management, and shared responsibility. Sustainability is not only about technology. It is also about awareness, choices, memory, and cooperation.</p><p>Today, efforts continue to restore parts of the region, plant trees, and improve living conditions. The story of the Aral Sea is not only about loss. It is also about learning, adaptation, and the possibility of a more sustainable future shaped together.</p>",
+        imageUrl: "/attached_assets/passport-stories/image1.png",
+        gallery: [
+          "/attached_assets/passport-stories/image1.png",
+          "/attached_assets/passport-stories/image2.jpeg",
+          "/attached_assets/passport-stories/image3.jpeg",
+          "/attached_assets/passport-stories/image4.jpeg",
+        ],
+        mediaUrl: null,
+        attachments: [],
+        author: "GREENENGINE Uzbekistan",
+        order: 0,
+        isPublished: true,
+        publishedAt: new Date("2026-04-16T09:00:00Z"),
+        translations: {
+          ru: {
+            title: "Там, где когда-то было море",
+            excerpt:
+              "Личная история из Узбекистана об Аральском море, памяти, потере и необходимости устойчивого будущего.",
+          },
+          uz: {
+            title: "Bir paytlar dengiz bo'lgan joy",
+            excerpt:
+              "O'zbekistondan Orol dengizi, xotira, yo'qotish va barqaror kelajak haqidagi shaxsiy hikoya.",
+          },
+        },
+      },
+    ];
+
+    for (const story of passportStoriesData) {
+      const existingStory = db
+        .select()
+        .from(passportStories)
+        .where(eq(passportStories.slug, story.slug))
+        .limit(1)
+        .all();
+
+      if (existingStory.length === 0) {
+        db.insert(passportStories).values(story).run();
+        console.log(`✓ Added passport story: ${story.title}`);
+      } else {
+        console.log(`- Passport story already exists: ${story.title}`);
+      }
     }
   }
 

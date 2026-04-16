@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -9,6 +10,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import type { PassportSection } from "@shared/schema";
+import { resolvePassportSection } from "@/lib/passportContent";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
@@ -20,15 +23,16 @@ const aboutLinks = [
   { title: "Management and Quality", href: "/about/management" },
 ];
 
-const passportLinks = [
-  { title: "Overview", href: "/passport" },
-  { title: "Digital Storytelling", href: "/passport/storytelling" },
-];
-
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: passportMenuSections } = useQuery<PassportSection[]>({
+    queryKey: ["/api/passport-sections/menu"],
+  });
+  const { data: passportLandingSection } = useQuery<PassportSection>({
+    queryKey: ["/api/passport-sections/landing"],
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +55,16 @@ export default function Header() {
 
   const erasmusLogoClass =
     "block w-auto object-contain mix-blend-multiply [filter:saturate(1.02)_contrast(1.04)]";
+  const resolvedPassportLanding = passportLandingSection ? resolvePassportSection(passportLandingSection) : null;
+  const passportTriggerLabel = resolvedPassportLanding?.navLabel || resolvedPassportLanding?.title || "Intercultural Passport";
+  const passportLinks =
+    passportMenuSections?.map((section) => {
+      const resolvedSection = resolvePassportSection(section);
+      return {
+        title: resolvedSection.navLabel,
+        href: resolvedSection.isLanding ? "/passport" : `/passport/${resolvedSection.slug}`,
+      };
+    }) ?? [{ title: "Overview", href: "/passport" }];
 
   return (
     <header
@@ -116,7 +130,7 @@ export default function Header() {
 
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-passport-menu">
-                      Intercultural Passport
+                      {passportTriggerLabel}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
@@ -247,7 +261,7 @@ export default function Header() {
               </div>
 
               <div className="space-y-1 rounded-2xl bg-[#edf2c6] p-2">
-                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">Intercultural Passport</div>
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">{passportTriggerLabel}</div>
                 {passportLinks.map((link) => (
                   <Link 
                     key={link.href} 

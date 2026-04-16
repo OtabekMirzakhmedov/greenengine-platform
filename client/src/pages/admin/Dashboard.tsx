@@ -18,6 +18,8 @@ import {
   Images,
   Grid3X3,
   BriefcaseBusiness,
+  Languages,
+  PenSquare,
 } from "lucide-react";
 
 const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
@@ -68,6 +70,22 @@ export default function Dashboard() {
       description: "Manage homepage cards, list page, and activity details",
       color: "text-cyan-500",
       bgColor: "bg-cyan-500/10",
+    },
+    {
+      title: "Passport Module",
+      icon: Languages,
+      href: "/admin/passport-sections",
+      description: "Navbar submenu, landing page, multilingual section content",
+      color: "text-lime-600",
+      bgColor: "bg-lime-500/10",
+    },
+    {
+      title: "Storytelling Stories",
+      icon: PenSquare,
+      href: "/admin/passport-stories",
+      description: "Digital Storytelling cards, detail pages, ordering, and publishing",
+      color: "text-green-700",
+      bgColor: "bg-green-500/10",
     },
     {
       title: "Events",

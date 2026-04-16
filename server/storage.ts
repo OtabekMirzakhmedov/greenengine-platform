@@ -1,5 +1,5 @@
 import { 
-  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, tenders, heroSections, homeActivityCards, activities, storyGalleries,
+  users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, tenders, heroSections, homeActivityCards, passportSections, passportStories, activities, storyGalleries,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -12,6 +12,8 @@ import {
   type Tender, type InsertTender,
   type HeroSection, type InsertHeroSection,
   type HomeActivityCard, type InsertHomeActivityCard,
+  type PassportSection, type InsertPassportSection,
+  type PassportStory, type InsertPassportStory,
   type Activity, type InsertActivity,
   type StoryGallery, type InsertStoryGallery,
 } from "@shared/schema";
@@ -24,6 +26,8 @@ type ActivityRow = typeof activities.$inferInsert;
 type StoryGalleryRow = typeof storyGalleries.$inferInsert;
 type NewsRow = typeof news.$inferInsert;
 type TenderRow = typeof tenders.$inferInsert;
+type PassportSectionRow = typeof passportSections.$inferInsert;
+type PassportStoryRow = typeof passportStories.$inferInsert;
 type UploadedAttachment = { name: string; url: string; size: string };
 
 const normalizeAttachmentUrl = (value: unknown): string => {
@@ -115,6 +119,22 @@ export interface IStorage {
   createHomeActivityCard(card: InsertHomeActivityCard): Promise<HomeActivityCard>;
   updateHomeActivityCard(id: string, card: Partial<InsertHomeActivityCard>): Promise<HomeActivityCard>;
   deleteHomeActivityCard(id: string): Promise<void>;
+
+  getPassportSections(): Promise<PassportSection[]>;
+  getVisiblePassportSections(): Promise<PassportSection[]>;
+  getPassportMenuSections(): Promise<PassportSection[]>;
+  getPassportLandingSection(): Promise<PassportSection | undefined>;
+  getPassportSectionBySlug(slug: string): Promise<PassportSection | undefined>;
+  createPassportSection(section: InsertPassportSection): Promise<PassportSection>;
+  updatePassportSection(id: string, section: Partial<InsertPassportSection>): Promise<PassportSection>;
+  deletePassportSection(id: string): Promise<void>;
+  getPassportStories(): Promise<PassportStory[]>;
+  getPublishedPassportStoriesBySection(sectionId: string): Promise<PassportStory[]>;
+  getPassportStoryBySlug(slug: string): Promise<PassportStory | undefined>;
+  getPublishedPassportStoryBySectionAndSlug(sectionId: string, slug: string): Promise<PassportStory | undefined>;
+  createPassportStory(story: InsertPassportStory): Promise<PassportStory>;
+  updatePassportStory(id: string, story: Partial<InsertPassportStory>): Promise<PassportStory>;
+  deletePassportStory(id: string): Promise<void>;
 
   getActivities(): Promise<Activity[]>;
   getActivityBySlug(slug: string): Promise<Activity | undefined>;
@@ -256,6 +276,121 @@ export class DatabaseStorage implements IStorage {
 
   async deleteHomeActivityCard(id: string): Promise<void> {
     await db.delete(homeActivityCards).where(eq(homeActivityCards.id, id));
+  }
+
+  async getPassportSections(): Promise<PassportSection[]> {
+    return await db
+      .select()
+      .from(passportSections)
+      .orderBy(desc(passportSections.isLanding), asc(passportSections.order), desc(passportSections.updatedAt));
+  }
+
+  async getVisiblePassportSections(): Promise<PassportSection[]> {
+    return await db
+      .select()
+      .from(passportSections)
+      .where(eq(passportSections.isVisible, true))
+      .orderBy(desc(passportSections.isLanding), asc(passportSections.order), desc(passportSections.updatedAt));
+  }
+
+  async getPassportMenuSections(): Promise<PassportSection[]> {
+    return await db
+      .select()
+      .from(passportSections)
+      .where(and(eq(passportSections.isVisible, true), eq(passportSections.showInMenu, true)))
+      .orderBy(desc(passportSections.isLanding), asc(passportSections.order), desc(passportSections.updatedAt));
+  }
+
+  async getPassportLandingSection(): Promise<PassportSection | undefined> {
+    const [landing] = await db
+      .select()
+      .from(passportSections)
+      .where(and(eq(passportSections.isVisible, true), eq(passportSections.isLanding, true)))
+      .orderBy(asc(passportSections.order), desc(passportSections.updatedAt));
+
+    if (landing) {
+      return landing;
+    }
+
+    const [fallback] = await db
+      .select()
+      .from(passportSections)
+      .where(eq(passportSections.isVisible, true))
+      .orderBy(desc(passportSections.isLanding), asc(passportSections.order), desc(passportSections.updatedAt));
+
+    return fallback || undefined;
+  }
+
+  async getPassportSectionBySlug(slug: string): Promise<PassportSection | undefined> {
+    const [section] = await db
+      .select()
+      .from(passportSections)
+      .where(and(eq(passportSections.slug, slug), eq(passportSections.isVisible, true)));
+    return section || undefined;
+  }
+
+  async createPassportSection(section: InsertPassportSection): Promise<PassportSection> {
+    const [created] = await db.insert(passportSections).values(section as PassportSectionRow).returning();
+    return created;
+  }
+
+  async updatePassportSection(id: string, section: Partial<InsertPassportSection>): Promise<PassportSection> {
+    const [updated] = await db
+      .update(passportSections)
+      .set(section as Partial<PassportSectionRow>)
+      .where(eq(passportSections.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deletePassportSection(id: string): Promise<void> {
+    await db.delete(passportSections).where(eq(passportSections.id, id));
+  }
+
+  async getPassportStories(): Promise<PassportStory[]> {
+    return await db
+      .select()
+      .from(passportStories)
+      .orderBy(desc(passportStories.isPublished), asc(passportStories.order), desc(passportStories.publishedAt), desc(passportStories.updatedAt));
+  }
+
+  async getPublishedPassportStoriesBySection(sectionId: string): Promise<PassportStory[]> {
+    return await db
+      .select()
+      .from(passportStories)
+      .where(and(eq(passportStories.sectionId, sectionId), eq(passportStories.isPublished, true)))
+      .orderBy(asc(passportStories.order), desc(passportStories.publishedAt), desc(passportStories.updatedAt));
+  }
+
+  async getPassportStoryBySlug(slug: string): Promise<PassportStory | undefined> {
+    const [story] = await db.select().from(passportStories).where(eq(passportStories.slug, slug));
+    return story || undefined;
+  }
+
+  async getPublishedPassportStoryBySectionAndSlug(sectionId: string, slug: string): Promise<PassportStory | undefined> {
+    const [story] = await db
+      .select()
+      .from(passportStories)
+      .where(and(eq(passportStories.sectionId, sectionId), eq(passportStories.slug, slug), eq(passportStories.isPublished, true)));
+    return story || undefined;
+  }
+
+  async createPassportStory(story: InsertPassportStory): Promise<PassportStory> {
+    const [created] = await db.insert(passportStories).values(story as PassportStoryRow).returning();
+    return created;
+  }
+
+  async updatePassportStory(id: string, story: Partial<InsertPassportStory>): Promise<PassportStory> {
+    const [updated] = await db
+      .update(passportStories)
+      .set(story as Partial<PassportStoryRow>)
+      .where(eq(passportStories.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deletePassportStory(id: string): Promise<void> {
+    await db.delete(passportStories).where(eq(passportStories.id, id));
   }
 
   async getActivities(): Promise<Activity[]> {

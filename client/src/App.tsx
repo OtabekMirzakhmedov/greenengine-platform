@@ -14,7 +14,8 @@ import About from "@/pages/about/About";
 import Goals from "@/pages/about/Goals";
 import Management from "@/pages/about/Management";
 import Passport from "@/pages/passport/Passport";
-import Storytelling from "@/pages/passport/Storytelling";
+import PassportSectionPage from "@/pages/passport/PassportSectionPage";
+import PassportStoryDetail from "@/pages/passport/PassportStoryDetail";
 import Events from "@/pages/Events";
 import EventDetail from "@/pages/EventDetail";
 import CommunityPlans from "@/pages/CommunityPlans";
@@ -28,6 +29,8 @@ import Dashboard from "@/pages/admin/Dashboard";
 import ActivitiesAdmin from "@/pages/admin/ActivitiesAdmin";
 import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
+import PassportSectionsAdmin from "@/pages/admin/PassportSectionsAdmin";
+import PassportStoriesAdmin from "@/pages/admin/PassportStoriesAdmin";
 import EventsAdmin from "@/pages/admin/EventsAdmin";
 import CommunityPlansAdmin from "@/pages/admin/CommunityPlansAdmin";
 import PartnersAdmin from "@/pages/admin/PartnersAdmin";
@@ -112,10 +115,18 @@ function Router() {
         )}
       </Route>
 
-      <Route path="/passport/storytelling">
+      <Route path="/passport/:sectionSlug/stories/:storySlug">
         {() => (
           <PublicLayout>
-            <Storytelling />
+            <PassportStoryDetail />
+          </PublicLayout>
+        )}
+      </Route>
+
+      <Route path="/passport/:slug">
+        {() => (
+          <PublicLayout>
+            <PassportSectionPage />
           </PublicLayout>
         )}
       </Route>
@@ -214,6 +225,22 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <PagesAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/passport-sections">
+        {() => (
+          <ProtectedRoute>
+            <PassportSectionsAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/passport-stories">
+        {() => (
+          <ProtectedRoute>
+            <PassportStoriesAdmin />
           </ProtectedRoute>
         )}
       </Route>

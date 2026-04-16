@@ -14,6 +14,8 @@ import {
   insertEventSchema,
   insertHeroSectionSchema,
   insertHomeActivityCardSchema,
+  insertPassportSectionSchema,
+  insertPassportStorySchema,
   insertNewsSchema,
   insertPartnerSchema,
   insertTenderSchema,
@@ -23,6 +25,8 @@ import {
   updateEventSchema,
   updateHomeActivityCardSchema,
   updateNewsSchema,
+  updatePassportSectionSchema,
+  updatePassportStorySchema,
   updatePartnerSchema,
   updateTenderSchema,
   updateStoryGallerySchema,
@@ -275,6 +279,193 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Home activity card deleted successfully" });
     } catch (error) {
       console.error("Delete home activity card error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections", async (_req, res) => {
+    try {
+      const sections = await storage.getVisiblePassportSections();
+      res.json(sections);
+    } catch (error) {
+      console.error("Get passport sections error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections/menu", async (_req, res) => {
+    try {
+      const sections = await storage.getPassportMenuSections();
+      res.json(sections);
+    } catch (error) {
+      console.error("Get passport menu sections error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections/landing", async (_req, res) => {
+    try {
+      const section = await storage.getPassportLandingSection();
+      if (!section) {
+        return res.status(404).json({ message: "Passport landing section not found" });
+      }
+      res.json(section);
+    } catch (error) {
+      console.error("Get passport landing section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections/slug/:slug", async (req, res) => {
+    try {
+      const section = await storage.getPassportSectionBySlug(req.params.slug);
+      if (!section) {
+        return res.status(404).json({ message: "Passport section not found" });
+      }
+      res.json(section);
+    } catch (error) {
+      console.error("Get passport section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/passport-sections", requireAuth, async (_req: AuthRequest, res) => {
+    try {
+      const sections = await storage.getPassportSections();
+      res.json(sections);
+    } catch (error) {
+      console.error("Get admin passport sections error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/passport-sections", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertPassportSectionSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const section = await storage.createPassportSection(validation.data);
+      res.status(201).json(section);
+    } catch (error) {
+      console.error("Create passport section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/passport-sections/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updatePassportSectionSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const section = await storage.updatePassportSection(req.params.id, validation.data);
+      res.json(section);
+    } catch (error) {
+      console.error("Update passport section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/passport-sections/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deletePassportSection(req.params.id);
+      res.json({ message: "Passport section deleted successfully" });
+    } catch (error) {
+      console.error("Delete passport section error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections/:sectionId/stories", async (req, res) => {
+    try {
+      const stories = await storage.getPublishedPassportStoriesBySection(req.params.sectionId);
+      res.json(stories);
+    } catch (error) {
+      console.error("Get passport stories error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/passport-sections/:sectionSlug/stories/:storySlug", async (req, res) => {
+    try {
+      const section = await storage.getPassportSectionBySlug(req.params.sectionSlug);
+      if (!section) {
+        return res.status(404).json({ message: "Passport section not found" });
+      }
+
+      const story = await storage.getPublishedPassportStoryBySectionAndSlug(section.id, req.params.storySlug);
+      if (!story) {
+        return res.status(404).json({ message: "Story not found" });
+      }
+
+      res.json({ section, story });
+    } catch (error) {
+      console.error("Get passport story detail error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/passport-stories", requireAuth, async (_req: AuthRequest, res) => {
+    try {
+      const stories = await storage.getPassportStories();
+      res.json(stories);
+    } catch (error) {
+      console.error("Get admin passport stories error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/passport-stories", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertPassportStorySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const story = await storage.createPassportStory(validation.data);
+      res.status(201).json(story);
+    } catch (error) {
+      console.error("Create passport story error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/passport-stories/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updatePassportStorySchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const story = await storage.updatePassportStory(req.params.id, validation.data);
+      res.json(story);
+    } catch (error) {
+      console.error("Update passport story error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/passport-stories/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deletePassportStory(req.params.id);
+      res.json({ message: "Passport story deleted successfully" });
+    } catch (error) {
+      console.error("Delete passport story error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
