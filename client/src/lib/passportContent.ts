@@ -65,3 +65,20 @@ export const resolvePassportStory = (
     attachments: translation?.attachments || story.attachments || [],
   };
 };
+
+export const getPassportSectionHref = (section: PassportSection) =>
+  section.isLanding ? "/passport" : `/passport/${section.slug}`;
+
+export const isStorytellingPassportSection = (section?: PassportSection | null, slug?: string | null) => {
+  if (!section && !slug) {
+    return false;
+  }
+
+  const normalizedSlug = (slug ?? section?.slug ?? "").toLowerCase();
+  const normalizedTitle = (section?.title ?? "").toLowerCase();
+  const normalizedLabel = (section?.navLabel ?? "").toLowerCase();
+
+  return [normalizedSlug, normalizedTitle, normalizedLabel].some((value) =>
+    value.includes("storytelling"),
+  );
+};

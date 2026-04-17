@@ -6,12 +6,13 @@ import { useState, useEffect } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuLink,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import type { PassportSection } from "@shared/schema";
-import { resolvePassportSection } from "@/lib/passportContent";
+import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportContent";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
@@ -62,7 +63,7 @@ export default function Header() {
       const resolvedSection = resolvePassportSection(section);
       return {
         title: resolvedSection.navLabel,
-        href: resolvedSection.isLanding ? "/passport" : `/passport/${resolvedSection.slug}`,
+        href: getPassportSectionHref(resolvedSection),
       };
     }) ?? [{ title: "Overview", href: "/passport" }];
 
@@ -113,18 +114,21 @@ export default function Header() {
                       About GREENENGINE
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
+                      <ul className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
                         {aboutLinks.map((link) => (
-                          <Link 
-                            key={link.href} 
-                            href={link.href}
-                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
-                            data-testid={`link-${link.href.replace(/\//g, '-')}`}
-                          >
-                            {link.title}
-                          </Link>
+                          <li key={link.href}>
+                            <NavigationMenuLink asChild>
+                              <Link 
+                                href={link.href}
+                                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
+                                data-testid={`link-${link.href.replace(/\//g, '-')}`}
+                              >
+                                {link.title}
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
@@ -133,18 +137,21 @@ export default function Header() {
                       {passportTriggerLabel}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
+                      <ul className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
                         {passportLinks.map((link) => (
-                          <Link 
-                            key={link.href} 
-                            href={link.href}
-                            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
-                            data-testid={`link-${link.href.replace(/\//g, '-')}`}
-                          >
-                            {link.title}
-                          </Link>
+                          <li key={link.href}>
+                            <NavigationMenuLink asChild>
+                              <Link 
+                                href={link.href}
+                                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
+                                data-testid={`link-${link.href.replace(/\//g, '-')}`}
+                              >
+                                {link.title}
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
