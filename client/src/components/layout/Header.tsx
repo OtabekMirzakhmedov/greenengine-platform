@@ -1,16 +1,8 @@
 import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuLink,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { PassportSection } from "@shared/schema";
 import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportContent";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
@@ -24,10 +16,14 @@ const aboutLinks = [
   { title: "Management and Quality", href: "/about/management" },
 ];
 
+type DesktopMenuKey = "about" | "passport" | null;
+
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState<DesktopMenuKey>(null);
+  const desktopMenuRef = useRef<HTMLDivElement | null>(null);
   const { data: passportMenuSections } = useQuery<PassportSection[]>({
     queryKey: ["/api/passport-sections/menu"],
   });
@@ -45,7 +41,30 @@ export default function Header() {
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setDesktopMenuOpen(null);
   }, [location]);
+
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!desktopMenuRef.current?.contains(event.target as Node)) {
+        setDesktopMenuOpen(null);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setDesktopMenuOpen(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
   const navLinkClass = (isActive: boolean) =>
     `inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
@@ -66,6 +85,64 @@ export default function Header() {
         href: getPassportSectionHref(resolvedSection),
       };
     }) ?? [{ title: "Overview", href: "/passport" }];
+
+  const renderDesktopDropdown = (
+    menuKey: Exclude<DesktopMenuKey, null>,
+    label: string,
+    links: Array<{ title: string; href: string }>,
+  ) => {
+    const isOpen = desktopMenuOpen === menuKey;
+
+    return (
+      <div
+        className="relative"
+        onMouseEnter={() => setDesktopMenuOpen(menuKey)}
+        onMouseLeave={() => setDesktopMenuOpen((current) => (current === menuKey ? null : current))}
+      >
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          aria-haspopup="menu"
+          className={`inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+            isOpen
+              ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
+              : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
+          }`}
+          data-testid={`button-${menuKey}-menu`}
+          onClick={() => setDesktopMenuOpen((current) => (current === menuKey ? null : menuKey))}
+          onFocus={() => setDesktopMenuOpen(menuKey)}
+        >
+          {label}
+          <ChevronDown
+            className={`ml-1.5 h-3.5 w-3.5 transition-transform duration-200 ${
+              isOpen ? "rotate-180 text-[#eef5cc]" : "text-[#5a6a14]"
+            }`}
+            aria-hidden="true"
+          />
+        </button>
+
+        <div
+          className={`absolute left-1/2 top-full z-[80] mt-3 w-72 -translate-x-1/2 transition-all duration-150 ${
+            isOpen ? "pointer-events-auto visible translate-y-0 opacity-100" : "pointer-events-none invisible -translate-y-1 opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]"
+                data-testid={`link-${link.href.replace(/\//g, "-")}`}
+                onClick={() => setDesktopMenuOpen(null)}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <header
@@ -97,7 +174,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="hidden min-[1280px]:flex min-w-0 flex-1 justify-center px-4">
+          <div ref={desktopMenuRef} className="hidden min-[1280px]:flex min-w-0 flex-1 justify-center px-4">
             <nav className="flex items-center gap-1.5 2xl:gap-2.5">
               <Link 
                 href="/"
@@ -107,55 +184,8 @@ export default function Header() {
                 Home
               </Link>
 
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-about-menu">
-                      About GREENENGINE
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
-                        {aboutLinks.map((link) => (
-                          <li key={link.href}>
-                            <NavigationMenuLink asChild>
-                              <Link 
-                                href={link.href}
-                                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
-                                data-testid={`link-${link.href.replace(/\//g, '-')}`}
-                              >
-                                {link.title}
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="min-h-11 rounded-full bg-transparent px-4 text-[15px] font-medium tracking-[-0.01em] text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405] focus:bg-[#b4c524] data-[state=open]:bg-[#8ca11f] data-[state=open]:text-[#f8fbe9] [&_svg]:ml-1.5 [&_svg]:h-3.5 [&_svg]:w-3.5 [&_svg]:text-[#5a6a14] data-[state=open]:[&_svg]:text-[#eef5cc]" data-testid="button-passport-menu">
-                      {passportTriggerLabel}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="w-72 rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
-                        {passportLinks.map((link) => (
-                          <li key={link.href}>
-                            <NavigationMenuLink asChild>
-                              <Link 
-                                href={link.href}
-                                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]" 
-                                data-testid={`link-${link.href.replace(/\//g, '-')}`}
-                              >
-                                {link.title}
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              {renderDesktopDropdown("about", "About GREENENGINE", aboutLinks)}
+              {renderDesktopDropdown("passport", passportTriggerLabel, passportLinks)}
 
               <Link 
                 href="/activities"
