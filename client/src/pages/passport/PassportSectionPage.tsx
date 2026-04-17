@@ -7,7 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import type { PassportSection, PassportStory } from "@shared/schema";
-import { resolvePassportSection, resolvePassportStory } from "@/lib/passportContent";
+import {
+  isStorytellingPassportSection,
+  resolvePassportSection,
+  resolvePassportStory,
+} from "@/lib/passportContent";
 
 export default function PassportSectionPage() {
   const [, params] = useRoute("/passport/:slug");
@@ -19,13 +23,13 @@ export default function PassportSectionPage() {
   });
 
   const { data: stories = [], isLoading: storiesLoading } = useQuery<PassportStory[]>({
-    enabled: Boolean(section?.id && slug === "digital-storytelling"),
+    enabled: Boolean(section?.id && isStorytellingPassportSection(section, slug)),
     queryKey: [section?.id ? `/api/passport-sections/${section.id}/stories` : "/api/passport-sections/stories"],
   });
 
   const resolvedSection = section ? resolvePassportSection(section) : null;
   const resolvedStories = stories.map((story) => resolvePassportStory(story));
-  const isStorytelling = slug === "digital-storytelling";
+  const isStorytelling = isStorytellingPassportSection(section, slug);
 
   if (isLoading) {
     return (

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PassportSection } from "@shared/schema";
-import { resolvePassportSection } from "@/lib/passportContent";
+import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportContent";
 
 export default function Passport() {
   const { data: landingSection, isLoading: landingLoading } = useQuery<PassportSection>({
@@ -59,7 +59,7 @@ export default function Passport() {
         {submenuItems.length > 0 ? (
           <div className="flex flex-wrap items-center justify-center gap-3">
             {submenuItems.slice(0, 3).map((section) => (
-              <Link key={section.id} href={`/passport/${section.slug}`}>
+              <Link key={section.id} href={getPassportSectionHref(section)}>
                 <Button
                   variant="outline"
                   className="rounded-full border-white/25 bg-white/12 px-5 text-white backdrop-blur-sm hover:bg-white hover:text-primary"
@@ -168,7 +168,7 @@ export default function Passport() {
                         {section.summary || "This section is ready to be described from the admin panel."}
                       </p>
                       <div className="mt-6">
-                        <Link href={`/passport/${section.slug}`}>
+                        <Link href={getPassportSectionHref(section)}>
                           <Button className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
                             Open Section
                             <ArrowRight className="ml-2 h-4 w-4" />

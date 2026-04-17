@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { resolvePassportSection, resolvePassportStory } from "@/lib/passportContent";
+import { getPassportSectionHref, resolvePassportSection, resolvePassportStory } from "@/lib/passportContent";
 
 interface StoryDetailResponse {
   section: PassportSection;
@@ -49,7 +49,7 @@ export default function PassportStoryDetail() {
       <div className="flex min-h-screen flex-col">
         <PageHero title="Story Not Found" description="The requested storytelling entry is not currently available." />
         <div className="flex flex-1 items-center justify-center py-16">
-          <Link href="/passport/digital-storytelling">
+          <Link href={sectionSlug ? `/passport/${sectionSlug}` : "/passport"}>
             <Button variant="outline" className="rounded-full">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Digital Storytelling
@@ -73,7 +73,7 @@ export default function PassportStoryDetail() {
       <div className="flex-1 bg-[linear-gradient(180deg,#f6fbf6_0%,#ffffff_100%)] py-14 md:py-18">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link href={`/passport/${sectionSlug}`}>
+            <Link href={getPassportSectionHref(resolvedSection)}>
               <Button variant="ghost" size="sm" className="rounded-full">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to {resolvedSection.title}
