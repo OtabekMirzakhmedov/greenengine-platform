@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db";
 import { passportSections } from "@shared/schema";
+import { log } from "./vite";
 
 const baselinePassportSections = [
   {
@@ -49,6 +50,9 @@ export async function ensurePassportBaselineData() {
 
     if (existing.length === 0) {
       await db.insert(passportSections).values(section);
+      log(`bootstrapped passport section "${section.slug}"`, "bootstrap");
+    } else {
+      log(`passport section "${section.slug}" already exists`, "bootstrap");
     }
   }
 }

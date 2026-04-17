@@ -77,8 +77,11 @@ fi
 
 # Build application
 print_info "Building application..."
+rm -rf dist
 npm run build
 print_success "Application built"
+print_info "Current build entry:"
+grep -o 'assets/[^"]*' dist/public/index.html | head -n 2 || true
 
 # Check if PM2 is installed
 if ! command -v pm2 &> /dev/null; then
@@ -90,7 +93,8 @@ fi
 # Start or restart application with PM2
 print_info "Starting/Restarting application with PM2..."
 if pm2 describe greenengine > /dev/null 2>&1; then
-    pm2 restart greenengine
+    pm2 restart greenengine --update-env
+    pm2 save
     print_success "Application restarted"
 else
     pm2 start ecosystem.config.cjs
