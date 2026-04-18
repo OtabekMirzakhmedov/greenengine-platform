@@ -16,6 +16,11 @@ const aboutLinks = [
   { title: "Management and Quality", href: "/about/management" },
 ];
 
+const fallbackPassportLinks = [
+  { title: "Overview", href: "/passport" },
+  { title: "Digital Storytelling", href: "/passport/digital-storytelling" },
+];
+
 type DesktopMenuKey = "about" | "passport" | null;
 
 export default function Header() {
@@ -67,7 +72,7 @@ export default function Header() {
   }, []);
 
   const navLinkClass = (isActive: boolean) =>
-    `inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+    `inline-flex min-h-10 items-center rounded-full px-3.5 py-1.5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
       isActive
         ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
         : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
@@ -77,14 +82,15 @@ export default function Header() {
     "block w-auto object-contain mix-blend-multiply [filter:saturate(1.02)_contrast(1.04)]";
   const resolvedPassportLanding = passportLandingSection ? resolvePassportSection(passportLandingSection) : null;
   const passportTriggerLabel = resolvedPassportLanding?.navLabel || resolvedPassportLanding?.title || "Intercultural Passport";
-  const passportLinks =
+  const resolvedPassportLinks =
     passportMenuSections?.map((section) => {
       const resolvedSection = resolvePassportSection(section);
       return {
         title: resolvedSection.navLabel,
         href: getPassportSectionHref(resolvedSection),
       };
-    }) ?? [{ title: "Overview", href: "/passport" }];
+    }) ?? [];
+  const passportLinks = resolvedPassportLinks.length > 0 ? resolvedPassportLinks : fallbackPassportLinks;
 
   const renderDesktopDropdown = (
     menuKey: Exclude<DesktopMenuKey, null>,
@@ -103,7 +109,7 @@ export default function Header() {
           type="button"
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className={`inline-flex min-h-11 items-center rounded-full px-4 py-2 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+          className={`inline-flex min-h-10 items-center rounded-full px-3.5 py-1.5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
             isOpen
               ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
               : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
@@ -122,10 +128,11 @@ export default function Header() {
         </button>
 
         <div
-          className={`absolute left-1/2 top-full z-[80] mt-3 w-72 -translate-x-1/2 transition-all duration-150 ${
+          className={`absolute left-1/2 top-full z-[80] w-72 -translate-x-1/2 pt-1 transition-all duration-150 ${
             isOpen ? "pointer-events-auto visible translate-y-0 opacity-100" : "pointer-events-none invisible -translate-y-1 opacity-0"
           }`}
         >
+          <div className="absolute inset-x-0 -top-3 h-3" aria-hidden="true" />
           <div className="overflow-hidden rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
             {links.map((link) => (
               <Link
@@ -150,32 +157,32 @@ export default function Header() {
         scrolled ? "shadow-[0_14px_34px_rgba(62,78,11,0.18)]" : "shadow-[0_1px_0_rgba(110,127,24,0.18)]"
       }`}
     >
-      <div className="mx-auto w-full max-w-[1760px] px-4 lg:px-6 xl:px-8">
-        <div className="flex min-h-[84px] items-center gap-4 py-3 xl:gap-6">
-          <div className="flex shrink-0 items-center gap-4 xl:gap-5">
+      <div className="mx-auto w-full max-w-[1760px] px-3 lg:px-4 xl:px-6">
+        <div className="flex min-h-[70px] items-center gap-2 py-1 xl:gap-3">
+          <div className="flex shrink-0 items-center gap-2 xl:gap-3">
             <Link
               href="/"
-              className="flex shrink-0 items-center rounded-[1.6rem] border border-[#9faf22]/55 bg-[#cfda2d]/60 px-2 py-1.5 shadow-[0_10px_24px_rgba(73,90,14,0.10)] transition-all hover:border-[#8da01f] hover:bg-[#d7e23f]/75"
+              className="flex h-[4.1rem] shrink-0 items-center overflow-hidden rounded-[1.2rem] border border-[#9faf22]/55 bg-[#cfda2d]/60 px-1 py-0 shadow-[0_8px_20px_rgba(73,90,14,0.12)] transition-all hover:border-[#8da01f] hover:bg-[#d7e23f]/75 sm:h-[4.25rem] lg:h-[4.35rem]"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
                 alt="GREENENGINE Logo"
-                className="h-[4.15rem] w-auto max-w-[280px] object-contain drop-shadow-[0_8px_18px_rgba(54,78,13,0.12)] sm:h-[4.45rem] sm:max-w-[330px] lg:h-[4.85rem] lg:max-w-[390px]"
+                className="h-[4.15rem] w-auto max-w-[292px] origin-center scale-[1.2] object-contain drop-shadow-[0_8px_18px_rgba(54,78,13,0.18)] sm:h-[4.35rem] sm:max-w-[334px] lg:h-[4.55rem] lg:max-w-[382px] xl:h-[4.65rem] xl:max-w-[410px]"
               />
             </Link>
 
-            <div className="hidden min-[1200px]:flex items-center self-center border-l border-[#a8ba29] pl-4 xl:pl-5">
+            <div className="hidden min-[1200px]:flex items-center self-center border-l border-[#a8ba29] pl-2.5 xl:pl-3">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className={`${erasmusLogoClass} h-[3.35rem] max-w-[230px] xl:h-[3.6rem] xl:max-w-[255px]`}
+                className={`${erasmusLogoClass} h-[2.75rem] max-w-[198px] xl:h-[2.95rem] xl:max-w-[218px]`}
               />
             </div>
           </div>
 
-          <div ref={desktopMenuRef} className="hidden min-[1280px]:flex min-w-0 flex-1 justify-center px-4">
-            <nav className="flex items-center gap-1.5 2xl:gap-2.5">
+          <div ref={desktopMenuRef} className="hidden min-[1280px]:flex min-w-0 flex-1 justify-center px-1">
+            <nav className="flex items-center gap-0.5 2xl:gap-1.5">
               <Link 
                 href="/"
                 className={navLinkClass(location === "/")}
@@ -229,12 +236,12 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-3 xl:gap-4">
+          <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-2.5">
             <div className="hidden items-center self-center min-[1100px]:flex min-[1200px]:hidden">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
-                className={`${erasmusLogoClass} h-[2.9rem] max-w-[185px]`}
+                className={`${erasmusLogoClass} h-[2.5rem] max-w-[162px]`}
               />
             </div>
 
@@ -242,12 +249,12 @@ export default function Header() {
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
-                className="h-[3.15rem] w-auto rounded-xl object-cover shadow-sm"
+                className="h-[2.65rem] w-auto rounded-xl object-cover shadow-sm"
               />
             </div>
 
             <Link href="/login" className="hidden sm:inline-flex">
-              <Button variant="outline" className="min-h-11 rounded-full border-[#8ea01f] bg-[#f8fbe9] px-5 text-sm font-semibold text-[#30400d] shadow-[0_12px_28px_rgba(73,90,14,0.10)] transition-all hover:border-[#708117] hover:bg-[#8ca11f] hover:text-[#f8fbe9]" data-testid="button-login">
+              <Button variant="outline" className="min-h-10 rounded-full border-[#8ea01f] bg-[#f8fbe9] px-4 text-sm font-semibold text-[#30400d] shadow-[0_10px_24px_rgba(73,90,14,0.10)] transition-all hover:border-[#708117] hover:bg-[#8ca11f] hover:text-[#f8fbe9]" data-testid="button-login">
                 Login
               </Button>
             </Link>
@@ -255,7 +262,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="h-11 w-11 rounded-full border-[#8ea01f] bg-[#f8fbe9] text-[#30400d] min-[1280px]:hidden"
+              className="h-10 w-10 rounded-full border-[#8ea01f] bg-[#f8fbe9] text-[#30400d] min-[1280px]:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >

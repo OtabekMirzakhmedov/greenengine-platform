@@ -13,7 +13,7 @@ import ActivityDetail from "@/pages/ActivityDetail";
 import About from "@/pages/about/About";
 import Goals from "@/pages/about/Goals";
 import Management from "@/pages/about/Management";
-import Passport from "@/pages/passport/Passport";
+import Passport from "@/pages/passport/PassportExperience";
 import PassportSectionPage from "@/pages/passport/PassportSectionPage";
 import PassportStoryDetail from "@/pages/passport/PassportStoryDetail";
 import Events from "@/pages/Events";
