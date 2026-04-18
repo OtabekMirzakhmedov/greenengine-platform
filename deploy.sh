@@ -42,6 +42,8 @@ fi
 
 print_success ".env file found"
 
+DEPLOY_BRANCH="${DEPLOY_BRANCH:-develop}"
+
 # Create necessary directories
 print_info "Creating necessary directories..."
 mkdir -p data uploads logs
@@ -49,9 +51,20 @@ print_success "Directories created"
 
 # Pull latest changes (if in git repo)
 if [ -d .git ]; then
-    print_info "Pulling latest changes from git..."
-    git pull
-    print_success "Git pull completed"
+    print_info "Deploying branch: $DEPLOY_BRANCH"
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        print_error "Working tree has uncommitted changes. Commit, stash, or remove them before deploying."
+        exit 1
+    fi
+
+    git fetch origin "$DEPLOY_BRANCH"
+    CURRENT_BRANCH="$(git branch --show-current)"
+    if [ "$CURRENT_BRANCH" != "$DEPLOY_BRANCH" ]; then
+        print_info "Switching from $CURRENT_BRANCH to $DEPLOY_BRANCH..."
+        git checkout "$DEPLOY_BRANCH"
+    fi
+    git pull --ff-only origin "$DEPLOY_BRANCH"
+    print_success "Git branch is up to date"
 fi
 
 # Install dependencies
@@ -64,15 +77,13 @@ print_info "Pushing database schema..."
 npm run db:push
 print_success "Database schema updated"
 
-# Ask if user wants to seed database
-read -p "Do you want to seed the database with initial data? (y/N) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+# Seed database only when explicitly requested. Interactive prompts can block automated deployments.
+if [ "${SEED_DATABASE:-false}" = "true" ]; then
     print_info "Seeding database..."
     node --loader tsx server/seed.ts
     print_success "Database seeded"
 else
-    print_warning "Skipping database seeding"
+    print_warning "Skipping database seeding. Set SEED_DATABASE=true to seed during deployment."
 fi
 
 # Build application

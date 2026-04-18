@@ -1,9 +1,9 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { passportSections } from "@shared/schema";
+import { passportSections, type InsertPassportSection, type PassportSection } from "@shared/schema";
 import { log } from "./vite";
 
-const baselinePassportSections = [
+export const baselinePassportSections: InsertPassportSection[] = [
   {
     title: "Intercultural Passport",
     navLabel: "Intercultural Passport",
@@ -11,7 +11,7 @@ const baselinePassportSections = [
     summary:
       "Developing global competencies through innovative learning experiences, creative reflection, and cross-cultural dialogue.",
     content:
-      "<p>The Intercultural Passport is an evolving educational framework designed to help students and educators strengthen intercultural awareness, communication, and collaborative problem-solving across diverse academic environments.</p><p>This module can now be managed entirely from the admin panel, including submenu labels, content ordering, visibility, media, and multilingual content variants.</p>",
+      "<p>The Intercultural Passport is a guided Erasmus+ learning space where students reflect on cultural encounters, communication, inclusion, mobility, and identity.</p><p>It helps learners document meaningful experiences, connect them with intercultural competences, and build a visible record of personal and academic growth.</p>",
     imageUrl: null,
     mediaUrl: null,
     links: [{ label: "Open Digital Storytelling", url: "/passport/digital-storytelling" }],
@@ -28,7 +28,7 @@ const baselinePassportSections = [
     summary:
       "Sharing cultural experiences through multimedia narratives, reflection, and student-led storytelling practices.",
     content:
-      "<p>Digital Storytelling combines personal narrative, cultural reflection, and accessible media tools to help participants express intercultural experiences in meaningful ways.</p><p>This page now highlights real stories curated through the admin panel, complete with professional card layouts, media, and multilingual detail pages.</p>",
+      "<p>Digital Storytelling helps students transform intercultural experiences into reflective multimedia narratives. Through writing, images, voice, video, and personal perspective, learners connect mobility, identity, dialogue, inclusion, and sustainability with their own lived experience.</p>",
     imageUrl: "/attached_assets/passport-stories/image1.png",
     mediaUrl: null,
     links: [{ label: "Back to Passport Overview", url: "/passport" }],
@@ -39,6 +39,33 @@ const baselinePassportSections = [
     isLanding: false,
   },
 ];
+
+export const fallbackPassportSections: PassportSection[] = baselinePassportSections.map((section) => ({
+  id: `baseline-${section.slug}`,
+  title: section.title,
+  navLabel: section.navLabel,
+  slug: section.slug,
+  summary: section.summary ?? null,
+  content: section.content ?? null,
+  imageUrl: section.imageUrl ?? null,
+  mediaUrl: section.mediaUrl ?? null,
+  links: section.links ?? [],
+  translations: section.translations ?? {},
+  order: section.order ?? 0,
+  isVisible: section.isVisible ?? true,
+  showInMenu: section.showInMenu ?? true,
+  isLanding: section.isLanding ?? false,
+  updatedAt: new Date(0),
+}));
+
+export const getFallbackPassportSectionBySlug = (slug: string) =>
+  fallbackPassportSections.find((section) => section.slug === slug);
+
+export const getFallbackPassportLandingSection = () =>
+  fallbackPassportSections.find((section) => section.isLanding) ?? fallbackPassportSections[0];
+
+export const getFallbackPassportMenuSections = () =>
+  fallbackPassportSections.filter((section) => section.isVisible && section.showInMenu);
 
 export async function ensurePassportBaselineData() {
   for (const section of baselinePassportSections) {
@@ -52,7 +79,14 @@ export async function ensurePassportBaselineData() {
       await db.insert(passportSections).values(section);
       log(`bootstrapped passport section "${section.slug}"`, "bootstrap");
     } else {
-      log(`passport section "${section.slug}" already exists`, "bootstrap");
+      await db
+        .update(passportSections)
+        .set({
+          ...section,
+          updatedAt: new Date(),
+        })
+        .where(eq(passportSections.slug, section.slug));
+      log(`repaired passport section "${section.slug}"`, "bootstrap");
     }
   }
 }

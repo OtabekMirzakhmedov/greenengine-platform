@@ -16,6 +16,11 @@ const aboutLinks = [
   { title: "Management and Quality", href: "/about/management" },
 ];
 
+const fallbackPassportLinks = [
+  { title: "Overview", href: "/passport" },
+  { title: "Digital Storytelling", href: "/passport/digital-storytelling" },
+];
+
 type DesktopMenuKey = "about" | "passport" | null;
 
 export default function Header() {
@@ -77,14 +82,15 @@ export default function Header() {
     "block w-auto object-contain mix-blend-multiply [filter:saturate(1.02)_contrast(1.04)]";
   const resolvedPassportLanding = passportLandingSection ? resolvePassportSection(passportLandingSection) : null;
   const passportTriggerLabel = resolvedPassportLanding?.navLabel || resolvedPassportLanding?.title || "Intercultural Passport";
-  const passportLinks =
+  const resolvedPassportLinks =
     passportMenuSections?.map((section) => {
       const resolvedSection = resolvePassportSection(section);
       return {
         title: resolvedSection.navLabel,
         href: getPassportSectionHref(resolvedSection),
       };
-    }) ?? [{ title: "Overview", href: "/passport" }];
+    }) ?? [];
+  const passportLinks = resolvedPassportLinks.length > 0 ? resolvedPassportLinks : fallbackPassportLinks;
 
   const renderDesktopDropdown = (
     menuKey: Exclude<DesktopMenuKey, null>,

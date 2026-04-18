@@ -31,6 +31,11 @@ import {
   updateTenderSchema,
   updateStoryGallerySchema,
 } from "@shared/schema";
+import {
+  getFallbackPassportLandingSection,
+  getFallbackPassportMenuSections,
+  getFallbackPassportSectionBySlug,
+} from "./bootstrap";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -286,7 +291,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/passport-sections", async (_req, res) => {
     try {
       const sections = await storage.getVisiblePassportSections();
-      res.json(sections);
+      res.json(sections.length > 0 ? sections : getFallbackPassportMenuSections());
     } catch (error) {
       console.error("Get passport sections error:", error);
       res.status(500).json({ message: "Internal server error" });
@@ -296,7 +301,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/passport-sections/menu", async (_req, res) => {
     try {
       const sections = await storage.getPassportMenuSections();
-      res.json(sections);
+      res.json(sections.length > 0 ? sections : getFallbackPassportMenuSections());
     } catch (error) {
       console.error("Get passport menu sections error:", error);
       res.status(500).json({ message: "Internal server error" });
@@ -307,7 +312,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const section = await storage.getPassportLandingSection();
       if (!section) {
-        return res.status(404).json({ message: "Passport landing section not found" });
+        return res.json(getFallbackPassportLandingSection());
       }
       res.json(section);
     } catch (error) {
@@ -320,6 +325,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const section = await storage.getPassportSectionBySlug(req.params.slug);
       if (!section) {
+        const fallbackSection = getFallbackPassportSectionBySlug(req.params.slug);
+
+        if (fallbackSection) {
+          return res.json(fallbackSection);
+        }
+
         return res.status(404).json({ message: "Passport section not found" });
       }
       res.json(section);
