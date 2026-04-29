@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
-const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
+const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-transparent.png";
 
 const quickLinks = [
   { href: "/about", label: "About" },
@@ -51,11 +51,15 @@ export default function ModernFooter() {
             <div className="p-8 md:p-10">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.9fr)_minmax(0,0.95fr)_minmax(0,0.85fr)]">
             <div className="space-y-6">
-              <Link href="/" data-testid="link-footer-home">
+              <Link
+                href="/"
+                className="block h-20 w-full max-w-[390px] overflow-hidden sm:h-24 sm:max-w-[430px]"
+                data-testid="link-footer-home"
+              >
                 <img
                   src={brandLogoUrl}
-                  alt="GREENENGINE Logo"
-                  className="h-20 w-auto max-w-[320px] object-contain sm:h-24 sm:max-w-[360px]"
+                  alt="GREEN ENGINE Logo"
+                  className="h-full w-full object-contain object-left [filter:saturate(1.08)_contrast(1.08)]"
                 />
               </Link>
 
