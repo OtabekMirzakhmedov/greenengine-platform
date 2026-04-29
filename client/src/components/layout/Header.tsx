@@ -8,7 +8,7 @@ import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportCo
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
-const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
+const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-transparent.png";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -159,20 +159,21 @@ export default function Header() {
     >
       <div className="mx-auto w-full max-w-[1760px] px-3 lg:px-4 xl:px-6">
         <div className="flex min-h-[70px] items-center gap-2 py-1 xl:gap-3">
-          <div className="flex shrink-0 items-center gap-2 xl:gap-3">
+          <div className="flex min-w-0 shrink-0 items-center gap-2 xl:gap-3">
             <Link
               href="/"
-              className="flex h-[4.1rem] shrink-0 items-center overflow-hidden rounded-[1.2rem] border border-[#9faf22]/55 bg-[#cfda2d]/60 px-1 py-0 shadow-[0_8px_20px_rgba(73,90,14,0.12)] transition-all hover:border-[#8da01f] hover:bg-[#d7e23f]/75 sm:h-[4.25rem] lg:h-[4.35rem]"
+              aria-label="GREEN ENGINE home"
+              className="flex h-[3.65rem] w-[10.75rem] shrink-0 items-center justify-start overflow-hidden bg-[#c6d309] p-0 transition-[filter] duration-200 hover:[filter:brightness(0.95)] sm:w-[11.75rem] lg:w-[12.75rem] xl:h-[3.75rem] xl:w-[13.75rem]"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
-                alt="GREENENGINE Logo"
-                className="h-[4.15rem] w-auto max-w-[292px] origin-center scale-[1.2] object-contain drop-shadow-[0_8px_18px_rgba(54,78,13,0.18)] sm:h-[4.35rem] sm:max-w-[334px] lg:h-[4.55rem] lg:max-w-[382px] xl:h-[4.65rem] xl:max-w-[410px]"
+                alt="GREEN ENGINE Logo"
+                className="h-full w-full object-contain object-left [filter:saturate(1.04)_contrast(1.04)]"
               />
             </Link>
 
-            <div className="hidden min-[1200px]:flex items-center self-center border-l border-[#a8ba29] pl-2.5 xl:pl-3">
+            <div className="hidden items-center self-center border-l border-[#a8ba29] pl-2.5 min-[1536px]:flex xl:pl-3">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -237,7 +238,7 @@ export default function Header() {
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-2.5">
-            <div className="hidden items-center self-center min-[1100px]:flex min-[1200px]:hidden">
+            <div className="hidden items-center self-center min-[1100px]:flex min-[1280px]:hidden">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -245,7 +246,7 @@ export default function Header() {
               />
             </div>
 
-            <div className="hidden items-center self-center pl-1 min-[1100px]:flex">
+            <div className="hidden items-center self-center pl-1 min-[1100px]:flex min-[1280px]:hidden min-[1536px]:flex">
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
