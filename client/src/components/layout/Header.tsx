@@ -8,7 +8,7 @@ import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportCo
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
-const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-transparent.png";
+const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-official.png";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -74,12 +74,11 @@ export default function Header() {
   const navLinkClass = (isActive: boolean) =>
     `inline-flex min-h-10 items-center rounded-full px-3.5 py-1.5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
       isActive
-        ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
-        : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
+        ? "bg-[#1f7a3a] text-white shadow-[0_10px_22px_rgba(31,122,58,0.18)] ring-1 ring-[#16592b]/15"
+        : "text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]"
     }`;
 
-  const erasmusLogoClass =
-    "block w-auto object-contain mix-blend-multiply [filter:saturate(1.02)_contrast(1.04)]";
+  const erasmusLogoClass = "block w-auto object-contain";
   const resolvedPassportLanding = passportLandingSection ? resolvePassportSection(passportLandingSection) : null;
   const passportTriggerLabel = resolvedPassportLanding?.navLabel || resolvedPassportLanding?.title || "Intercultural Passport";
   const resolvedPassportLinks =
@@ -111,8 +110,8 @@ export default function Header() {
           aria-haspopup="menu"
           className={`inline-flex min-h-10 items-center rounded-full px-3.5 py-1.5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
             isOpen
-              ? "bg-[#8ca11f] text-[#f8fbe9] shadow-[0_10px_22px_rgba(78,96,16,0.24)] ring-1 ring-[#6e7f18]/25"
-              : "text-[#263108] hover:bg-[#b4c524] hover:text-[#1b2405]"
+              ? "bg-[#1f7a3a] text-white shadow-[0_10px_22px_rgba(31,122,58,0.18)] ring-1 ring-[#16592b]/15"
+              : "text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]"
           }`}
           data-testid={`button-${menuKey}-menu`}
           onClick={() => setDesktopMenuOpen((current) => (current === menuKey ? null : menuKey))}
@@ -121,7 +120,7 @@ export default function Header() {
           {label}
           <ChevronDown
             className={`ml-1.5 h-3.5 w-3.5 transition-transform duration-200 ${
-              isOpen ? "rotate-180 text-[#eef5cc]" : "text-[#5a6a14]"
+              isOpen ? "rotate-180 text-white" : "text-[#4d7555]"
             }`}
             aria-hidden="true"
           />
@@ -133,12 +132,12 @@ export default function Header() {
           }`}
         >
           <div className="absolute inset-x-0 -top-3 h-3" aria-hidden="true" />
-          <div className="overflow-hidden rounded-2xl border border-[#dbe49f] bg-[#f9fbe9] p-2 shadow-[0_18px_38px_rgba(62,78,11,0.16)]">
+          <div className="overflow-hidden rounded-2xl border border-[#dfe9df] bg-white p-2 shadow-[0_18px_38px_rgba(22,89,43,0.12)]">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#34420d] transition-colors hover:bg-[#e8efbf] hover:text-[#1f2906]"
+                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#23452b] transition-colors hover:bg-[#eef7ed] hover:text-[#14572a]"
                 data-testid={`link-${link.href.replace(/\//g, "-")}`}
                 onClick={() => setDesktopMenuOpen(null)}
               >
@@ -153,8 +152,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b border-[#9aac25] bg-[#c6d309] transition-shadow ${
-        scrolled ? "shadow-[0_14px_34px_rgba(62,78,11,0.18)]" : "shadow-[0_1px_0_rgba(110,127,24,0.18)]"
+      className={`sticky top-0 z-50 w-full border-b border-[#e1e9df] bg-white transition-shadow ${
+        scrolled ? "shadow-[0_14px_34px_rgba(22,89,43,0.10)]" : "shadow-[0_1px_0_rgba(22,89,43,0.08)]"
       }`}
     >
       <div className="mx-auto w-full max-w-[1760px] px-3 lg:px-4 xl:px-6">
@@ -163,17 +162,17 @@ export default function Header() {
             <Link
               href="/"
               aria-label="GREEN ENGINE home"
-              className="flex h-[3.65rem] w-[10.75rem] shrink-0 items-center justify-start overflow-hidden bg-[#c6d309] p-0 transition-[filter] duration-200 hover:[filter:brightness(0.95)] sm:w-[11.75rem] lg:w-[12.75rem] xl:h-[3.75rem] xl:w-[13.75rem]"
+              className="flex h-[3.65rem] w-[12.25rem] shrink-0 items-center justify-start overflow-hidden bg-white p-0 sm:w-[14.25rem] lg:w-[15rem] xl:h-[3.75rem] xl:w-[16rem]"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
                 alt="GREEN ENGINE Logo"
-                className="h-full w-full object-contain object-left [filter:saturate(1.04)_contrast(1.04)]"
+                className="h-full w-full object-contain object-left"
               />
             </Link>
 
-            <div className="hidden items-center self-center border-l border-[#a8ba29] pl-2.5 min-[1536px]:flex xl:pl-3">
+            <div className="hidden items-center self-center border-l border-[#dfe9df] pl-2.5 min-[1536px]:flex xl:pl-3">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -250,12 +249,12 @@ export default function Header() {
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
-                className="h-[2.65rem] w-auto rounded-xl object-cover shadow-sm"
+                className="h-[2.65rem] w-auto object-contain"
               />
             </div>
 
             <Link href="/login" className="hidden sm:inline-flex">
-              <Button variant="outline" className="min-h-10 rounded-full border-[#8ea01f] bg-[#f8fbe9] px-4 text-sm font-semibold text-[#30400d] shadow-[0_10px_24px_rgba(73,90,14,0.10)] transition-all hover:border-[#708117] hover:bg-[#8ca11f] hover:text-[#f8fbe9]" data-testid="button-login">
+              <Button variant="outline" className="min-h-10 rounded-full border-[#cfe0cf] bg-white px-4 text-sm font-semibold text-[#23452b] shadow-[0_8px_20px_rgba(22,89,43,0.08)] transition-all hover:border-[#1f7a3a] hover:bg-[#1f7a3a] hover:text-white" data-testid="button-login">
                 Login
               </Button>
             </Link>
@@ -263,7 +262,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="h-10 w-10 rounded-full border-[#8ea01f] bg-[#f8fbe9] text-[#30400d] min-[1280px]:hidden"
+              className="h-10 w-10 rounded-full border-[#cfe0cf] bg-white text-[#23452b] shadow-[0_8px_20px_rgba(22,89,43,0.08)] min-[1280px]:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -273,9 +272,9 @@ export default function Header() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="min-[1280px]:hidden border-t border-[#9aac25] py-4" data-testid="mobile-menu">
-            <div className="space-y-1 rounded-3xl bg-[#d6df52]/95 p-2 shadow-[0_16px_40px_rgba(62,78,11,0.18)]">
-              <div className="flex items-center justify-between gap-3 rounded-2xl bg-[#edf2c6] px-3 py-3 min-[540px]:hidden">
+          <div className="min-[1280px]:hidden border-t border-[#e1e9df] py-4" data-testid="mobile-menu">
+            <div className="space-y-1 rounded-3xl border border-[#e1e9df] bg-white p-2 shadow-[0_16px_40px_rgba(22,89,43,0.12)]">
+              <div className="flex items-center justify-between gap-3 rounded-2xl bg-[#f6faf5] px-3 py-3 min-[540px]:hidden">
                 <img
                   src={erasmusLogo}
                   alt="Co-funded by the European Union"
@@ -284,20 +283,20 @@ export default function Header() {
                 <img
                   src={flagImageUrl}
                   alt="Partner country and EU flags"
-                  className="h-10 w-auto rounded-xl object-cover shadow-sm"
+                  className="h-10 w-auto object-contain"
                 />
               </div>
-              <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-home">
+              <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-home">
                 Home
               </Link>
 
-              <div className="space-y-1 rounded-2xl bg-[#edf2c6] p-2">
-                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">About GREENENGINE</div>
+              <div className="space-y-1 rounded-2xl bg-[#f6faf5] p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#4d7555]">About GREENENGINE</div>
                 {aboutLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#2f3a0c] hover:bg-white hover:text-[#1b2405]" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#23452b] hover:bg-white hover:text-[#14572a]"
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -305,13 +304,13 @@ export default function Header() {
                 ))}
               </div>
 
-              <div className="space-y-1 rounded-2xl bg-[#edf2c6] p-2">
-                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#5f6d17]">{passportTriggerLabel}</div>
+              <div className="space-y-1 rounded-2xl bg-[#f6faf5] p-2">
+                <div className="px-2 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#4d7555]">{passportTriggerLabel}</div>
                 {passportLinks.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href}
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#2f3a0c] hover:bg-white hover:text-[#1b2405]" 
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#23452b] hover:bg-white hover:text-[#14572a]"
                     data-testid={`link-mobile-${link.href.replace(/\//g, '-')}`}
                   >
                     {link.title}
@@ -319,29 +318,29 @@ export default function Header() {
                 ))}
               </div>
 
-              <Link href="/activities" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-activities">
+              <Link href="/activities" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-activities">
                 Activities
               </Link>
 
-              <Link href="/news" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-news">
+              <Link href="/news" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-news">
                 News
               </Link>
 
-              <Link href="/events" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-events">
+              <Link href="/events" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-events">
                 Events
               </Link>
 
-              <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-tenders">
+              <Link href="/tenders" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-tenders">
                 Tenders
               </Link>
 
-              <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#263108] hover:bg-[#edf2c6] hover:text-[#1b2405]" data-testid="link-mobile-partners">
+              <Link href="/partners" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-partners">
                 Partners
               </Link>
 
               <div className="pt-2">
                 <Link href="/login" className="block">
-                  <span className="flex min-h-11 items-center justify-center rounded-full bg-[#8ca11f] px-5 text-sm font-semibold text-[#f8fbe9] shadow-[0_14px_34px_rgba(62,78,11,0.20)]">
+                  <span className="flex min-h-11 items-center justify-center rounded-full bg-[#1f7a3a] px-5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(31,122,58,0.18)]">
                     Admin Login
                   </span>
                 </Link>
