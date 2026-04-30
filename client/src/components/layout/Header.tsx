@@ -249,7 +249,7 @@ export default function Header() {
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
-                className="h-[2.65rem] w-auto object-contain"
+                className="h-[2.65rem] w-auto rounded-xl object-contain shadow-[0_8px_18px_rgba(22,89,43,0.14)] ring-1 ring-[#dfe9df]"
               />
             </div>
 
@@ -283,7 +283,7 @@ export default function Header() {
                 <img
                   src={flagImageUrl}
                   alt="Partner country and EU flags"
-                  className="h-10 w-auto object-contain"
+                  className="h-10 w-auto rounded-xl object-contain shadow-[0_8px_18px_rgba(22,89,43,0.14)] ring-1 ring-[#dfe9df]"
                 />
               </div>
               <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-home">
