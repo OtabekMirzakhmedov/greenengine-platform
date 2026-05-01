@@ -8,7 +8,7 @@ import { getPassportSectionHref, resolvePassportSection } from "@/lib/passportCo
 import erasmusLogo from "@assets/Eurasmus+ Co-funded logo HIGH QUALITY_1763433184665.jpg";
 
 const flagImageUrl = "/attached_assets/flag-collage.jpg";
-const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-official.png";
+const brandLogoUrl = "/attached_assets/greenengine-navbar-logo-white.png";
 
 const aboutLinks = [
   { title: "About GREENENGINE", href: "/about" },
@@ -78,7 +78,7 @@ export default function Header() {
         : "text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]"
     }`;
 
-  const erasmusLogoClass = "block w-auto object-contain";
+  const erasmusLogoClass = "m-0 block w-auto object-contain p-0";
   const resolvedPassportLanding = passportLandingSection ? resolvePassportSection(passportLandingSection) : null;
   const passportTriggerLabel = resolvedPassportLanding?.navLabel || resolvedPassportLanding?.title || "Intercultural Passport";
   const resolvedPassportLinks =
@@ -152,27 +152,27 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b border-[#e1e9df] bg-white transition-shadow ${
-        scrolled ? "shadow-[0_14px_34px_rgba(22,89,43,0.10)]" : "shadow-[0_1px_0_rgba(22,89,43,0.08)]"
+      className={`sticky top-0 z-50 w-full border-b border-[#dfe9df] bg-[#ffffff] transition-shadow ${
+        scrolled ? "shadow-[0_14px_34px_rgba(22,89,43,0.12)]" : "shadow-[0_1px_0_rgba(22,89,43,0.10)]"
       }`}
     >
       <div className="mx-auto w-full max-w-[1760px] px-3 lg:px-4 xl:px-6">
-        <div className="flex min-h-[70px] items-center gap-2 py-1 xl:gap-3">
+        <div className="flex h-[70px] items-center justify-between gap-2 xl:gap-3">
           <div className="flex min-w-0 shrink-0 items-center gap-2 xl:gap-3">
             <Link
               href="/"
               aria-label="GREEN ENGINE home"
-              className="flex h-[3.65rem] w-[12.25rem] shrink-0 items-center justify-start overflow-hidden bg-white p-0 sm:w-[14.25rem] lg:w-[15rem] xl:h-[3.75rem] xl:w-[16rem]"
+              className="flex h-[4rem] w-[13.25rem] shrink-0 items-center justify-center overflow-hidden p-0 sm:w-[14rem] lg:w-[14.5rem] xl:w-[15rem]"
               data-testid="link-home"
             >
               <img
                 src={brandLogoUrl}
                 alt="GREEN ENGINE Logo"
-                className="h-full w-full object-contain object-left"
+                className="m-0 block h-full w-full object-contain object-center p-0"
               />
             </Link>
 
-            <div className="hidden items-center self-center border-l border-[#dfe9df] pl-2.5 min-[1536px]:flex xl:pl-3">
+            <div className="hidden items-center min-[1536px]:flex">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -236,8 +236,8 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-2.5">
-            <div className="hidden items-center self-center min-[1100px]:flex min-[1280px]:hidden">
+          <div className="flex shrink-0 items-center justify-end gap-2 xl:gap-2.5">
+            <div className="hidden items-center min-[1100px]:flex min-[1280px]:hidden">
               <img
                 src={erasmusLogo}
                 alt="Co-funded by the Erasmus+ Programme of the European Union"
@@ -245,11 +245,11 @@ export default function Header() {
               />
             </div>
 
-            <div className="hidden items-center self-center pl-1 min-[1100px]:flex min-[1280px]:hidden min-[1536px]:flex">
+            <div className="hidden items-center min-[1100px]:flex min-[1280px]:hidden min-[1536px]:flex">
               <img
                 src={flagImageUrl}
                 alt="Partner country and EU flags"
-                className="h-[2.65rem] w-auto rounded-xl object-contain shadow-[0_8px_18px_rgba(22,89,43,0.14)] ring-1 ring-[#dfe9df]"
+                className="m-0 block h-[2.65rem] w-auto rounded-xl object-contain p-0"
               />
             </div>
 
@@ -283,7 +283,7 @@ export default function Header() {
                 <img
                   src={flagImageUrl}
                   alt="Partner country and EU flags"
-                  className="h-10 w-auto rounded-xl object-contain shadow-[0_8px_18px_rgba(22,89,43,0.14)] ring-1 ring-[#dfe9df]"
+                  className="m-0 block h-10 w-auto rounded-xl object-contain p-0"
                 />
               </div>
               <Link href="/" className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#23452b] hover:bg-[#eef7ed] hover:text-[#14572a]" data-testid="link-mobile-home">
