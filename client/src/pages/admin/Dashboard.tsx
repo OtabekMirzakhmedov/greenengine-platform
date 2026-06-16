@@ -20,6 +20,7 @@ import {
   BriefcaseBusiness,
   Languages,
   PenSquare,
+  Target,
 } from "lucide-react";
 
 const brandLogoUrl = "/attached_assets/greenengine-logo-official.png";
@@ -70,6 +71,14 @@ export default function Dashboard() {
       description: "Manage homepage cards, list page, and activity details",
       color: "text-cyan-500",
       bgColor: "bg-cyan-500/10",
+    },
+    {
+      title: "Goals and Objectives",
+      icon: Target,
+      href: "/admin/goals-objectives",
+      description: "Manage vision copy, objective cards, KPIs, and consortium stats",
+      color: "text-emerald-700",
+      bgColor: "bg-emerald-500/10",
     },
     {
       title: "Passport Module",

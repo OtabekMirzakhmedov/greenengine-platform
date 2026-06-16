@@ -27,6 +27,7 @@ import TenderDetail from "@/pages/TenderDetail";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import ActivitiesAdmin from "@/pages/admin/ActivitiesAdmin";
+import GoalsObjectivesAdmin from "@/pages/admin/GoalsObjectivesAdmin";
 import HeroSectionsAdmin from "@/pages/admin/HeroSectionsAdmin";
 import PagesAdmin from "@/pages/admin/PagesAdmin";
 import PassportSectionsAdmin from "@/pages/admin/PassportSectionsAdmin";
@@ -217,6 +218,14 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <ActivitiesAdmin />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/admin/goals-objectives">
+        {() => (
+          <ProtectedRoute>
+            <GoalsObjectivesAdmin />
           </ProtectedRoute>
         )}
       </Route>

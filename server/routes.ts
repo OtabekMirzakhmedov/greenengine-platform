@@ -13,6 +13,7 @@ import {
   insertActionPlanSchema,
   insertEventSchema,
   insertHeroSectionSchema,
+  insertGoalObjectiveSchema,
   insertHomeActivityCardSchema,
   insertPassportSectionSchema,
   insertPassportStorySchema,
@@ -24,6 +25,7 @@ import {
   updateActionPlanSchema,
   updateEventSchema,
   updateHomeActivityCardSchema,
+  updateGoalObjectiveSchema,
   updateNewsSchema,
   updatePassportSectionSchema,
   updatePassportStorySchema,
@@ -284,6 +286,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Home activity card deleted successfully" });
     } catch (error) {
       console.error("Delete home activity card error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/goal-objectives", async (_req, res) => {
+    try {
+      const items = await storage.getPublishedGoalObjectives();
+      res.json(items);
+    } catch (error) {
+      console.error("Get goal objectives error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/goal-objectives", requireAuth, async (_req: AuthRequest, res) => {
+    try {
+      const items = await storage.getGoalObjectives();
+      res.json(items);
+    } catch (error) {
+      console.error("Get admin goal objectives error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/goal-objectives", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = insertGoalObjectiveSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const item = await storage.createGoalObjective(validation.data);
+      res.status(201).json(item);
+    } catch (error) {
+      console.error("Create goal objective error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.put("/api/goal-objectives/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      const validation = updateGoalObjectiveSchema.safeParse(req.body);
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid input",
+          errors: validation.error.errors,
+        });
+      }
+
+      const item = await storage.updateGoalObjective(req.params.id, validation.data);
+      res.json(item);
+    } catch (error) {
+      console.error("Update goal objective error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/goal-objectives/:id", requireAuth, async (req: AuthRequest, res) => {
+    try {
+      await storage.deleteGoalObjective(req.params.id);
+      res.json({ message: "Goal/objective item deleted successfully" });
+    } catch (error) {
+      console.error("Delete goal objective error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
