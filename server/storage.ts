@@ -1,5 +1,6 @@
 import { 
   users, institutions, events, actionPlans, infographics, communityPlans, partners, pages, news, tenders, heroSections, homeActivityCards, passportSections, passportStories, activities, storyGalleries,
+  goalObjectives,
   type User, type InsertUser,
   type Institution, type InsertInstitution,
   type Event, type InsertEvent,
@@ -12,6 +13,7 @@ import {
   type Tender, type InsertTender,
   type HeroSection, type InsertHeroSection,
   type HomeActivityCard, type InsertHomeActivityCard,
+  type GoalObjective, type InsertGoalObjective,
   type PassportSection, type InsertPassportSection,
   type PassportStory, type InsertPassportStory,
   type Activity, type InsertActivity,
@@ -26,6 +28,7 @@ type ActivityRow = typeof activities.$inferInsert;
 type StoryGalleryRow = typeof storyGalleries.$inferInsert;
 type NewsRow = typeof news.$inferInsert;
 type TenderRow = typeof tenders.$inferInsert;
+type GoalObjectiveRow = typeof goalObjectives.$inferInsert;
 type PassportSectionRow = typeof passportSections.$inferInsert;
 type PassportStoryRow = typeof passportStories.$inferInsert;
 type UploadedAttachment = { name: string; url: string; size: string };
@@ -119,6 +122,12 @@ export interface IStorage {
   createHomeActivityCard(card: InsertHomeActivityCard): Promise<HomeActivityCard>;
   updateHomeActivityCard(id: string, card: Partial<InsertHomeActivityCard>): Promise<HomeActivityCard>;
   deleteHomeActivityCard(id: string): Promise<void>;
+
+  getGoalObjectives(): Promise<GoalObjective[]>;
+  getPublishedGoalObjectives(): Promise<GoalObjective[]>;
+  createGoalObjective(item: InsertGoalObjective): Promise<GoalObjective>;
+  updateGoalObjective(id: string, item: Partial<InsertGoalObjective>): Promise<GoalObjective>;
+  deleteGoalObjective(id: string): Promise<void>;
 
   getPassportSections(): Promise<PassportSection[]>;
   getVisiblePassportSections(): Promise<PassportSection[]>;
@@ -276,6 +285,39 @@ export class DatabaseStorage implements IStorage {
 
   async deleteHomeActivityCard(id: string): Promise<void> {
     await db.delete(homeActivityCards).where(eq(homeActivityCards.id, id));
+  }
+
+  async getGoalObjectives(): Promise<GoalObjective[]> {
+    return await db
+      .select()
+      .from(goalObjectives)
+      .orderBy(asc(goalObjectives.order), desc(goalObjectives.updatedAt));
+  }
+
+  async getPublishedGoalObjectives(): Promise<GoalObjective[]> {
+    return await db
+      .select()
+      .from(goalObjectives)
+      .where(eq(goalObjectives.isPublished, true))
+      .orderBy(asc(goalObjectives.order), desc(goalObjectives.updatedAt));
+  }
+
+  async createGoalObjective(item: InsertGoalObjective): Promise<GoalObjective> {
+    const [created] = await db.insert(goalObjectives).values(item as GoalObjectiveRow).returning();
+    return created;
+  }
+
+  async updateGoalObjective(id: string, item: Partial<InsertGoalObjective>): Promise<GoalObjective> {
+    const [updated] = await db
+      .update(goalObjectives)
+      .set({ ...(item as Partial<GoalObjectiveRow>), updatedAt: new Date() })
+      .where(eq(goalObjectives.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteGoalObjective(id: string): Promise<void> {
+    await db.delete(goalObjectives).where(eq(goalObjectives.id, id));
   }
 
   async getPassportSections(): Promise<PassportSection[]> {

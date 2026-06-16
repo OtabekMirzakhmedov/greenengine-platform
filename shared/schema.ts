@@ -42,6 +42,19 @@ export const homeActivityCards = sqliteTable("home_activity_cards", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+export const goalObjectives = sqliteTable("goal_objectives", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  itemType: text("item_type").notNull().default("objective"),
+  title: text("title").notNull(),
+  description: text("description"),
+  metric: text("metric"),
+  kpis: text("kpis", { mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  icon: text("icon").notNull().default("target"),
+  order: integer("order").notNull().default(0),
+  isPublished: integer("is_published", { mode: "boolean" }).notNull().default(true),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 export const passportSections = sqliteTable("passport_sections", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text("title").notNull(),
@@ -247,6 +260,77 @@ export const insertUserSchema = createInsertSchema(users).omit({ id: true, creat
 export const insertPageSchema = createInsertSchema(pages).omit({ id: true, updatedAt: true });
 export const insertHeroSectionSchema = createInsertSchema(heroSections).omit({ id: true, updatedAt: true });
 export const insertHomeActivityCardSchema = createInsertSchema(homeActivityCards).omit({ id: true, updatedAt: true });
+const goalObjectiveItemTypeSchema = z.enum(["vision", "objective", "stat"]);
+const goalObjectiveBaseSchema = createInsertSchema(goalObjectives)
+  .omit({ id: true, updatedAt: true })
+  .extend({
+    itemType: goalObjectiveItemTypeSchema.default("objective"),
+    title: z.string().trim().min(1, "Title is required"),
+    description: z.string().trim().optional().nullable(),
+    metric: z.string().trim().optional().nullable(),
+    kpis: z.array(z.string().trim().min(1, "KPI text is required")).default([]),
+    icon: z.string().trim().min(1, "Icon is required").default("target"),
+    order: z.coerce.number().int().default(0),
+    isPublished: z.coerce.boolean().default(true),
+  });
+
+export const insertGoalObjectiveSchema = goalObjectiveBaseSchema.superRefine((data, ctx) => {
+    if ((data.itemType === "vision" || data.itemType === "objective") && !data.description?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["description"],
+        message: "Description is required",
+      });
+    }
+
+    if (data.itemType === "objective" && data.kpis.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["kpis"],
+        message: "Add at least one key performance indicator",
+      });
+    }
+
+    if (data.itemType === "stat" && !data.metric?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["metric"],
+        message: "Metric is required for consortium stats",
+      });
+    }
+  });
+export const updateGoalObjectiveSchema = goalObjectiveBaseSchema.partial().superRefine((data, ctx) => {
+  if (Object.keys(data).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least one field must be provided for update",
+    });
+  }
+
+  if ((data.itemType === "vision" || data.itemType === "objective") && !data.description?.trim()) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["description"],
+      message: "Description is required",
+    });
+  }
+
+  if (data.itemType === "objective" && (!data.kpis || data.kpis.length === 0)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["kpis"],
+      message: "Add at least one key performance indicator",
+    });
+  }
+
+  if (data.itemType === "stat" && !data.metric?.trim()) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["metric"],
+      message: "Metric is required for consortium stats",
+    });
+  }
+});
 const passportLinkSchema = z.object({
   label: z.string().min(1, "Link label is required"),
   url: z.string().min(1, "Link URL is required"),
@@ -396,6 +480,8 @@ export type InsertHeroSection = z.infer<typeof insertHeroSectionSchema>;
 export type HeroSection = typeof heroSections.$inferSelect;
 export type InsertHomeActivityCard = z.infer<typeof insertHomeActivityCardSchema>;
 export type HomeActivityCard = typeof homeActivityCards.$inferSelect;
+export type InsertGoalObjective = z.infer<typeof insertGoalObjectiveSchema>;
+export type GoalObjective = typeof goalObjectives.$inferSelect;
 export type InsertPassportSection = z.infer<typeof insertPassportSectionSchema>;
 export type PassportSection = typeof passportSections.$inferSelect;
 export type InsertPassportStory = z.infer<typeof insertPassportStorySchema>;
